@@ -8,6 +8,8 @@ public class JavaMiniLibraryApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(JavaMiniLibraryApplication.class, args);
+
+		///this is commet to check commitment vlad
 	}
 
 }
