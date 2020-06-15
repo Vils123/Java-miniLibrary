@@ -1,3 +1,0 @@
-assspublic class ass {
-    
-}
