@@ -11,9 +11,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Getter
-@Setter
-@NoArgsConstructor
+@Getter @Setter @NoArgsConstructor
 @Table
 @Entity(name = "Reader_Information")
 public class Reader extends Person {
@@ -51,4 +49,3 @@ public class Reader extends Person {
 
     
 
-}
