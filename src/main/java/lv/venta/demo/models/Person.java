@@ -2,9 +2,12 @@ package lv.venta.demo.models;
 
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -16,14 +19,22 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lv.venta.demo.utils.Verification;
 @Getter @Setter @NoArgsConstructor
+@Table
+@Entity(name="Person_information")
 public class Person {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Setter(value=AccessLevel.PRIVATE)
 	private int id;
 	
+	@Column(name="Name")
+	@Size(min=3, max=30)
+	@Pattern(regexp="[a-zA-Z\\s]+$")
 	private String name;
 	
+	@Column(name="Surname")
+	@Size(min=3, max=30)
+	@Pattern(regexp="[a-zA-Z\\s]+$")
 	private String surname;
 	
 	@Temporal(TemporalType.DATE)

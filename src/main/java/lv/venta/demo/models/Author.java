@@ -3,9 +3,12 @@ package lv.venta.demo.models;
 import java.util.ArrayList;
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-
+import javax.validation.constraints.Size;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import lombok.Getter;
@@ -13,18 +16,29 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lv.venta.demo.enums.Genre;
 @Getter @Setter @NoArgsConstructor
+@Table
+@Entity(name="Author_information")
 public class Author extends Person{
-	
+	@Column(name="Country_Of_Origin")
+	@Size(min=3, max=30)
+	@Pattern(regexp="[a-zA-Z\\s]+$")
 	private String countryOfOrigin;
 	
+	@Column(name="Background")
 	private String shortBackground;
 	
+	@Column(name="Written_Books")
 	private ArrayList<Book> writtenBooks = new ArrayList<Book>();
 	
+	@Column(name="Literature_style")
+	@Size(min=3, max=30)
+	@Pattern(regexp="[a-zA-Z\\s]+$")
+	
 	private String literatureStyle;
-	
+	@Column(name="Genre")
 	private Genre mainGenre;
-	
+
+	@Column(name="Date_Of_Death")
 	@Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern = "yyyy")
 	private Date dateOfDeath;
