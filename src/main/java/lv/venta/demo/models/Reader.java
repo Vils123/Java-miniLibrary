@@ -44,7 +44,7 @@ public class Reader extends Person {
 		return "Reader [allBooks=" + allBooks + ", currentBooks=" + currentBooks + ", password=" + password
 				+ ", username=" + username + "]";
 	}
-
+       // please check this out, idk vai es pareizi uztaisiju
     }
 
 
