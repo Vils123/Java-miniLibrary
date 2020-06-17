@@ -51,14 +51,15 @@ public class Reader extends Person {
     	return true;
     }
     
-    public boolean returnBook(Book b)
+    public Book returnBook(int id)
     {
-    	if(currentBooks.contains(b))
+    	if(currentBooks.size() <= id+1)
     	{
-    		currentBooks.remove(b);
-    		return true;
+    		Book temp = currentBooks.get(id+1);
+    		currentBooks.remove(id+1);
+    		return temp;
     	}
-    	return false;
+    	return null;
     }
     
     

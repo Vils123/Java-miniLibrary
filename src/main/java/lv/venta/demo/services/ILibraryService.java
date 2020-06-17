@@ -1,5 +1,6 @@
 package lv.venta.demo.services;
 
+import lv.venta.demo.enums.Condition;
 import lv.venta.demo.models.Admin;
 import lv.venta.demo.models.Author;
 import lv.venta.demo.models.Book;
@@ -24,4 +25,8 @@ public interface ILibraryService {
 	void showAllBooks();
 	void showAllReaders();
 	void showAllAdmins();
+	
+	
+	boolean giveBookToReader(Reader reader, String title, Condition condition);
+	boolean takeBookFromReader(Reader reader, int id);
 }

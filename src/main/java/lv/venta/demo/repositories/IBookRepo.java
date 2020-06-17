@@ -16,6 +16,7 @@ public interface IBookRepo extends CrudRepository <Book,Integer> {
     Book findByTitle(String title);
     ArrayList<Book> findByAuthor(Author author);  
     Book findByCondition (Condition condition);
+    Book findByTitleAndCondition(String title, Condition condition);
     Book findByReturnDate(Date date);
     ArrayList<Book> findByReader(Reader reader); // prob need something more
 
