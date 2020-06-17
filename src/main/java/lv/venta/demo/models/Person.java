@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -18,9 +19,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lv.venta.demo.utils.Verification;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 @Getter @Setter @NoArgsConstructor
-@Table
-@Entity(name="Person_information")
+@MappedSuperclass
 public class Person {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

@@ -27,22 +27,54 @@ public class Reader extends Person {
 
     @Column(name = "Book_History")
     private ArrayList<Book> allBooks;
+    
+    private static ArrayList<String> takenUsernames = new ArrayList<String>();
 
-    public Reader(String name, String surname, Date date, String username, String password,
-            ArrayList<Book> currentBooks, ArrayList<Book> allBooks) {
-        super(name, surname, date);
-        this.username = username;
-        this.password = password;
-        this.currentBooks = currentBooks;
-        this.allBooks = allBooks;
+    public Reader(String name, String surname, Date date, String username, String password){
+    	super(name,surname,date);
+    	if(!takenUsernames.contains(username))
+    	{
+    		this.username = username;
+    		this.password = password;
+    		takenUsernames.add(username);
+    	}
+    	
+
+    }
+    
+    public boolean takeBook(Book b)
+    {
+    	if(currentBooks.size() > 2)     //max 3 books var reizee njemt
+    		return false;
+    	currentBooks.add(b);
+    	allBooks.add(b);
+    	return true;
+    }
+    
+    public boolean returnBook(Book b)
+    {
+    	if(currentBooks.contains(b))
+    	{
+    		currentBooks.remove(b);
+    		return true;
+    	}
+    	return false;
+    }
+    
+    
+    public ArrayList<Book> showCurrentBooks ()
+    {
+    	return currentBooks;
+    }
+    
+    public ArrayList<Book> showAllBooks(){
+    	return allBooks;
     }
 
 	@Override
 	public String toString() {
-		return "Reader [allBooks=" + allBooks + ", currentBooks=" + currentBooks + ", password=" + password
-				+ ", username=" + username + "]";
+		return "Reader " + super.toString() + "\nCurrently taken books:" + currentBooks + "\nBook History: "+ allBooks; 
 	}
-       // please check this out, idk vai es pareizi uztaisiju
     }
 
 

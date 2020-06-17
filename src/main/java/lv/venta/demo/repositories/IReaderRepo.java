@@ -10,7 +10,5 @@ import lv.venta.demo.models.Reader;
 public interface IReaderRepo extends CrudRepository<Reader,Integer>{
 
     Reader findByUsername(String username);
-    ArrayList<Book> findByCurrentBooks(String currentBooks);
-    ArrayList<Book> findByAllBooks(String allBooks);
 
 }
