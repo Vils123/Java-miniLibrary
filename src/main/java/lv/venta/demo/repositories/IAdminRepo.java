@@ -6,4 +6,6 @@ import lv.venta.demo.models.Admin;
 
 public interface IAdminRepo extends CrudRepository<Admin, Integer>{
 
+	boolean existsByUsername(String username);
+	Admin findByUsername(String username);
 }

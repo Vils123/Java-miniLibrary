@@ -57,7 +57,7 @@ public class LibraryServiceImpl implements ILibraryService{
 		for(int i = 0 ; i < 10; i++)          //saliek 10 vienadas gramatas biblioteekaa
 		{
 			Book temp = new Book("1234567891123", "Harry potter and the java code", a1, new Date(115,0,1), Genre.COMEDY, Condition.GOOD);
-			libraryBookRepo.save(temp);
+			addNewBook(temp);
 		}
 		
 		giveBookToReader(r1,"Harry potter and the java code", Condition.GOOD);    //funkcija lejaa
@@ -73,68 +73,128 @@ public class LibraryServiceImpl implements ILibraryService{
 
 	@Override
 	public boolean addNewBook(Book book) {
-		// TODO Auto-generated method stub
+		if(book !=null)
+		{
+			libraryBookRepo.save(book);
+			return true;
+		}
 		return false;
 	}
 
 	@Override
-	public boolean giveBookById(int id) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean giveBookById(Reader reader, int id) {
+		Book temp = libraryBookRepo.findById(id);
+		if(temp == null)
+			return false;
+		return giveBookToReader(reader, temp.getTitle(), temp.getCondition());
 	}
 
 	@Override
-	public boolean returnBookById(int id) {
-		// TODO Auto-generated method stub
+	public boolean returnBookById(Reader reader,  int id) {
+		Book temp = takenBookRepo.findById(id);
+		if(temp == null)
+			return false;
+		for(int i = 1; i<4; i++)  //no 1-3,  jo readeram var but panemtas tikai 3 gramatas
+ 		{
+			if(reader.getCurrentBooks().get(i).getId() == temp.getId())      //atrod gramatu
+				return takeBookFromReader(reader, i);                        //njem vinj laukaa
+		}
 		return false;
 	}
 
 	@Override
 	public boolean deleteAllBooksFromLibraryByTitle(String title) {
-		// TODO Auto-generated method stub
-		return false;
+		if(!libraryBookRepo.existsByTitle(title))                     //ja saakumaa nemaz nav tads title, tad false
+			return false;
+		while(libraryBookRepo.existsByTitle(title))
+		{
+			libraryBookRepo.delete(libraryBookRepo.findByTitle(title));        //nem aaraa kameer aizliegto graamatu vairs nav
+		}
+		return true;
 	}
 
 	@Override
-	public boolean deleteAllBooksFromLibraryByIsbn(String title) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean deleteAllBooksFromLibraryByIsbn(String isbn) {
+		if(!libraryBookRepo.existsByIsbn(isbn))                     //ja saakumaa nemaz nav tads isbn, tad false
+			return false;
+		while(libraryBookRepo.existsByTitle(isbn))
+		{
+			libraryBookRepo.delete(libraryBookRepo.findByIsbn(isbn));        //nem aaraa kameer aizliegto graamatu vairs nav
+		}
+		return true;
 	}
 
 	@Override
 	public boolean addReader(Reader reader) {
-		// TODO Auto-generated method stub
-		return false;
+		if(readerRepo.existsByUsername(reader.getUsername()))  //var arii peec id
+			return false;
+		readerRepo.save(reader);
+		return true;
 	}
 
 	@Override
 	public boolean addAdmin(Admin admin) {
-		// TODO Auto-generated method stub
-		return false;
+		if(adminRepo.existsByUsername(admin.getUsername()))
+			return false;
+		adminRepo.save(admin);
+		readerRepo.save(admin);          //jo admins ir arii reader
+		return true;
 	}
 
 	@Override
 	public boolean addAuthor(Author author) {
-		// TODO Auto-generated method stub
-		return false;
+		if(authorRepo.existsById(author.getId()))
+			return false;
+		authorRepo.save(author);
+		return true;
 	}
 
 	@Override
 	public boolean updateReader(Reader reader) {
-		// TODO Auto-generated method stub
-		return false;
+		Reader temp = readerRepo.findByUsername(reader.getUsername());
+		if(temp == null)
+			return false;
+		temp.setAllBooks(reader.getAllBooks());
+		temp.setCurrentBooks(reader.getCurrentBooks());
+		temp.setDateOfBirth(reader.getDateOfBirth());
+		temp.setName(reader.getName());
+		temp.setSurname(reader.getSurname());
+		temp.setPassword(reader.getPassword());
+		readerRepo.save(temp);
+		return true;
 	}
 
 	@Override
 	public boolean updateAdmin(Admin admin) {
-		// TODO Auto-generated method stub
-		return false;
+		Admin temp = adminRepo.findByUsername(admin.getUsername());
+		if(temp == null)
+			return false;
+		temp.setAllBooks(admin.getAllBooks());
+		temp.setCurrentBooks(admin.getCurrentBooks());
+		temp.setDateOfBirth(admin.getDateOfBirth());
+		temp.setName(admin.getName());
+		temp.setSurname(admin.getSurname());
+		temp.setPassword(admin.getPassword());
+		adminRepo.save(temp);
+		readerRepo.save(temp);
+		return true;
 	}
 
 	@Override
 	public boolean updateAuthor(Author author) {
-		// TODO Auto-generated method stub
-		return false;
+		Author temp = authorRepo.findByNameAndSurname(author.getName(), author.getSurname());
+		if(temp == null)
+			return false;
+		temp.setCountryOfOrigin(author.getCountryOfOrigin());
+		temp.setDateOfBirth(author.getDateOfBirth());
+		temp.setDateOfDeath(author.getDateOfDeath());
+		temp.setLiteratureStyle(author.getLiteratureStyle());
+		temp.setMainGenre(author.getMainGenre());
+		temp.setShortBackground(author.getShortBackground());
+		temp.setWrittenBooks(author.getWrittenBooks());
+		authorRepo.save(temp);
+		return true;
+
 	}
 
 	@Override

@@ -9,6 +9,7 @@ import lv.venta.demo.models.Author;
 @Repository
 public interface IAuthorRepo extends CrudRepository<Author,Integer> {
     
+	Author findByNameAndSurname(String name, String surname);
     Author findByCountryOfOrigin (String origin);
     Author findByGenre (Genre genre);
     Author findByLiteratureStyle (String literatureStyle);

@@ -10,5 +10,6 @@ import lv.venta.demo.models.Reader;
 public interface IReaderRepo extends CrudRepository<Reader,Integer>{
 
     Reader findByUsername(String username);
+    boolean existsByUsername(String username);
 
 }

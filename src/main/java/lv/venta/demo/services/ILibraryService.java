@@ -9,8 +9,8 @@ import lv.venta.demo.models.Reader;
 public interface ILibraryService {
 	void inputdata();
 	boolean addNewBook(Book book);
-	boolean giveBookById(int id);
-	boolean returnBookById(int id);
+	boolean giveBookById(Reader reader, int id);
+	boolean returnBookById(Reader reader, int id);
 	boolean deleteAllBooksFromLibraryByTitle(String title);
 	boolean deleteAllBooksFromLibraryByIsbn(String title);
 	boolean addReader(Reader reader);
