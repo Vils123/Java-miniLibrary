@@ -29,5 +29,5 @@ public interface ILibraryService {
 	
 	
 	boolean giveBookToReader(Reader reader, String title, Condition condition);
-	boolean takeBookFromReader(Reader reader, int id);
+	boolean takeBookFromReader(Reader reader, Book book);
 }

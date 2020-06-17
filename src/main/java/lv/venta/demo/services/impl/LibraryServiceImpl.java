@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import lv.venta.demo.enums.Condition;
 import lv.venta.demo.enums.Genre;
@@ -16,7 +17,7 @@ import lv.venta.demo.repositories.IAuthorRepo;
 import lv.venta.demo.repositories.IBookRepo;
 import lv.venta.demo.repositories.IReaderRepo;
 import lv.venta.demo.services.ILibraryService;
-
+@Service
 public class LibraryServiceImpl implements ILibraryService{
 
 	@Autowired
@@ -55,11 +56,17 @@ public class LibraryServiceImpl implements ILibraryService{
 		
 		
 		
-		for(int i = 0 ; i < 10; i++)          //saliek 10 vienadas gramatas biblioteekaa
-		{
-			Book temp = new Book("1234567891123", "Harry potter and the java code", a1, new Date(115,0,1), Genre.COMEDY, Condition.GOOD);
-			addNewBook(temp);
-		}
+
+		Book b1 = new Book("123456789112", "Harry potter and the java code", a1, new Date(115,0,1), Genre.COMEDY, Condition.GOOD);
+		addNewBook(b1);
+		Book b2 = new Book("123456789112", "Harry potter and the java code", a1, new Date(115,0,1), Genre.COMEDY, Condition.GOOD);
+		addNewBook(b2);
+		Book b3 = new Book("123456789112", "Harry potter and the java code", a1, new Date(115,0,1), Genre.COMEDY, Condition.GOOD);
+		addNewBook(b3);
+		Book b4 = new Book("123456789112", "Harry potter and the java code", a1, new Date(115,0,1), Genre.COMEDY, Condition.GOOD);
+		addNewBook(b4);
+		Book b5 = new Book("123456789112", "Harry potter and the java code", a1, new Date(115,0,1), Genre.COMEDY, Condition.POOR);
+		addNewBook(b5);
 		
 		giveBookToReader(r1,"Harry potter and the java code", Condition.GOOD);    //funkcija lejaa
 		
@@ -67,7 +74,7 @@ public class LibraryServiceImpl implements ILibraryService{
 		
 		giveBookToReader(r3,"Harry potter and the java code", Condition.GOOD);
 		
-		takeBookFromReader(r1, 1);                                                //arii lejaa
+		takeBookFromReader(r1, r1.getTakenBooks().get(0));                    //arii lejaa
 				
 		
 	}
@@ -95,12 +102,14 @@ public class LibraryServiceImpl implements ILibraryService{
 		Book temp = takenBookRepo.findById(id);
 		if(temp == null)
 			return false;
-		for(int i = 1; i<4; i++)  //no 1-3,  jo readeram var but panemtas tikai 3 gramatas
- 		{
-			if(reader.getCurrentBooks().get(i).getId() == temp.getId())      //atrod gramatu
-				return takeBookFromReader(reader, i);                        //njem vinj laukaa
+		if(reader.returnBook(temp))
+		{
+			libraryBookRepo.save(temp);
+			takenBookRepo.delete(temp);
+			return true;
 		}
 		return false;
+		
 	}
 
 	@Override
@@ -109,7 +118,7 @@ public class LibraryServiceImpl implements ILibraryService{
 			return false;
 		while(libraryBookRepo.existsByTitle(title))
 		{
-			libraryBookRepo.delete(libraryBookRepo.findByTitle(title));        //nem aaraa kameer aizliegto graamatu vairs nav
+			libraryBookRepo.delete(libraryBookRepo.findByTitle(title).get(0));        //nem aaraa kameer aizliegto graamatu vairs nav
 		}
 		return true;
 	}
@@ -120,7 +129,7 @@ public class LibraryServiceImpl implements ILibraryService{
 			return false;
 		while(libraryBookRepo.existsByTitle(isbn))
 		{
-			libraryBookRepo.delete(libraryBookRepo.findByIsbn(isbn));        //nem aaraa kameer aizliegto graamatu vairs nav
+			libraryBookRepo.delete(libraryBookRepo.findByIsbn(isbn).get(0));        //nem aaraa kameer aizliegto graamatu vairs nav
 		}
 		return true;
 	}
@@ -245,11 +254,12 @@ public class LibraryServiceImpl implements ILibraryService{
 
 	@Override
 	public boolean giveBookToReader(Reader reader, String title, Condition condition) {
-		Book temp = libraryBookRepo.findByTitleAndCondition(title, condition);
+		Book temp = libraryBookRepo.findByTitleAndCondition(title, condition).get(0);
 		if(temp == null)
 			return false;      //ja neatrod gramatu talak neiet
 		if(reader.takeBook(temp))    //ja readeram ir atlauts nemt gramatu
 		{
+			System.out.println("giving book to " + reader);
 			takenBookRepo.save(temp);
 			libraryBookRepo.delete(temp);
 			return true;
@@ -258,12 +268,12 @@ public class LibraryServiceImpl implements ILibraryService{
 	}
 
 	@Override
-	public boolean takeBookFromReader(Reader reader, int id) {    //id - kura no max3 graamataam reader panjemto graamatu sarakstaa
-		Book temp = reader.returnBook(1);          //ja reader atgriezh kadu gramatu, tad taa gramata jasaglabaa atpakal biblioteekaa un jaaiznjem no taken repo
-		if(temp != null)
+	public boolean takeBookFromReader(Reader reader, Book book) {  
+		if(reader.returnBook(book))        //ja reader atgriezh kadu gramatu, tad taa gramata jasaglabaa atpakal biblioteekaa un jaaiznjem no taken repo
 		{
-			libraryBookRepo.save(temp);
-			takenBookRepo.delete(temp);
+			System.out.println("taking book from " + reader);
+			libraryBookRepo.save(book);
+			takenBookRepo.delete(book);
 			return true;
 		}
 		return false;

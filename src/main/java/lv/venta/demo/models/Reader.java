@@ -1,11 +1,16 @@
 package lv.venta.demo.models;
 
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Lob;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,8 +18,8 @@ import lombok.Setter;
 
 @Getter @Setter @NoArgsConstructor
 @Table
-@Entity(name = "Reader_Information")
-public class Reader extends Person {
+@Entity(name = "ReaderTable")
+public class Reader extends Person implements Serializable{
 
     @Column(name = "Username")
     private String username;
@@ -22,14 +27,18 @@ public class Reader extends Person {
     @Column(name = "Password")
     private String password;
 
-    @Column(name = "Current_Taken_Books")
-    private ArrayList<Book> currentBooks;
-
-    @Column(name = "Book_History")
-    private ArrayList<Book> allBooks;
-    
+	@OneToMany(mappedBy = "reader")
+    private Collection<Book> currentBooks;
+	
+    @Transient
     private static ArrayList<String> takenUsernames = new ArrayList<String>();
-
+    @Transient
+    private ArrayList<String> allBooks = new ArrayList<String>();
+    @Transient
+    
+	private ArrayList<Book> takenBooks = new ArrayList<Book>();
+	
+	
     public Reader(String name, String surname, Date date, String username, String password){
     	super(name,surname,date);
     	if(!takenUsernames.contains(username))
@@ -44,34 +53,46 @@ public class Reader extends Person {
     
     public boolean takeBook(Book b)
     {
-    	if(currentBooks.size() > 2)     //max 3 books var reizee njemt
+    	if(takenBooks.size() > 2)     //max 3 books var reizee njemt
     		return false;
-    	currentBooks.add(b);
-    	allBooks.add(b);
+		b.setReader(this);
+		Date today = new Date();
+		b.setTakenDate(today);
+		today.setDate(today.getDate()+7);
+		b.setReturnDate(today);
+		takenBooks.add(b);
+    	allBooks.add(b.getTitle());
     	return true;
     }
     
-    public Book returnBook(int id)
+    public boolean returnBook(Book book)
     {
-    	if(currentBooks.size() <= id+1)
+    	if(book.getReader() == this)
     	{
-    		Book temp = currentBooks.get(id+1);
-    		currentBooks.remove(id+1);
-    		return temp;
+    		book.setReader(null);
+    		book.setTakenDate(null);
+    		book.setReturnDate(null);
+    		takenBooks.remove(book);
+    		return true;
     	}
-    	return null;
+    	return false;
     }
     
     
-    public ArrayList<Book> showCurrentBooks ()
+    public Collection<Book> showCurrentBooks ()
     {
     	return currentBooks;
     }
     
-    public ArrayList<Book> showAllBooks(){
+    public ArrayList<String> showAllBooks(){
     	return allBooks;
     }
 
+    public ArrayList<Book> getTakenBooks()
+    {
+    	return takenBooks;
+    }
+    
 	@Override
 	public String toString() {
 		return "Reader " + super.toString() + "\nCurrently taken books:" + currentBooks + "\nBook History: "+ allBooks; 

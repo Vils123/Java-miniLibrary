@@ -12,13 +12,11 @@ import lv.venta.demo.models.Reader;
 
 public interface IBookRepo extends CrudRepository <Book,Integer> {
     Book findById(int id);
-    Book findByIsbn(String isbn);
-    Book findByTitle(String title);
-    ArrayList<Book> findByAuthor(Author author);  
-    Book findByCondition (Condition condition);
-    Book findByTitleAndCondition(String title, Condition condition);
-    Book findByReturnDate(Date date);
-    ArrayList<Book> findByReader(Reader reader);
+    ArrayList<Book> findByIsbn(String isbn);
+    ArrayList<Book> findByTitle(String title);
+    ArrayList<Book> findByCondition (Condition condition);
+    ArrayList<Book> findByTitleAndCondition(String title, Condition condition);
+    ArrayList<Book> findByReturnDate(Date date);
     boolean existsByTitle(String title);
     boolean existsByIsbn(String isbn);
     

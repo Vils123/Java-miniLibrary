@@ -1,10 +1,16 @@
 package lv.venta.demo.models;
 
+
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -19,7 +25,7 @@ import lv.venta.demo.enums.Genre;
 @Getter @Setter @NoArgsConstructor
 @Table
 @Entity(name="Author_information")
-public class Author extends Person{
+public class Author extends Person implements Serializable{
 	@Column(name="Country_Of_Origin")
 	@Size(min=3, max=30)
 	@Pattern(regexp="[a-zA-Z\\s]+$")
@@ -28,8 +34,10 @@ public class Author extends Person{
 	@Column(name="Background")
 	private String shortBackground;
 	
-	@Column(name="Written_Books")
-	private ArrayList<Book> writtenBooks = new ArrayList<Book>();
+	@ManyToMany(mappedBy = "authors")
+	private Collection<Book> writtenBooks;
+	
+
 	
 	@Column(name="Literature_style")
 	@Size(min=3, max=30)
@@ -42,7 +50,7 @@ public class Author extends Person{
 	@Column(name="Date_Of_Death")
 	@Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern = "yyyy")
-	private Date dateOfDeath;
+	private Date dateOfDeath = null;
 	
 	public Author(String name, String surname, Date dateOfBirth, String country, String story, String style, Genre mainGenre, Date deathDate)
 	{
@@ -51,13 +59,16 @@ public class Author extends Person{
 		this.shortBackground = story;
 		this.literatureStyle = style;
 		this.mainGenre = mainGenre;
-		if(deathDate.after(new Date()))
-			this.dateOfDeath = deathDate;
+		if(deathDate != null)
+		{
+			if(deathDate.after(new Date()))
+				this.dateOfDeath = deathDate;
+		}
 	}
 	
-	public void addBook(Book book)           // NEEDS SUM WORK THO
+	public void addBook(Book book)          
 	{
-		if(!writtenBooks.contains(book))
+		if(!writtenBooks.contains(book.getIsbn()))
 			writtenBooks.add(book);
 	}
 }
