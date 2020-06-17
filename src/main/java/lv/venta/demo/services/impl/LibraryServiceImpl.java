@@ -1,5 +1,6 @@
 package lv.venta.demo.services.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -199,37 +200,47 @@ public class LibraryServiceImpl implements ILibraryService{
 
 	@Override
 	public boolean deleteReader(Reader reader) {
-		// TODO Auto-generated method stub
-		return false;
+		Reader temp = readerRepo.findByUsername(reader.getUsername());
+		if(temp == null){
+			return false;							//Parbauda vai usernname eksiste un ja ja tad izdzes to lietotaju, ja ne nu tad nav pareizi kaut kas 
+		}
+		else{
+			readerRepo.delete(reader);
+			return true;
+		}
 	}
 
-	@Override
-	public boolean deleteAdmin(Admin admin) {
-		// TODO Auto-generated method stub
-		return false;
-	}
 
 	@Override
 	public boolean deleteAuthor(Author author) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public void showAllBooks() {
-		// TODO Auto-generated method stub
+		Author temp = authorRepo.findByNameAndSurname(author.getName(), author.getSurname());
+		Author temp1 = authorRepo.findByLiteratureStyle(author.getLiteratureStyle()); //mekleju pec visam vertibam, jo es nez pec ka varetu
+		Author temp2 = authorRepo.findByGenre(author.getMainGenre());										//atseviska meklet, piemeram ka Reader, kur tam ir uniq username
+		if(temp == null && temp1 == null && temp2 == null){
+			return false;
+		}
+		else{
+			authorRepo.deleteById(author.getId());
+		return true;
+		}
 		
 	}
 
 	@Override
-	public void showAllReaders() {
-		// TODO Auto-generated method stub
+	public ArrayList<Book> showAllBooks() {
+		return (ArrayList<Book>) libraryBookRepo.findAll();
 		
 	}
 
 	@Override
-	public void showAllAdmins() {
-		// TODO Auto-generated method stub
+	public ArrayList<Reader> showAllReaders() {
+		return (ArrayList<Reader>)readerRepo.findAll();
+		
+	}
+
+	@Override
+	public ArrayList<Admin> showAllAdmins() {
+		return (ArrayList<Admin>) adminRepo.findAll();
 		
 	}
 

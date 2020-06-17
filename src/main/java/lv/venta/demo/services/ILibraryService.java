@@ -1,5 +1,7 @@
 package lv.venta.demo.services;
 
+import java.util.ArrayList;
+
 import lv.venta.demo.enums.Condition;
 import lv.venta.demo.models.Admin;
 import lv.venta.demo.models.Author;
@@ -20,11 +22,10 @@ public interface ILibraryService {
 	boolean updateAdmin(Admin admin);
 	boolean updateAuthor(Author author);
 	boolean deleteReader(Reader reader);
-	boolean deleteAdmin(Admin admin);
 	boolean deleteAuthor(Author author);
-	void showAllBooks();
-	void showAllReaders();
-	void showAllAdmins();
+	ArrayList<Book> showAllBooks();  // izmainiju so, jo mums vajag no KUAT KA izdabut to info
+	ArrayList<Reader> showAllReaders();
+	ArrayList<Admin> showAllAdmins();
 	
 	
 	boolean giveBookToReader(Reader reader, String title, Condition condition);
