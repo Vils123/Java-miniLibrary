@@ -205,7 +205,7 @@ public class LibraryServiceImpl implements ILibraryService{
 			return false;							//Parbauda vai usernname eksiste un ja ja tad izdzes to lietotaju, ja ne nu tad nav pareizi kaut kas 
 		}
 		else{
-			readerRepo.delete(reader);
+			readerRepo.delete(temp);
 			return true;
 		}
 	}
@@ -214,14 +214,13 @@ public class LibraryServiceImpl implements ILibraryService{
 	@Override
 	public boolean deleteAuthor(Author author) {
 		Author temp = authorRepo.findByNameAndSurname(author.getName(), author.getSurname());
-		Author temp1 = authorRepo.findByLiteratureStyle(author.getLiteratureStyle()); //mekleju pec visam vertibam, jo es nez pec ka varetu
-		Author temp2 = authorRepo.findByGenre(author.getMainGenre());										//atseviska meklet, piemeram ka Reader, kur tam ir uniq username
-		if(temp == null && temp1 == null && temp2 == null){
+		if(temp == null)
 			return false;
-		}
-		else{
-			authorRepo.deleteById(author.getId());
-		return true;
+		else
+		{
+			readerRepo.deleteById(temp.getId());
+			authorRepo.delete(temp);
+			return true;
 		}
 		
 	}
