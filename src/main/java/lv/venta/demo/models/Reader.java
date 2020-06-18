@@ -51,27 +51,24 @@ public class Reader extends Person implements Serializable{
 
     }
     
-    public boolean takeBook(Book b)
+    public boolean takeBook(Book book)
     {
     	if(takenBooks.size() > 2)     //max 3 books var reizee njemt
     		return false;
-		b.setReader(this);
-		Date today = new Date();
-		b.setTakenDate(today);
-		today.setDate(today.getDate()+7);
-		b.setReturnDate(today);
-		takenBooks.add(b);
-    	allBooks.add(b.getTitle());
-    	return true;
+    	if(book.giveBook(this))
+    	{
+    		takenBooks.add(book);
+    		allBooks.add(book.getTitle());
+    		return true;
+    	}
+    	return false;
     }
     
     public boolean returnBook(Book book)
     {
     	if(book.getReader() == this)
     	{
-    		book.setReader(null);
-    		book.setTakenDate(null);
-    		book.setReturnDate(null);
+    		book.returnBook();
     		takenBooks.remove(book);
     		return true;
     	}
@@ -95,7 +92,7 @@ public class Reader extends Person implements Serializable{
     
 	@Override
 	public String toString() {
-		return "Reader " + super.toString() + "\nCurrently taken books:" + currentBooks + "\nBook History: "+ allBooks; 
+		return "Reader " + super.toString() + "\nCurrently taken books:" + takenBooks + "\nBook History: "+ allBooks; 
 	}
     }
 

@@ -17,6 +17,8 @@ public interface IBookRepo extends CrudRepository <Book,Integer> {
     ArrayList<Book> findByCondition (Condition condition);
     ArrayList<Book> findByTitleAndCondition(String title, Condition condition);
     ArrayList<Book> findByReturnDate(Date date);
+    ArrayList<Book> findAllByTitle(String title);
+    ArrayList<Book> findAllByIsbn(String isbn);
     boolean existsByTitle(String title);
     boolean existsByIsbn(String isbn);
     

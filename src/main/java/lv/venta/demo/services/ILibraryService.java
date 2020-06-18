@@ -18,6 +18,7 @@ public interface ILibraryService {
 	boolean addReader(Reader reader);
 	boolean addAdmin(Admin admin);
 	boolean addAuthor(Author author);
+	boolean updateBook(Book book);
 	boolean updateReader(Reader reader);
 	boolean updateAdmin(Admin admin);
 	boolean updateAuthor(Author author);
@@ -28,6 +29,6 @@ public interface ILibraryService {
 	ArrayList<Admin> showAllAdmins();
 	
 	
-	boolean giveBookToReader(Reader reader, String title, Condition condition);
+	boolean giveBookToReader(Reader reader, String title);
 	boolean takeBookFromReader(Reader reader, Book book);
 }

@@ -21,9 +21,7 @@ import lv.venta.demo.services.ILibraryService;
 public class LibraryServiceImpl implements ILibraryService{
 
 	@Autowired
-	IBookRepo libraryBookRepo;
-	@Autowired
-	IBookRepo takenBookRepo;
+	IBookRepo bookRepo;
 	@Autowired
 	IReaderRepo readerRepo;
 	@Autowired
@@ -68,13 +66,23 @@ public class LibraryServiceImpl implements ILibraryService{
 		Book b5 = new Book("123456789112", "Harry potter and the java code", a1, new Date(115,0,1), Genre.COMEDY, Condition.POOR);
 		addNewBook(b5);
 		
-		giveBookToReader(r1,"Harry potter and the java code", Condition.GOOD);    //funkcija lejaa
+		giveBookToReader(r1,"Harry potter and the java code");    
+		takeBookFromReader(r1, r1.getTakenBooks().get(0));
 		
-		giveBookToReader(r2,"Harry potter and the java code", Condition.GOOD);
+		giveBookToReader(r1,"Harry potter and the java code");    
+		takeBookFromReader(r1, r1.getTakenBooks().get(0));
 		
-		giveBookToReader(r3,"Harry potter and the java code", Condition.GOOD);
+		giveBookToReader(r1,"Harry potter and the java code");    
+		takeBookFromReader(r1, r1.getTakenBooks().get(0));
 		
-		takeBookFromReader(r1, r1.getTakenBooks().get(0));                    //arii lejaa
+		giveBookToReader(r1,"Harry potter and the java code");    
+		takeBookFromReader(r1, r1.getTakenBooks().get(0));
+		
+		giveBookToReader(r1,"Harry potter and the java code");    
+		takeBookFromReader(r1, r1.getTakenBooks().get(0));
+		
+		giveBookToReader(r1,"Harry potter and the java code");    
+		takeBookFromReader(r1, r1.getTakenBooks().get(0));
 				
 		
 	}
@@ -83,7 +91,7 @@ public class LibraryServiceImpl implements ILibraryService{
 	public boolean addNewBook(Book book) {
 		if(book !=null)
 		{
-			libraryBookRepo.save(book);
+			bookRepo.save(book);
 			return true;
 		}
 		return false;
@@ -91,21 +99,19 @@ public class LibraryServiceImpl implements ILibraryService{
 
 	@Override
 	public boolean giveBookById(Reader reader, int id) {
-		Book temp = libraryBookRepo.findById(id);
+		Book temp = bookRepo.findById(id);
 		if(temp == null)
 			return false;
-		return giveBookToReader(reader, temp.getTitle(), temp.getCondition());
+		return giveBookToReader(reader, temp.getTitle());
 	}
 
 	@Override
 	public boolean returnBookById(Reader reader,  int id) {
-		Book temp = takenBookRepo.findById(id);
+		Book temp = bookRepo.findById(id);
 		if(temp == null)
 			return false;
 		if(reader.returnBook(temp))
 		{
-			libraryBookRepo.save(temp);
-			takenBookRepo.delete(temp);
 			return true;
 		}
 		return false;
@@ -114,22 +120,26 @@ public class LibraryServiceImpl implements ILibraryService{
 
 	@Override
 	public boolean deleteAllBooksFromLibraryByTitle(String title) {
-		if(!libraryBookRepo.existsByTitle(title))                     //ja saakumaa nemaz nav tads title, tad false
+		if(!bookRepo.existsByTitle(title))                     //ja saakumaa nemaz nav tads title, tad false
 			return false;
-		while(libraryBookRepo.existsByTitle(title))
+		ArrayList<Book> allBooks = bookRepo.findAllByTitle(title);
+		for(Book a : allBooks)
 		{
-			libraryBookRepo.delete(libraryBookRepo.findByTitle(title).get(0));        //nem aaraa kameer aizliegto graamatu vairs nav
+			if(a.isInLibrary())
+				bookRepo.delete(a);
 		}
 		return true;
 	}
 
 	@Override
 	public boolean deleteAllBooksFromLibraryByIsbn(String isbn) {
-		if(!libraryBookRepo.existsByIsbn(isbn))                     //ja saakumaa nemaz nav tads isbn, tad false
+		if(!bookRepo.existsByIsbn(isbn))                     //ja saakumaa nemaz nav tads title, tad false
 			return false;
-		while(libraryBookRepo.existsByTitle(isbn))
+		ArrayList<Book> allBooks = bookRepo.findAllByIsbn(isbn);
+		for(Book a : allBooks)
 		{
-			libraryBookRepo.delete(libraryBookRepo.findByIsbn(isbn).get(0));        //nem aaraa kameer aizliegto graamatu vairs nav
+			if(a.isInLibrary())
+				bookRepo.delete(a);
 		}
 		return true;
 	}
@@ -159,6 +169,31 @@ public class LibraryServiceImpl implements ILibraryService{
 		return true;
 	}
 
+	
+	@Override
+	public boolean updateBook(Book book)
+	{
+		if(bookRepo.existsById(book.getId()))
+		{
+			Book temp = bookRepo.findById(book.getId());
+			temp.setAuthors(book.getAuthors());
+			temp.setCondition(book.getCondition());
+			temp.setConditionCounter(book.getConditionCounter());
+			temp.setGenres(book.getGenres());
+			temp.setGenresString(book.getGenresString());
+			temp.setInLibrary(book.isInLibrary());
+			temp.setIsbn(book.getIsbn());
+			temp.setPublishDate(book.getPublishDate());
+			temp.setReader(book.getReader());
+			temp.setReturnDate(book.getReturnDate());
+			temp.setTakenDate(book.getTakenDate());
+			temp.setTitle(book.getTitle());
+			bookRepo.save(temp);
+			return true;
+		}
+		return false;
+	}
+	
 	@Override
 	public boolean updateReader(Reader reader) {
 		Reader temp = readerRepo.findByUsername(reader.getUsername());
@@ -170,6 +205,7 @@ public class LibraryServiceImpl implements ILibraryService{
 		temp.setName(reader.getName());
 		temp.setSurname(reader.getSurname());
 		temp.setPassword(reader.getPassword());
+		temp.setTakenBooks(reader.getTakenBooks());
 		readerRepo.save(temp);
 		return true;
 	}
@@ -185,6 +221,7 @@ public class LibraryServiceImpl implements ILibraryService{
 		temp.setName(admin.getName());
 		temp.setSurname(admin.getSurname());
 		temp.setPassword(admin.getPassword());
+		temp.setTakenBooks(admin.getTakenBooks());
 		adminRepo.save(temp);
 		readerRepo.save(temp);
 		return true;
@@ -236,7 +273,7 @@ public class LibraryServiceImpl implements ILibraryService{
 
 	@Override
 	public ArrayList<Book> showAllBooks() {
-		return (ArrayList<Book>) libraryBookRepo.findAll();
+		return (ArrayList<Book>) bookRepo.findAll();
 		
 	}
 
@@ -253,15 +290,24 @@ public class LibraryServiceImpl implements ILibraryService{
 	}
 
 	@Override
-	public boolean giveBookToReader(Reader reader, String title, Condition condition) {
-		Book temp = libraryBookRepo.findByTitleAndCondition(title, condition).get(0);
+	public boolean giveBookToReader(Reader reader, String title) {
+		ArrayList<Book> allBooks = bookRepo.findAllByTitle(title);
+		Book temp = null;
+		for(Book a : allBooks)
+		{
+			if(a.isInLibrary())
+			{
+				temp = a;
+				break;
+			}
+		}
+		System.out.println(temp.getTitle());
 		if(temp == null)
 			return false;      //ja neatrod gramatu talak neiet
 		if(reader.takeBook(temp))    //ja readeram ir atlauts nemt gramatu
 		{
 			System.out.println("giving book to " + reader);
-			takenBookRepo.save(temp);
-			libraryBookRepo.delete(temp);
+			updateBook(temp);
 			return true;
 		}
 		return false;
@@ -269,11 +315,14 @@ public class LibraryServiceImpl implements ILibraryService{
 
 	@Override
 	public boolean takeBookFromReader(Reader reader, Book book) {  
-		if(reader.returnBook(book))        //ja reader atgriezh kadu gramatu, tad taa gramata jasaglabaa atpakal biblioteekaa un jaaiznjem no taken repo
+		if(reader.returnBook(book))        
 		{
 			System.out.println("taking book from " + reader);
-			libraryBookRepo.save(book);
-			takenBookRepo.delete(book);
+
+			if(book.getConditionCounter() < 1)
+				bookRepo.delete(book);        //if book dies
+			else
+				updateBook(book);
 			return true;
 		}
 		return false;

@@ -82,8 +82,8 @@ public class Book implements Serializable{
 	@ManyToMany
 	@JoinTable(name = "Book_Author", joinColumns =@JoinColumn(name = "B_Id"), inverseJoinColumns =@JoinColumn(name = "Id"))
 	private Collection<Author> authors;
-	
-	
+	@Column(name = "In_Library")
+	private boolean inLibrary = true;
 	
 	public Book(String isbn, String title, Collection<Author> authors, Date publishDate, ArrayList<Genre> genres,
 			Condition condition) {
@@ -208,11 +208,12 @@ public class Book implements Serializable{
 	public boolean decreaseCondition()
 	{
 		conditionCounter--;
+		System.out.println(conditionCounter);
 		if(conditionCounter == 10)
 			this.condition = Condition.USED;
 		if(conditionCounter == 5)
 			this.condition = Condition.POOR;
-		if(conditionCounter < 1) 
+		if(conditionCounter < 0) 
 			return false;                       // idk what to do with dead book
 		return true;
 	}
@@ -247,11 +248,37 @@ public class Book implements Serializable{
 			returnDate = date;
 	}
 	
-	public void returnBook()   //graamata ir atpakal biblioteekaa - tai zuud condition un datumi
+	public boolean returnBook()   //graamata ir atpakal biblioteekaa - tai zuud condition,datumi,reader
 	{
-		takenDate = null;
-		returnDate = null;
-		decreaseCondition();
+		if(!inLibrary)
+		{
+			inLibrary = true;
+			reader = null;
+			takenDate = null;
+			returnDate = null;
+			decreaseCondition();
+			System.out.println("returned book" + this.getId());
+			return true;
+		}
+		return false;
+	}
+	
+	public boolean giveBook(Reader reader)
+	{
+		System.out.println("ggg");
+		if(inLibrary)
+		{
+			inLibrary = false;
+			this.reader = reader;
+			Date today = new Date();
+			Date returnBy = new Date();
+			returnBy.setDate(today.getDate()+7);
+			this.takenDate = today;
+			this.returnDate = returnBy;
+			System.out.println("gave book " + this.getId() + " to " + reader.getName());
+			return true;
+		}
+		return false;
 	}
 	
 	
