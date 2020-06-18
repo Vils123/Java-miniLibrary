@@ -94,7 +94,7 @@ public class Book implements Serializable{
 			this.authors = authors;
 			this.publishDate = publishDate;
 			this.genres = genres;
-			if(condition != null)
+			if(condition != null && conditionCounter != 15)
 			{	
 				this.condition = condition;
 				startConditionCounter();
@@ -174,7 +174,6 @@ public class Book implements Serializable{
 	public void setCondition(Condition condition)
 	{
 		this.condition = condition;
-		startConditionCounter();
 	}
 	
 	public void setGenres(ArrayList<Genre> genres)
@@ -207,14 +206,13 @@ public class Book implements Serializable{
 	
 	public boolean decreaseCondition()
 	{
-		conditionCounter--;
-		System.out.println(conditionCounter);
+		conditionCounter = conditionCounter - 1;
 		if(conditionCounter == 10)
 			this.condition = Condition.USED;
 		if(conditionCounter == 5)
 			this.condition = Condition.POOR;
 		if(conditionCounter < 0) 
-			return false;                       // idk what to do with dead book
+			return false;                       
 		return true;
 	}
 	
@@ -265,7 +263,6 @@ public class Book implements Serializable{
 	
 	public boolean giveBook(Reader reader)
 	{
-		System.out.println("ggg");
 		if(inLibrary)
 		{
 			inLibrary = false;

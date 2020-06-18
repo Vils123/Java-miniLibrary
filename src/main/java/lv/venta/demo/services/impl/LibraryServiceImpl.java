@@ -55,7 +55,7 @@ public class LibraryServiceImpl implements ILibraryService{
 		
 		
 
-		Book b1 = new Book("123456789112", "Harry potter and the java code", a1, new Date(115,0,1), Genre.COMEDY, Condition.GOOD);
+		Book b1 = new Book("123456789112", "Harry potter and the java code", a1, new Date(115,0,1), Genre.COMEDY, Condition.POOR);
 		addNewBook(b1);
 		Book b2 = new Book("123456789112", "Harry potter and the java code", a1, new Date(115,0,1), Genre.COMEDY, Condition.GOOD);
 		addNewBook(b2);
@@ -68,22 +68,8 @@ public class LibraryServiceImpl implements ILibraryService{
 		
 		giveBookToReader(r1,"Harry potter and the java code");    
 		takeBookFromReader(r1, r1.getTakenBooks().get(0));
-		
-		giveBookToReader(r1,"Harry potter and the java code");    
-		takeBookFromReader(r1, r1.getTakenBooks().get(0));
-		
-		giveBookToReader(r1,"Harry potter and the java code");    
-		takeBookFromReader(r1, r1.getTakenBooks().get(0));
-		
-		giveBookToReader(r1,"Harry potter and the java code");    
-		takeBookFromReader(r1, r1.getTakenBooks().get(0));
-		
-		giveBookToReader(r1,"Harry potter and the java code");    
-		takeBookFromReader(r1, r1.getTakenBooks().get(0));
-		
-		giveBookToReader(r1,"Harry potter and the java code");    
-		takeBookFromReader(r1, r1.getTakenBooks().get(0));
-				
+
+	
 		
 	}
 
