@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>All Readers</title>
+</head>
+
+<body>
+<table>
+
+        <tr th:each="reader: ${inner}">
+            <td th:text="${reader.toString()}" />
+        </tr>
+
+</table>
+
+
+</body>
+</html>

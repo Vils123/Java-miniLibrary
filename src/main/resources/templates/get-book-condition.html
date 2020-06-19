@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<body xmlns:th="http://www.thymeleaf.org">
+
+
+
+<form action="#"th:action="@{/reader/showAllBooksByCondition}" method="post">
+	<td>Select the books Quality</td>
+	<select name = "type">
+		<option th:each="condition : ${type}" th:text="${condition.toString()}"></option>
+	</select>
+	<input type="submit" value="enter">
+	</form>
+</body>
+</html>

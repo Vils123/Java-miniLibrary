@@ -3,6 +3,7 @@ package lv.venta.demo.services;
 import java.util.ArrayList;
 
 import lv.venta.demo.enums.Condition;
+import lv.venta.demo.enums.Genre;
 import lv.venta.demo.models.Admin;
 import lv.venta.demo.models.Author;
 import lv.venta.demo.models.Book;
@@ -24,9 +25,13 @@ public interface ILibraryService {
 	boolean updateAuthor(Author author);
 	boolean deleteReader(Reader reader);
 	boolean deleteAuthor(Author author);
+
+	Reader selectReaderByUsername(String username)
 	ArrayList<Book> showAllBooks();  // izmainiju so, jo mums vajag no KUAT KA izdabut to info
 	ArrayList<Reader> showAllReaders();
 	ArrayList<Admin> showAllAdmins();
+	ArrayList<Book> selectAllBooksByCondition(Condition condition) throws Exception;
+	
 	
 	
 	boolean giveBookToReader(Reader reader, String title);

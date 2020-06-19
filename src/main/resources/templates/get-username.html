@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body >
+<form action="#"th:action="@{/admin/readerbyusername}" th:object="${reader}" method="post">
+	<table>
+    <td> Please input the username </td> 
+	<tr>
+	<td><input type="text" th:field="*{username}"> </td>
+	<td th:if="${#fields.hasErrors('username')}"> The username is not ocrrect</td>	
+	</tr>
+	</table>
+		<input type="submit">
+	</form>
+</body>
+</html>

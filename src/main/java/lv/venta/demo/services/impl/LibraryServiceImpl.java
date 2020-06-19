@@ -42,11 +42,10 @@ public class LibraryServiceImpl implements ILibraryService{
 		Reader r4 = new Reader("Vladislavs", "Sivakovs", new Date(99,07,7), "vvssss123333", "parole123");
 		
 		readerRepo.save(admin1);
-		readerRepo.save(r1);
 		readerRepo.save(r2);
 		readerRepo.save(r3);
 		readerRepo.save(r4);
-
+		readerRepo.save(r1);
 		
 		Author a1 = new Author("Barack", "Obama", new Date(60, 03,03), "not USA", "He was a president aswell", "He writing facts", Genre.COMEDY, null);
 		
@@ -69,7 +68,9 @@ public class LibraryServiceImpl implements ILibraryService{
 		giveBookToReader(r1,"Harry potter and the java code");    
 		takeBookFromReader(r1, r1.getTakenBooks().get(0));
 
-	
+		giveBookToReader(r3, "Harry potter and the java code" );
+		giveBookToReader(r2, "Harry potter and the java code" );
+		
 		
 	}
 
@@ -313,5 +314,29 @@ public class LibraryServiceImpl implements ILibraryService{
 		}
 		return false;
 	}
+
+
+
+	@Override
+	public ArrayList<Book> selectAllBooksByCondition(Condition condition) throws Exception {
+		ArrayList<Book> selectBook = bookRepo.findByCondition(condition);
+		if (selectBook != null) {
+			return selectBook;
+		} else {
+			throw new Exception("The Condition is wrong");
+		}
+	}
+
+	@Override
+	public Reader selectReaderByUsername(String username) {
+		return readerRepo.findByUsername(username);
+	}
+
+
+
+	
+
+
+	
 
 }

@@ -92,7 +92,7 @@ public class Reader extends Person implements Serializable{
     
 	@Override
 	public String toString() {
-		return "Reader " + super.toString() + "\nCurrently taken books:" + takenBooks + "\nBook History: "+ allBooks; 
+		return "Reader " + super.toString() + "\nCurrently taken books:" + getTakenBooks() + "\nBook History: "+ a; 
 	}
     }
 

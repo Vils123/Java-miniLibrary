@@ -1,5 +1,7 @@
 package lv.venta.demo.repositories;
 
+import java.util.ArrayList;
+
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -12,6 +14,7 @@ public interface IAuthorRepo extends CrudRepository<Author,Integer> {
 	Author findByNameAndSurname(String name, String surname);
     Author findByCountryOfOrigin (String origin);
     Author findByLiteratureStyle (String literatureStyle);
+
     
 
 
