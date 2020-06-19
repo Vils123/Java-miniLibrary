@@ -1,15 +1,18 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+style="background-color:powderblue;">
 <body >
 <form action="#"th:action="@{/reader/booksByTitle}" th:object="${book}" method="post">
-	<table>
+	<table style="border:2px solid rgb(0, 0, 0);margin-left:auto;margin-right:auto;background-color: rgb(255, 255, 255);">
     <td> Please input the title </td> 
 	<tr>
 	<td><input type="text" th:field="*{title}"> </td>
 	<td th:if="${#fields.hasErrors('title')}"> The title is not right </td>	
 	</tr>
 	</table>
+	<div style="text-align:center">
 		<input type="submit">
+		</div>
 	</form>
 </body>
 </html>

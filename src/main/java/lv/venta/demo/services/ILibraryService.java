@@ -31,6 +31,7 @@ public interface ILibraryService {
 	ArrayList<Book> showAllBooks();  // izmainiju so, jo mums vajag no KUAT KA izdabut to info
 	ArrayList<Reader> showAllReaders();
 	ArrayList<Admin> showAllAdmins();
+	ArrayList<Author> showAllAuthors();
 	ArrayList<Book> selectAllBooksByCondition(Condition condition) throws Exception;
 	ArrayList<Book> selectAllBooksByGenre(Genre genre) throws Exception;
 	

@@ -1,14 +1,22 @@
 <!DOCTYPE html>
-<body xmlns:th="http://www.thymeleaf.org">
+<body xmlns:th="http://www.thymeleaf.org"
+style="background-color:powderblue;">
 
 
 
 <form action="#"th:action="@{/reader/showAllBooksByCondition}" method="post">
+	<table style="border:2px solid rgb(0, 0, 0);margin-left:auto;margin-right:auto;background-color: rgb(255, 255, 255);">
 	<td>Select the books Quality</td>
+	<div style="text-align:center">
 	<select name = "type">
 		<option th:each="condition : ${type}" th:text="${condition.toString()}"></option>
+		</div>
 	</select>
-	<input type="submit" value="enter">
+	</td>
+	</table>
+	<div style="text-align:center">
+		<input type="submit" value="enter">
+</div>
 	</form>
 </body>
 </html>

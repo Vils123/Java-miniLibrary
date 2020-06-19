@@ -44,12 +44,12 @@ public class LibraryController {
 	}
 
 
-	@GetMapping("/admin/readerByUsername") //localhost:8080/admin/readerbyusername
+	@GetMapping("/admin/readerByUsername") //localhost:8080/admin/readerByUsername
 	public String readerbyusername(Reader reader){
 		return "get-username";
 	}
 
-	@PostMapping("/admin/readerByUsername")//localhost:8080/admin/readerbyusername
+	@PostMapping("/admin/readerByUsername")//localhost:8080/admin/readerByUsername
 	public String readerbyusernamePost(Model model, @Valid Reader reader, BindingResult result){
 		System.out.println("kkkk");
 		if(!result.hasErrors()){
@@ -62,12 +62,12 @@ public class LibraryController {
 
 	} 
 
-	@GetMapping("/reader/booksByTitle")//localhost:8080/reader/booksbytitle
+	@GetMapping("/reader/booksByTitle")//localhost:8080/reader/booksByTitle
 	public String booksByName(Book books){
 		return "get-book-by-title";
 	}
 
-	@PostMapping("/reader/booksByTitle")//localhost:8080/reader/booksbytitle
+	@PostMapping("/reader/booksByTitle")//localhost:8080/reader/booksByTitle
 	public String booksByAuthorTitle(Model model,@Valid Book book,BindingResult result){
 		System.out.println("Working");
 		if(!result.hasErrors()){
@@ -80,7 +80,7 @@ public class LibraryController {
 
 	} 
 
-	@GetMapping("/reader/showAllBooksByCondition")
+	@GetMapping("/reader/showAllBooksByCondition")//localhost:8080/reader/showAllBooksByCondition
 		public String showAllBooksByCondition(Model model){
 			model.addAttribute("type", Condition.values());
 			return "get-book-condition";
@@ -128,7 +128,7 @@ public class LibraryController {
 		}
 	}
 	
-	@GetMapping("/reader/showAllBooksByGenre")
+	@GetMapping("/reader/showAllBooksByGenre")//localhost:8080/reader/showAllBooksByGenre
 	public String showAllBooksByGenre(Model model){
 		model.addAttribute("type", Genre.values());
 		return "get-book-genre";
@@ -141,7 +141,17 @@ public class LibraryController {
 	model.addAttribute("inner", service.selectAllBooksByGenre(genre));
 	return "books-all-show"; }
 	
+@GetMapping("/admin/showAllAuthors") //localhost:8080/admin/showAllAuthors
+	public String showAllAuthors(Model model){
+		model.addAttribute("inner", service.showAllAuthors());
+		return "author-all-show";
+	}
 
+@GetMapping("/reader/showAllAuthors") //localhost:8080/reader/showAllAuthors
+	public String showAllAuthorsForReader(Model model){
+		model.addAttribute("inner", service.showAllAuthors());
+		return "author-all-show";
+	}
 
 
 }

@@ -349,6 +349,11 @@ public class LibraryServiceImpl implements ILibraryService{
 		}
 	}
 
+	@Override
+	public ArrayList<Author> showAllAuthors() {
+		return (ArrayList<Author>) authorRepo.findAll();
+	}
+
 
 
 	
