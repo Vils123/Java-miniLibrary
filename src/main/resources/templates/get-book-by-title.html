@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body >
+<form action="#"th:action="@{/reader/booksByTitle}" th:object="${book}" method="post">
+	<table>
+    <td> Please input the title </td> 
+	<tr>
+	<td><input type="text" th:field="*{title}"> </td>
+	<td th:if="${#fields.hasErrors('title')}"> The title is not right </td>	
+	</tr>
+	</table>
+		<input type="submit">
+	</form>
+</body>
+</html>

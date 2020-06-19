@@ -26,7 +26,8 @@ public interface ILibraryService {
 	boolean deleteReader(Reader reader);
 	boolean deleteAuthor(Author author);
 
-	Reader selectReaderByUsername(String username)
+	Reader selectReaderByUsername(String username);
+	ArrayList<Book> showAllBooksByTitle(String  title);
 	ArrayList<Book> showAllBooks();  // izmainiju so, jo mums vajag no KUAT KA izdabut to info
 	ArrayList<Reader> showAllReaders();
 	ArrayList<Admin> showAllAdmins();

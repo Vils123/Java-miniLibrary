@@ -1,0 +1,48 @@
+<html>
+<body xmlns:th="http://www.thymeleaf.org">
+
+        <form action="#" th:action="@{/admin/registerReader}" th:object="${reader}"
+                method="post">
+
+        <table>
+        
+        
+        <tr>
+                <td>Name</td>
+                <td> <input type="text" th:field="*{name}"> </td>
+                <td th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></td>
+        </tr>
+        
+                
+        
+        <tr>
+                <td>Surname</td>
+                <td><input type="text" th:field="*{surname}"> </td>
+                <td th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}"></td>
+        </tr>
+                
+                
+        <tr>        
+                <td>Date of Birth(yyyy-mm-dd)</td>
+                <td><input type="text" th:field="*{dateOfBirth}"> </td>
+                <td th:if="${#fields.hasErrors('dateOfBirth')}" th:errors="*{dateOfBirth}"></td>
+        </tr>
+                
+        <tr>
+                <td>Username</td>
+                <td><input type="text" th:field="*{username}"></td>
+                <td th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></td>
+        </tr>
+
+        <tr>
+                <td>Password</td>
+                <td><input type="text" th:field="*{password}"></td>
+                <td th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></td>
+        </tr>
+                
+        </table>
+                <input type="submit">
+        </form>
+</body>
+
+</html>

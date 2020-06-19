@@ -332,6 +332,11 @@ public class LibraryServiceImpl implements ILibraryService{
 		return readerRepo.findByUsername(username);
 	}
 
+	@Override
+	public ArrayList<Book> showAllBooksByTitle(String title) {
+		return bookRepo.findAllByTitle(title);
+	}
+
 
 
 	

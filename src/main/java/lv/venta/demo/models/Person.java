@@ -44,7 +44,7 @@ public class Person {
 	private String surname;
 	
 	@Temporal(TemporalType.DATE)
-	@DateTimeFormat(pattern = "dd-MM-yyyy")
+	@DateTimeFormat(pattern = "yyyy-mm-dd")
 	private Date dateOfBirth;
 	
 	public Person(String name, String surname, Date date)

@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import lv.venta.demo.enums.Condition;
 import lv.venta.demo.enums.Genre;
+import lv.venta.demo.models.Admin;
+import lv.venta.demo.models.Book;
 import lv.venta.demo.models.Reader;
 import lv.venta.demo.services.impl.LibraryServiceImpl;
 @Controller
@@ -42,12 +44,12 @@ public class LibraryController {
 	}
 
 
-	@GetMapping("/admin/readerbyusername") //localhost:8080/admin/readerbyusername
+	@GetMapping("/admin/readerByUsername") //localhost:8080/admin/readerbyusername
 	public String readerbyusername(Reader reader){
 		return "get-username";
 	}
 
-	@PostMapping("/admin/readerbyusername")//localhost:8080/admin/readerbyusername
+	@PostMapping("/admin/readerByUsername")//localhost:8080/admin/readerbyusername
 	public String readerbyusernamePost(Model model, @Valid Reader reader, BindingResult result){
 		System.out.println("kkkk");
 		if(!result.hasErrors()){
@@ -60,7 +62,23 @@ public class LibraryController {
 
 	} 
 
-	@GetMapping(reader)
+	@GetMapping("/reader/booksByTitle")//localhost:8080/reader/booksbytitle
+	public String booksByName(Book books){
+		return "get-book-by-title";
+	}
+
+	@PostMapping("/reader/booksByTitle")//localhost:8080/reader/booksbytitle
+	public String booksByAuthorTitle(Model model,@Valid Book book,BindingResult result){
+		System.out.println("Working");
+		if(!result.hasErrors()){
+			model.addAttribute("inner", service.showAllBooksByTitle(book.getTitle()));
+			return "books-all-show"; 
+		}
+		else{
+			return "get-book-by-title";
+		}
+
+	} 
 
 	@GetMapping("/reader/showAllBooksByCondition")
 		public String showAllBooksByCondition(Model model){
@@ -75,7 +93,39 @@ public class LibraryController {
 		model.addAttribute("inner", service.selectAllBooksByCondition(condition));
 		return "books-all-show"; }
 
-	
+	@GetMapping("/admin/registerReader") //localhost:8080/admin/registerReader
+	public String insertReader(Reader reader){
+		return "reader-insert";
+	}
 
+	@PostMapping("/admin/registerReader")
+	public String insertPatient(@Valid Reader reader, BindingResult result) {
+		System.out.println(reader);
+		
+		if(!result.hasErrors()) {
+			service.addReader(reader);
+			return "ok";}
+		else {
+			return "reader-insert";
+		}
+	}
+
+
+	@GetMapping("/admin/registerAdmin") //localhost:8080/admin/registerAdmin
+	public String insertAdmin(Admin admin){
+		return "admin-insert";
+	}
+
+	@PostMapping("/admin/registerAdmin")
+	public String insertPatient(@Valid Admin admin, BindingResult result) {
+		System.out.println(admin);
+		
+		if(!result.hasErrors()) {
+			service.addAdmin(admin);
+			return "ok";}
+		else {
+			return "admin-insert";
+		}
+	}
 	
 }
