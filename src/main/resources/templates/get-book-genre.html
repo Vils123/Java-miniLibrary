@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<body xmlns:th="http://www.thymeleaf.org">
+
+
+
+<form action="#"th:action="@{/reader/showAllBooksByGenre}" method="post">
+	<td>Select the books Genre</td>
+	<select name = "type">
+		<option th:each="genre : ${type}" th:text="${genre.toString()}"></option>
+	</select>
+	<input type="submit" value="enter">
+	</form>
+</body>
+</html>

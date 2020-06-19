@@ -64,6 +64,9 @@ public class LibraryServiceImpl implements ILibraryService{
 		addNewBook(b4);
 		Book b5 = new Book("123456789112", "Harry potter and the java code", a1, new Date(115,0,1), Genre.COMEDY, Condition.POOR);
 		addNewBook(b5);
+		Book b6 = new Book("192929191991", "The hot Student", a1, new Date(114,0,1), Genre.ROMANCE, Condition.MINT);
+		addNewBook(b6);
+
 		
 		giveBookToReader(r1,"Harry potter and the java code");    
 		takeBookFromReader(r1, r1.getTakenBooks().get(0));
@@ -166,8 +169,7 @@ public class LibraryServiceImpl implements ILibraryService{
 			temp.setAuthors(book.getAuthors());
 			temp.setCondition(book.getCondition());
 			temp.setConditionCounter(book.getConditionCounter());
-			temp.setGenres(book.getGenres());
-			temp.setGenresString(book.getGenresString());
+			temp.setGenres(book.getGenre());
 			temp.setInLibrary(book.isInLibrary());
 			temp.setIsbn(book.getIsbn());
 			temp.setPublishDate(book.getPublishDate());
@@ -335,6 +337,16 @@ public class LibraryServiceImpl implements ILibraryService{
 	@Override
 	public ArrayList<Book> showAllBooksByTitle(String title) {
 		return bookRepo.findAllByTitle(title);
+	}
+
+	@Override
+	public ArrayList<Book> selectAllBooksByGenre(Genre genre) throws Exception {
+		ArrayList<Book> selectBook = bookRepo.findByGenre(genre);
+		if (selectBook != null) {
+			return selectBook;
+		} else {
+			throw new Exception("The Genre is wrong");
+		}
 	}
 
 

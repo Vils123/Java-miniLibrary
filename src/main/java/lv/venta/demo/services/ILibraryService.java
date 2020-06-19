@@ -32,6 +32,7 @@ public interface ILibraryService {
 	ArrayList<Reader> showAllReaders();
 	ArrayList<Admin> showAllAdmins();
 	ArrayList<Book> selectAllBooksByCondition(Condition condition) throws Exception;
+	ArrayList<Book> selectAllBooksByGenre(Genre genre) throws Exception;
 	
 	
 	

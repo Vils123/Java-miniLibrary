@@ -128,4 +128,20 @@ public class LibraryController {
 		}
 	}
 	
+	@GetMapping("/reader/showAllBooksByGenre")
+	public String showAllBooksByGenre(Model model){
+		model.addAttribute("type", Genre.values());
+		return "get-book-genre";
+	}
+
+
+@PostMapping("/reader/showAllBooksByGenre")
+	public String showAllBooksByGenrePost (Model model, @RequestParam(name = "type") Genre genre)
+			throws Exception {
+	model.addAttribute("inner", service.selectAllBooksByGenre(genre));
+	return "books-all-show"; }
+	
+
+
+
 }

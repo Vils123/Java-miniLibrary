@@ -54,11 +54,9 @@ public class Book implements Serializable{
 	
 	private Date publishDate;
 	
-	@Transient
-	private ArrayList<Genre> genres = new ArrayList<Genre>();
 	
 	@Column(name = "Genres")
-	private String genresString = "";
+	private Genre genre = Genre.COMEDY;
 	
 	@Column(name = "Condition")
 	private Condition condition = Condition.GOOD;
@@ -85,45 +83,6 @@ public class Book implements Serializable{
 	@Column(name = "In_Library")
 	private boolean inLibrary = true;
 	
-	public Book(String isbn, String title, Collection<Author> authors, Date publishDate, ArrayList<Genre> genres,
-			Condition condition) {
-		if(checkDate(publishDate))   //no time travelers
-		{
-			this.isbn = isbn;
-			this.title = title;
-			this.authors = authors;
-			this.publishDate = publishDate;
-			this.genres = genres;
-			if(condition != null && conditionCounter != 15)
-			{	
-				this.condition = condition;
-				startConditionCounter();
-			}
-			this.genresString = stringifyGenres();
-			//addBookToAuthors();
-		}
-	}
-	
-	public Book(String isbn, String title, Author author, Date publishDate, ArrayList<Genre> genres,
-			Condition condition) {
-		if(checkDate(publishDate))   //no time travelers
-		{
-			this.isbn = isbn;
-			this.title = title;
-			ArrayList<Author> a = new ArrayList<Author>();
-			a.add(author);
-			this.authors = a;
-			this.publishDate = publishDate;
-			this.genres = genres;
-			if(condition != null)
-			{	
-				this.condition = condition;
-				startConditionCounter();
-			}
-			this.genresString = stringifyGenres();
-			//addBookToAuthors();
-		}
-	}
 	
 	public Book(String isbn, String title, Collection<Author> authors, Date publishDate, Genre genre,
 			Condition condition) {
@@ -133,13 +92,12 @@ public class Book implements Serializable{
 			this.title = title;
 			this.authors = authors;
 			this.publishDate = publishDate;
-			this.genres.add(genre);
+			this.genre = genre;
 			if(condition != null)
 			{	
 				this.condition = condition;
 				startConditionCounter();
 			}
-			this.genresString = stringifyGenres();
 			//addBookToAuthors();
 		}
 	}
@@ -154,14 +112,13 @@ public class Book implements Serializable{
 			a.add(author);
 			this.authors = (Collection) a;
 			this.publishDate = publishDate;
-			this.genres.add(genre);
+			this.genre = genre;
 			
 			if(condition != null)
 			{	
 				this.condition = condition;
 				startConditionCounter();
 			}
-			this.genresString = stringifyGenres();
 			//addBookToAuthors();
 		}
 	}
@@ -176,10 +133,9 @@ public class Book implements Serializable{
 		this.condition = condition;
 	}
 	
-	public void setGenres(ArrayList<Genre> genres)
+	public void setGenres(Genre genre)
 	{
-		this.genres = genres;
-		this.genresString = stringifyGenres();
+		this.genre = genre;
 	}
 	
 	
@@ -193,16 +149,6 @@ public class Book implements Serializable{
 		return false;
 	}
 	
-	public boolean addGenre(Genre genre)
-	{
-		if(genres.contains(genre))
-		{
-			genres.add(genre);
-			this.genresString = stringifyGenres();
-			return true;
-		}
-		return false;
-	}
 	
 	public boolean decreaseCondition()
 	{
@@ -295,15 +241,6 @@ public class Book implements Serializable{
 		}
 	}
 	
-	private String stringifyGenres()
-	{
-		String gen = "";
-		for(Genre g : genres)
-		{
-			gen += g;
-		}
-		return gen;
-	}
 	
 	public String toString()
 	{
@@ -315,6 +252,6 @@ public class Book implements Serializable{
 		autori = autori.substring(0, autori.length()-2);
 		
 			
-		return title + "\nWritten By: " + autori +  "\nGenre: " + genres + "\nCondition: " + condition; 
+		return title + "\nWritten By: " + autori +  "\nGenre: " + genre + "\nCondition: " + condition; 
 	}
 }
