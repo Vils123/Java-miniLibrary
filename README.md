@@ -1,2 +1,2 @@
 # Java-miniLibrary
-Java thing by Vlad, Karlis and Ricards
+Java library system made by Kārlis,Ričards and Vladislavs
