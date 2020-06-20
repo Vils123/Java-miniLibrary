@@ -1,0 +1,28 @@
+<html>
+<body xmlns:th="http://www.thymeleaf.org"
+style="background-color:powderblue;">
+
+        <form action="#" th:action="@{/home}" th:object="${reader}"
+                method="post">
+
+        <table style="border:2px solid rgb(0, 0, 0);margin-left:auto;margin-right:auto;background-color: rgb(255, 255, 255);">
+            <td>Please input your admin logins </td>
+            <tr>
+                <td>Username</td>
+                <td><input type="text" th:field="*{username}"></td>
+                <td th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></td>
+        </tr>
+
+        <tr>
+                <td>Password</td>
+                <td><input type="text" th:field="*{password}"></td>
+                <td th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></td>
+        </tr>
+    </table>
+    <div style="text-align:center">
+            <input type="submit">
+    </div>
+    </form>
+</body>
+
+</html>   

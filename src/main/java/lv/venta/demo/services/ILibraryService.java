@@ -25,6 +25,8 @@ public interface ILibraryService {
 	boolean updateAuthor(Author author);
 	boolean deleteReader(Reader reader);
 	boolean deleteAuthor(Author author);
+	boolean authoriseAdmin(Admin admin);
+	boolean authoriseReader(Reader reader);
 
 	Reader selectReaderByUsername(String username);
 	ArrayList<Book> showAllBooksByTitle(String  title);

@@ -117,7 +117,7 @@ public class LibraryController {
 	}
 
 	@PostMapping("/admin/registerAdmin")
-	public String insertPatient(@Valid Admin admin, BindingResult result) {
+	public String insertAdmin(@Valid Admin admin, BindingResult result) {
 		System.out.println(admin);
 		
 		if(!result.hasErrors()) {
@@ -152,6 +152,27 @@ public class LibraryController {
 		model.addAttribute("inner", service.showAllAuthors());
 		return "author-all-show";
 	}
+
+
+@GetMapping("/home") //localhost:8080/home
+	public String authoriseAdmin(Admin admin, Reader reader){
+		return "home.html";}
+
+@PostMapping("/home")
+		public String authoriseAdmin(@Valid Admin admin,@Valid Reader reader, BindingResult result){
+			System.out.println(admin.getUsername() + " " + admin.getPassword());
+			if(service.authoriseAdmin(admin)){
+				return "admin-page";
+			}
+			else if(service.authoriseReader(reader)){
+				return "reader-page";
+			}
+			else{
+				return "redirect:/home";
+			}
+				
+			
+		}
 
 
 }

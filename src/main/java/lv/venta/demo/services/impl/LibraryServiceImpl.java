@@ -33,15 +33,16 @@ public class LibraryServiceImpl implements ILibraryService{
 	@Override
 	public void inputdata() {
 		Admin admin1 = new Admin("Dat", "Boss", new Date(66,06,06), "boss", "password");
+		Admin admin2 = new Admin("Bossiks","Tossiks",new Date(98,07,01), "smuks","koks");
 		
 		adminRepo.save(admin1);
+		adminRepo.save(admin2);
 		
 		Reader r1 = new Reader("Janis", "Berzins", new Date(100,05,05), "janchuks123", "parole123");
 		Reader r2 = new Reader("Richards", "Everts", new Date(98,05,05), "ricijs111", "parole123");
 		Reader r3 = new Reader("Karlis", "Sermuksitis", new Date(99,02,05), "bilis333", "parole123");
 		Reader r4 = new Reader("Vladislavs", "Sivakovs", new Date(99,07,7), "vvssss123333", "parole123");
 		
-		readerRepo.save(admin1);
 		readerRepo.save(r2);
 		readerRepo.save(r3);
 		readerRepo.save(r4);
@@ -146,8 +147,7 @@ public class LibraryServiceImpl implements ILibraryService{
 	public boolean addAdmin(Admin admin) {
 		if(adminRepo.existsByUsername(admin.getUsername()))
 			return false;
-		adminRepo.save(admin);
-		readerRepo.save(admin);          //jo admins ir arii reader
+		adminRepo.save(admin);         
 		return true;
 	}
 
@@ -204,15 +204,11 @@ public class LibraryServiceImpl implements ILibraryService{
 		Admin temp = adminRepo.findByUsername(admin.getUsername());
 		if(temp == null)
 			return false;
-		temp.setAllBooks(admin.getAllBooks());
-		temp.setCurrentBooks(admin.getCurrentBooks());
 		temp.setDateOfBirth(admin.getDateOfBirth());
 		temp.setName(admin.getName());
 		temp.setSurname(admin.getSurname());
 		temp.setPassword(admin.getPassword());
-		temp.setTakenBooks(admin.getTakenBooks());
 		adminRepo.save(temp);
-		readerRepo.save(temp);
 		return true;
 	}
 
@@ -352,6 +348,28 @@ public class LibraryServiceImpl implements ILibraryService{
 	@Override
 	public ArrayList<Author> showAllAuthors() {
 		return (ArrayList<Author>) authorRepo.findAll();
+	}
+
+	@Override
+	public boolean authoriseAdmin(Admin admin) {
+		if(adminRepo.existsByUsername(admin.getUsername()) && adminRepo.existsByPassword(admin.getPassword())){
+			return true;
+		}
+		else{
+			return false;
+		}
+		
+	}
+
+	@Override
+	public boolean authoriseReader(Reader reader) {
+		if(readerRepo.existsByUsername(reader.getUsername()) && readerRepo.existsByPassword(reader.getPassword())){
+			return true;
+		}
+		else{
+			return false;
+		}
+		
 	}
 
 
