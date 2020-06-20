@@ -4,7 +4,10 @@ style="background-color:powderblue;">
 <body >
 <form action="#"th:action="@{/admin/readerByUsername}" th:object="${reader}" method="post">
 	<table style="border:2px solid rgb(0, 0, 0);margin-left:auto;margin-right:auto;background-color: rgb(255, 255, 255);">
-    <td> Please input the username </td> 
+    <b>
+	<p style=text-align:center> Please write the username
+	</b> 
+	</p>
 	<tr>
 	<td><input type="text" th:field="*{username}"> </td>
 	<td th:if="${#fields.hasErrors('username')}"> The name is not right </td>	
@@ -16,3 +19,4 @@ style="background-color:powderblue;">
 	</form>
 </body>
 </html>
+

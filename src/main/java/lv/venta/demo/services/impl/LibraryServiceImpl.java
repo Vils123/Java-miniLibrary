@@ -34,9 +34,11 @@ public class LibraryServiceImpl implements ILibraryService{
 	public void inputdata() {
 		Admin admin1 = new Admin("Dat", "Boss", new Date(66,06,06), "boss", "password");
 		Admin admin2 = new Admin("Bossiks","Tossiks",new Date(98,07,01), "smuks","koks");
+		Admin admin3 = new Admin("Janka","Panka",new Date(99,07,01), "Janka","paks");
 		
 		adminRepo.save(admin1);
 		adminRepo.save(admin2);
+		adminRepo.save(admin3);
 		
 		Reader r1 = new Reader("Janis", "Berzins", new Date(100,05,05), "janchuks123", "parole123");
 		Reader r2 = new Reader("Richards", "Everts", new Date(98,05,05), "ricijs111", "parole123");
@@ -49,31 +51,29 @@ public class LibraryServiceImpl implements ILibraryService{
 		readerRepo.save(r1);
 		
 		Author a1 = new Author("Barack", "Obama", new Date(60, 03,03), "not USA", "He was a president aswell", "He writing facts", Genre.COMEDY, null);
+		Author a2 = new Author("Egata", "Bristi", new Date(10, 05,11), "America", "Great author", "Writes detective novels", Genre.DETECTIVE, new Date(90,04,9));
+		Author a3 = new Author("Verners", "Smits", new Date(98, 05,10), "Latvia", "Coder", "He do be coding", Genre.MYSTERY, null);
 		
 		authorRepo.save(a1);
+		authorRepo.save(a2);
+		authorRepo.save(a3);
 		
 		
 		
 
 		Book b1 = new Book("123456789112", "Harry potter and the java code", a1, new Date(115,0,1), Genre.COMEDY, Condition.POOR);
 		addNewBook(b1);
-		Book b2 = new Book("123456789112", "Harry potter and the java code", a1, new Date(115,0,1), Genre.COMEDY, Condition.GOOD);
+		Book b2 = new Book("191919191919", "The master of code", a3, new Date(115,0,1), Genre.COMEDY, Condition.GOOD);
 		addNewBook(b2);
-		Book b3 = new Book("123456789112", "Harry potter and the java code", a1, new Date(115,0,1), Genre.COMEDY, Condition.GOOD);
+		Book b3 = new Book("192929191991", "The lost Student", a2, new Date(114,0,1), Genre.DETECTIVE, Condition.MINT);
 		addNewBook(b3);
-		Book b4 = new Book("123456789112", "Harry potter and the java code", a1, new Date(115,0,1), Genre.COMEDY, Condition.GOOD);
-		addNewBook(b4);
-		Book b5 = new Book("123456789112", "Harry potter and the java code", a1, new Date(115,0,1), Genre.COMEDY, Condition.POOR);
-		addNewBook(b5);
-		Book b6 = new Book("192929191991", "The hot Student", a1, new Date(114,0,1), Genre.ROMANCE, Condition.MINT);
-		addNewBook(b6);
 
 		
 		giveBookToReader(r1,"Harry potter and the java code");    
 		takeBookFromReader(r1, r1.getTakenBooks().get(0));
 
-		giveBookToReader(r3, "Harry potter and the java code" );
-		giveBookToReader(r2, "Harry potter and the java code" );
+		giveBookToReader(r3, "The lost Student" );
+		giveBookToReader(r2, "The master of code" );
 		
 		
 	}
