@@ -9,7 +9,11 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.Transient;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,20 +24,24 @@ import lombok.Setter;
 @Entity(name = "ReaderTable")
 public class Reader extends Person implements Serializable{
 
-
     @Column(name = "Username")
     private String username;
-
 
     @Column(name = "Password")
     private String password;
 
-
 	@OneToMany(mappedBy = "reader")
 	private Collection<Book> currentBooks;
-	
-	private boolean blacklisted = false;
-	
+
+	///for review 
+	private boolean blacklisted = false; 
+	///for review
+	@Temporal(TemporalType.DATE)
+	@DateTimeFormat(pattern = "dd-mm-yyyy")
+	private Date blacklistDate = null;
+	///blacklisting incase if admin is looking through reviews
+	//and spot person with bad language use in many of reviews
+
     @Transient
 	private static ArrayList<String> takenUsernames = new ArrayList<String>();
 	
