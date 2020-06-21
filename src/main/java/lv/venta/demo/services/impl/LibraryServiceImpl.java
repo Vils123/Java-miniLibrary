@@ -361,7 +361,7 @@ public class LibraryServiceImpl implements ILibraryService {
 
 	@Override
 	public Reader giveReviewToBook(Book book, Review review) {
-		review.
+		
 		return null;
 	}
 
