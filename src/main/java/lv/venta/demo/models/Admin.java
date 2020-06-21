@@ -15,15 +15,20 @@ import lombok.Setter;
 @Table(name = "AdminTable")
 @Getter @Setter @NoArgsConstructor
 public class Admin extends Person{
+
+
 	@Column(name = "Username")
     private String username;
+
 
     @Column(name = "Password")
 	private String password;
 	
+
 	@Transient
     private static ArrayList<String> takenUsernames = new ArrayList<String>();
 	
+
 	public Admin(String name, String surname, Date date, String username, String password){
 		super(name,surname,date);
 		
@@ -38,9 +43,11 @@ public class Admin extends Person{
     }
 
 	
-	
 	public String toString()
 	{
 		return "Admin " + super.getName() + " " + super.getSurname(); 
 	}
+
+
+	//
 }

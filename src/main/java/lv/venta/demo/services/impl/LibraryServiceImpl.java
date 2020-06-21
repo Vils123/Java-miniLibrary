@@ -17,21 +17,26 @@ import lv.venta.demo.repositories.IAuthorRepo;
 import lv.venta.demo.repositories.IBookRepo;
 import lv.venta.demo.repositories.IReaderRepo;
 import lv.venta.demo.services.ILibraryService;
+
 @Service
 public class LibraryServiceImpl implements ILibraryService{
 
 	@Autowired
 	IBookRepo bookRepo;
+
 	@Autowired
 	IReaderRepo readerRepo;
+
 	@Autowired
 	IAdminRepo adminRepo;
+
 	@Autowired
 	IAuthorRepo authorRepo;
 	
 	
 	@Override
 	public void inputdata() {
+		
 		Admin admin1 = new Admin("Dat", "Boss", new Date(66,06,06), "boss", "password");
 		Admin admin2 = new Admin("Bossiks","Tossiks",new Date(98,07,01), "smuks","koks");
 		Admin admin3 = new Admin("Janka","Panka",new Date(99,07,01), "Janka","paks");
@@ -75,7 +80,6 @@ public class LibraryServiceImpl implements ILibraryService{
 		giveBookToReader(r3, "The lost Student" );
 		giveBookToReader(r2, "The master of code" );
 		
-		
 	}
 
 	@Override
@@ -88,6 +92,7 @@ public class LibraryServiceImpl implements ILibraryService{
 		return false;
 	}
 
+
 	@Override
 	public boolean giveBookById(Reader reader, int id) {
 		Book temp = bookRepo.findById(id);
@@ -95,6 +100,7 @@ public class LibraryServiceImpl implements ILibraryService{
 			return false;
 		return giveBookToReader(reader, temp.getTitle());
 	}
+
 
 	@Override
 	public boolean returnBookById(Reader reader,  int id) {
@@ -109,6 +115,7 @@ public class LibraryServiceImpl implements ILibraryService{
 		
 	}
 
+
 	@Override
 	public boolean deleteAllBooksFromLibraryByTitle(String title) {
 		if(!bookRepo.existsByTitle(title))                     //ja saakumaa nemaz nav tads title, tad false
@@ -121,6 +128,7 @@ public class LibraryServiceImpl implements ILibraryService{
 		}
 		return true;
 	}
+
 
 	@Override
 	public boolean deleteAllBooksFromLibraryByIsbn(String isbn) {
@@ -135,6 +143,7 @@ public class LibraryServiceImpl implements ILibraryService{
 		return true;
 	}
 
+
 	@Override
 	public boolean addReader(Reader reader) {
 		if(readerRepo.existsByUsername(reader.getUsername()))  //var arii peec id
@@ -143,6 +152,7 @@ public class LibraryServiceImpl implements ILibraryService{
 		return true;
 	}
 
+
 	@Override
 	public boolean addAdmin(Admin admin) {
 		if(adminRepo.existsByUsername(admin.getUsername()))
@@ -150,6 +160,7 @@ public class LibraryServiceImpl implements ILibraryService{
 		adminRepo.save(admin);         
 		return true;
 	}
+
 
 	@Override
 	public boolean addAuthor(Author author) {
@@ -182,6 +193,7 @@ public class LibraryServiceImpl implements ILibraryService{
 		}
 		return false;
 	}
+
 	
 	@Override
 	public boolean updateReader(Reader reader) {
@@ -199,6 +211,7 @@ public class LibraryServiceImpl implements ILibraryService{
 		return true;
 	}
 
+
 	@Override
 	public boolean updateAdmin(Admin admin) {
 		Admin temp = adminRepo.findByUsername(admin.getUsername());
@@ -211,6 +224,7 @@ public class LibraryServiceImpl implements ILibraryService{
 		adminRepo.save(temp);
 		return true;
 	}
+
 
 	@Override
 	public boolean updateAuthor(Author author) {
@@ -226,8 +240,8 @@ public class LibraryServiceImpl implements ILibraryService{
 		temp.setWrittenBooks(author.getWrittenBooks());
 		authorRepo.save(temp);
 		return true;
-
 	}
+
 
 	@Override
 	public boolean deleteReader(Reader reader) {
@@ -253,25 +267,23 @@ public class LibraryServiceImpl implements ILibraryService{
 			authorRepo.delete(temp);
 			return true;
 		}
-		
 	}
+
 
 	@Override
 	public ArrayList<Book> showAllBooks() {
 		return (ArrayList<Book>) bookRepo.findAll();
-		
 	}
 
 	@Override
 	public ArrayList<Reader> showAllReaders() {
 		return (ArrayList<Reader>)readerRepo.findAll();
-		
 	}
+
 
 	@Override
 	public ArrayList<Admin> showAllAdmins() {
 		return (ArrayList<Admin>) adminRepo.findAll();
-		
 	}
 
 	@Override
@@ -287,9 +299,7 @@ public class LibraryServiceImpl implements ILibraryService{
 			}
 		}
 		System.out.println(temp.getTitle());
-		if(temp == null)
-			return false;      //ja neatrod gramatu talak neiet
-		if(reader.takeBook(temp))    //ja readeram ir atlauts nemt gramatu
+		if (reader.takeBook(temp)) // ja readeram ir atlauts nemt gramatu
 		{
 			System.out.println("giving book to " + reader);
 			updateBook(temp);
@@ -297,6 +307,7 @@ public class LibraryServiceImpl implements ILibraryService{
 		}
 		return false;
 	}
+
 
 	@Override
 	public boolean takeBookFromReader(Reader reader, Book book) {  
@@ -314,7 +325,6 @@ public class LibraryServiceImpl implements ILibraryService{
 	}
 
 
-
 	@Override
 	public ArrayList<Book> selectAllBooksByCondition(Condition condition) throws Exception {
 		ArrayList<Book> selectBook = bookRepo.findByCondition(condition);
@@ -325,15 +335,18 @@ public class LibraryServiceImpl implements ILibraryService{
 		}
 	}
 
+
 	@Override
 	public Reader selectReaderByUsername(String username) {
 		return readerRepo.findByUsername(username);
 	}
 
+
 	@Override
 	public ArrayList<Book> showAllBooksByTitle(String title) {
 		return bookRepo.findAllByTitle(title);
 	}
+
 
 	@Override
 	public ArrayList<Book> selectAllBooksByGenre(Genre genre) throws Exception {
@@ -345,10 +358,12 @@ public class LibraryServiceImpl implements ILibraryService{
 		}
 	}
 
+
 	@Override
 	public ArrayList<Author> showAllAuthors() {
 		return (ArrayList<Author>) authorRepo.findAll();
 	}
+
 
 	@Override
 	public boolean authoriseAdmin(Admin admin) {
@@ -360,6 +375,7 @@ public class LibraryServiceImpl implements ILibraryService{
 		}
 		
 	}
+	
 
 	@Override
 	public boolean authoriseReader(Reader reader) {

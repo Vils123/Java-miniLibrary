@@ -34,49 +34,58 @@ import lv.venta.demo.enums.Genre;
 @Table(name = "BookTable")
 @Getter @Setter @NoArgsConstructor
 public class Book implements Serializable{
+
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "Book_Id")
 	@Setter(value=AccessLevel.PRIVATE)
 	private int id;
 	
+
 	@Size(min=10, max=13)
 	@Pattern(regexp="[0-9A-Z\\s]+$")
 	@Column(name = "ISBN") 
 	private String isbn;  
 	
+
 	@Column(name = "Title")
 	private String title;
 	
+
 	@Column(name = "Published")
 	@Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern = "yyyy")  // i think just year is enough?
-	
 	private Date publishDate;
 	
 	
 	@Column(name = "Genres")
 	private Genre genre = Genre.COMEDY;
 	
+
 	@Column(name = "Condition")
 	private Condition condition = Condition.GOOD;
 	@Transient
 	private int conditionCounter = 15;
 	
+
 	@Column(name = "Date_when_taken")
 	@Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date takenDate = null;
 	
+
 	@Column(name = "Return_by")
 	@Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date returnDate = null;
 	
+
 	@ManyToOne
 	@JoinColumn(name = "Reader_Id")
 	private Reader reader;
 	
+
 	@ManyToMany
 	@JoinTable(name = "Book_Author", joinColumns =@JoinColumn(name = "B_Id"), inverseJoinColumns =@JoinColumn(name = "Id"))
 	private Collection<Author> authors;
@@ -101,6 +110,7 @@ public class Book implements Serializable{
 			//addBookToAuthors();
 		}
 	}
+
 	
 	public Book(String isbn, String title, Author author, Date publishDate, Genre genre,
 			Condition condition) {
@@ -122,6 +132,7 @@ public class Book implements Serializable{
 			//addBookToAuthors();
 		}
 	}
+
 	
 	public void setPublishDate(Date date)
 	{
@@ -163,7 +174,6 @@ public class Book implements Serializable{
 	}
 	
 	
-	
 	private boolean checkDate(Date date)
 	{
 		Date today = new Date();
@@ -181,17 +191,20 @@ public class Book implements Serializable{
 			conditionCounter = 5;
 	}
 	
+
 	public void addTakenDate()
 	{
 		takenDate = new Date();
 	}
 	
+
 	public void addReturnDate(Date date)
 	{
 		if(date.after(takenDate))
 			returnDate = date;
 	}
 	
+
 	public boolean returnBook()   //graamata ir atpakal biblioteekaa - tai zuud condition,datumi,reader
 	{
 		if(!inLibrary)
@@ -207,6 +220,7 @@ public class Book implements Serializable{
 		return false;
 	}
 	
+
 	public boolean giveBook(Reader reader)
 	{
 		if(inLibrary)
@@ -254,4 +268,7 @@ public class Book implements Serializable{
 			
 		return title + "\nWritten By: " + autori +  "\nGenre: " + genre + "\nCondition: " + condition; 
 	}
+
+
+	//
 }

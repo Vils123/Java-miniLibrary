@@ -7,7 +7,6 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Lob;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -21,21 +20,28 @@ import lombok.Setter;
 @Entity(name = "ReaderTable")
 public class Reader extends Person implements Serializable{
 
+
     @Column(name = "Username")
     private String username;
+
 
     @Column(name = "Password")
     private String password;
 
+
 	@OneToMany(mappedBy = "reader")
     private Collection<Book> currentBooks;
 	
+
     @Transient
-    private static ArrayList<String> takenUsernames = new ArrayList<String>();
+	private static ArrayList<String> takenUsernames = new ArrayList<String>();
+	
+
     @Transient
-    private ArrayList<String> allBooks = new ArrayList<String>();
+	private ArrayList<String> allBooks = new ArrayList<String>();
+	
+
     @Transient
-    
 	private ArrayList<Book> takenBooks = new ArrayList<Book>();
 	
 	
@@ -46,11 +52,10 @@ public class Reader extends Person implements Serializable{
     		this.username = username;
     		this.password = password;
     		takenUsernames.add(username);
-    	}
-    	
-
+		}
     }
-    
+	
+	
     public boolean takeBook(Book book)
     {
     	if(takenBooks.size() > 2)     //max 3 books var reizee njemt
@@ -62,7 +67,8 @@ public class Reader extends Person implements Serializable{
     		return true;
     	}
     	return false;
-    }
+	}
+	
     
     public boolean returnBook(Book book)
     {
@@ -79,21 +85,26 @@ public class Reader extends Person implements Serializable{
     public Collection<Book> showCurrentBooks ()
     {
     	return currentBooks;
-    }
+	}
+	
     
     public ArrayList<String> showAllBooks(){
     	return allBooks;
-    }
+	}
+	
 
     public ArrayList<Book> getTakenBooks()
     {
     	return takenBooks;
-    }
+	}
+	
     
 	@Override
 	public String toString() {
 		return "Reader " + super.toString() + "\nCurrently taken books:" + takenBooks + "\nBook History: "+ allBooks; 
 	}
+
+	
     }
 
 

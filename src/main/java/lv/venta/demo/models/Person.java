@@ -9,8 +9,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
-import javax.persistence.MappedSuperclass;
-import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -27,26 +25,32 @@ import javax.validation.constraints.Size;
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class Person {
+
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Setter(value=AccessLevel.PRIVATE)
 	@Column(name = "Id")
 	private int id;
+
 	
 	@Column(name="Name")
 	@Size(min=3, max=30)
 	@Pattern(regexp="[a-zA-Z\\s]+$")
 	private String name;
+
 	
 	@Column(name="Surname")
 	@Size(min=3, max=30)
 	@Pattern(regexp="[a-zA-Z\\s]+$")
 	private String surname;
+
 	
 	@Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern = "yyyy-mm-dd")
 	private Date dateOfBirth;
 	
+
 	public Person(String name, String surname, Date date)
 	{
 		if(date.before(new Date()))      //if the person is born
@@ -57,16 +61,19 @@ public class Person {
 		}
 		
 	}
+
 	
 	public void setName(String name)
 	{
 		this.name = Verification.verifyName(name);
 	}
 
+
 	public void setSurname(String surname)
 	{
 		this.surname = Verification.verifyName(surname);
 	}
+
 	
 	public void setDateOfBirth(Date date)
 	{
@@ -76,8 +83,12 @@ public class Person {
 		}
 	}
 	
+
 	public String toString()              //no date here for now, maybe later
 	{
 		return name + " " + surname;
 	}
+
+
+	//
 }
