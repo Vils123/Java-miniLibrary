@@ -1,6 +1,5 @@
 package lv.venta.demo.models;
 
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -19,6 +18,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
@@ -35,6 +35,9 @@ import lv.venta.demo.enums.Genre;
 @Table(name = "BookTable")
 @Getter @Setter @NoArgsConstructor
 public class Book implements Serializable{
+
+	ArrayList<Book> allBooksInLibrary = new ArrayList<Book>();///
+	// for adding them fro mconstructor and storing them after construction
 
 	@ManyToOne 
 	@JoinColumn(name = "Id_r")
@@ -83,6 +86,13 @@ public class Book implements Serializable{
 	@Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date returnDate = null;
+
+
+	@Min(0)
+	int book_count; 
+	// can be 0 at first 
+	// can be changed 
+	// one of parametres in constructor ... ? how to for loop a constructor
 	
 
 	@ManyToOne
@@ -97,7 +107,40 @@ public class Book implements Serializable{
 	private boolean inLibrary = true;
 	
 	
+	//constructor for one author
+	public Book(String isbn, String title, Author author, Date publishDate, Genre genre,
+			Condition condition,int book_count) {
+		Book temp = new Book();
+		if (checkDate(publishDate)) // no time travelers
+		{
+			if(book_count>=0){
+				for (int i = 0; i < book_count; i++) {
+					temp = new Book(isbn, title, author, publishDate, genre, condition);
+					allBooksInLibrary.add(temp);
+				}
+			}
+			// addBookToAuthors();
+		}
+	}
+
 	public Book(String isbn, String title, Collection<Author> authors, Date publishDate, Genre genre,
+	 Condition condition, int book_count ) {
+		Book temp = new Book();
+		if (checkDate(publishDate)) // no time travelers
+		{
+			if (book_count >= 0) {
+				for (int i = 0; i < book_count; i++) {
+					temp = new Book(isbn, title, authors, publishDate, genre, condition);
+					allBooksInLibrary.add(temp);
+				}
+			}
+			// addBookToAuthors();
+		}
+	}
+
+
+	// made it private because there is noo need of single book adding used in loop constructor
+	private Book(String isbn, String title, Collection<Author> authors, Date publishDate, Genre genre,
 			Condition condition) {
 		if(checkDate(publishDate))   //no time travelers
 		{
@@ -116,7 +159,8 @@ public class Book implements Serializable{
 	}
 
 	
-	public Book(String isbn, String title, Author author, Date publishDate, Genre genre,
+	//made it private because there is noo need of single book adding used in loop constructor 
+	private Book(String isbn, String title, Author author, Date publishDate, Genre genre,
 			Condition condition) {
 		if(checkDate(publishDate))   //no time travelers
 		{

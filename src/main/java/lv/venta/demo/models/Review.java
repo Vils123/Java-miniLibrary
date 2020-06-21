@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -30,9 +31,11 @@ import lombok.Setter;
 @Entity(name = "All reviews")
 public class Review {
 
-    @OneToMany(mappedBy = "review") 
-    private Collection<Book> visasGramatas;
+    // @OneToMany(mappedBy = "review")  
+    // private Collection<Book> allBooks;
 
+    // @OneToOne
+    
 
     ArrayList <Review> allReviewsByUsers = new ArrayList<>();
 
@@ -78,6 +81,8 @@ public class Review {
         setRating3(r3);
         setThoughts(thoughts);
         setCommentDate(new Date());
+
+        //make repo ad in repo to allreviews
         
     }
 

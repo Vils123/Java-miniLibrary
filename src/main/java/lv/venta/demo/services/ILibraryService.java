@@ -96,7 +96,7 @@ public interface ILibraryService {
 	//[ALL]
 	ArrayList<Reader> showAllBlacklistedReaders();
 	//[ADMIN]
-	Boolean addToBlackListrById(int id);
+	Boolean addToBlackListById(int id);
 	// [ADMIN]
 	Boolean removeFromBlackListByID(int id);
 	// [ADMIN]
