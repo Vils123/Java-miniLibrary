@@ -39,11 +39,15 @@ public class Reader extends Person implements Serializable{
 
     @Transient
 	private ArrayList<String> allBooks = new ArrayList<String>();
-	
+	//books that are returned and anre in reading process(taken from library)
 
     @Transient
 	private ArrayList<Book> takenBooks = new ArrayList<Book>();
-	
+	//books taken / in reading process
+
+	@Transient
+	private ArrayList<Book> booksReadAndReturned = new ArrayList<Book>();
+	//used so user can make review only on books that have been read and returned 
 	
     public Reader(String name, String surname, Date date, String username, String password){
     	super(name,surname,date);

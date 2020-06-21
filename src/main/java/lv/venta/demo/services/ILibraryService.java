@@ -72,10 +72,10 @@ public interface ILibraryService {
 	// [USER], [ADMIN]
 
 	boolean giveBookToReader(Reader reader, String title);
-	// 2nd. give book
+	// 2nd. give book ... IS THIS NEEDED?
 	// 1st. line 19 gives byID ... 2nd line 74 gives byTitle
 	boolean takeBookFromReader(Reader reader, Book book);
-	// 2nd. take book
+	// 2nd. take book  ...  IS THIS NEEDED?
 	// 1st. line 22 takes byID ... 2nd line 77 gives instance
 
 }

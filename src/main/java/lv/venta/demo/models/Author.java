@@ -26,7 +26,7 @@ import lv.venta.demo.enums.Genre;
 @Entity(name="Author_information")
 public class Author extends Person implements Serializable{
 
-
+	
 	@Column(name="Country_Of_Origin")
 	@Size(min=3, max=30)
 	@Pattern(regexp="[a-zA-Z\\s]+$")
