@@ -10,7 +10,9 @@ import lv.venta.demo.models.Book;
 import lv.venta.demo.models.Reader;
 
 public interface ILibraryService {
+
 	void inputdata();
+	
 	boolean addNewBook(Book book);
 	boolean giveBookById(Reader reader, int id);
 	boolean returnBookById(Reader reader, int id);
@@ -25,10 +27,11 @@ public interface ILibraryService {
 	boolean updateAuthor(Author author);
 	boolean deleteReader(Reader reader);
 	boolean deleteAuthor(Author author);
-	boolean authoriseAdmin(Admin admin);
-	boolean authoriseReader(Reader reader);
 
-	Reader selectReaderByUsername(String username);
+	boolean authoriseAdmin(Admin admin);//
+	boolean authoriseReader(Reader reader);//
+
+	Reader selectReaderByUsername(String username);//
 	ArrayList<Book> showAllBooksByTitle(String  title);
 	ArrayList<Book> showAllBooks();  // izmainiju so, jo mums vajag no KUAT KA izdabut to info
 	ArrayList<Reader> showAllReaders();
@@ -36,8 +39,6 @@ public interface ILibraryService {
 	ArrayList<Author> showAllAuthors();
 	ArrayList<Book> selectAllBooksByCondition(Condition condition) throws Exception;
 	ArrayList<Book> selectAllBooksByGenre(Genre genre) throws Exception;
-	
-	
 	
 	boolean giveBookToReader(Reader reader, String title);
 	boolean takeBookFromReader(Reader reader, Book book);

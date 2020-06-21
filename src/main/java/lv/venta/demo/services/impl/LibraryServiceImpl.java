@@ -82,6 +82,8 @@ public class LibraryServiceImpl implements ILibraryService{
 		
 	}
 
+
+
 	@Override
 	public boolean addNewBook(Book book) {
 		if(book !=null)
@@ -92,7 +94,6 @@ public class LibraryServiceImpl implements ILibraryService{
 		return false;
 	}
 
-
 	@Override
 	public boolean giveBookById(Reader reader, int id) {
 		Book temp = bookRepo.findById(id);
@@ -100,7 +101,6 @@ public class LibraryServiceImpl implements ILibraryService{
 			return false;
 		return giveBookToReader(reader, temp.getTitle());
 	}
-
 
 	@Override
 	public boolean returnBookById(Reader reader,  int id) {
@@ -115,7 +115,6 @@ public class LibraryServiceImpl implements ILibraryService{
 		
 	}
 
-
 	@Override
 	public boolean deleteAllBooksFromLibraryByTitle(String title) {
 		if(!bookRepo.existsByTitle(title))                     //ja saakumaa nemaz nav tads title, tad false
@@ -128,7 +127,6 @@ public class LibraryServiceImpl implements ILibraryService{
 		}
 		return true;
 	}
-
 
 	@Override
 	public boolean deleteAllBooksFromLibraryByIsbn(String isbn) {
@@ -143,7 +141,6 @@ public class LibraryServiceImpl implements ILibraryService{
 		return true;
 	}
 
-
 	@Override
 	public boolean addReader(Reader reader) {
 		if(readerRepo.existsByUsername(reader.getUsername()))  //var arii peec id
@@ -151,7 +148,6 @@ public class LibraryServiceImpl implements ILibraryService{
 		readerRepo.save(reader);
 		return true;
 	}
-
 
 	@Override
 	public boolean addAdmin(Admin admin) {
@@ -161,7 +157,6 @@ public class LibraryServiceImpl implements ILibraryService{
 		return true;
 	}
 
-
 	@Override
 	public boolean addAuthor(Author author) {
 		if(authorRepo.existsById(author.getId()))
@@ -170,7 +165,6 @@ public class LibraryServiceImpl implements ILibraryService{
 		return true;
 	}
 
-	
 	@Override
 	public boolean updateBook(Book book)
 	{
@@ -194,7 +188,6 @@ public class LibraryServiceImpl implements ILibraryService{
 		return false;
 	}
 
-	
 	@Override
 	public boolean updateReader(Reader reader) {
 		Reader temp = readerRepo.findByUsername(reader.getUsername());
@@ -211,7 +204,6 @@ public class LibraryServiceImpl implements ILibraryService{
 		return true;
 	}
 
-
 	@Override
 	public boolean updateAdmin(Admin admin) {
 		Admin temp = adminRepo.findByUsername(admin.getUsername());
@@ -224,7 +216,6 @@ public class LibraryServiceImpl implements ILibraryService{
 		adminRepo.save(temp);
 		return true;
 	}
-
 
 	@Override
 	public boolean updateAuthor(Author author) {
@@ -242,7 +233,6 @@ public class LibraryServiceImpl implements ILibraryService{
 		return true;
 	}
 
-
 	@Override
 	public boolean deleteReader(Reader reader) {
 		Reader temp = readerRepo.findByUsername(reader.getUsername());
@@ -254,7 +244,6 @@ public class LibraryServiceImpl implements ILibraryService{
 			return true;
 		}
 	}
-
 
 	@Override
 	public boolean deleteAuthor(Author author) {
@@ -270,6 +259,39 @@ public class LibraryServiceImpl implements ILibraryService{
 	}
 
 
+
+	@Override
+	public boolean authoriseAdmin(Admin admin) {
+		if (adminRepo.existsByUsername(admin.getUsername()) && adminRepo.existsByPassword(admin.getPassword())) {
+			return true;
+		} else {
+			return false;
+		}
+
+	}
+
+	@Override
+	public boolean authoriseReader(Reader reader) {
+		if (readerRepo.existsByUsername(reader.getUsername()) && readerRepo.existsByPassword(reader.getPassword())) {
+			return true;
+		} else {
+			return false;
+		}
+
+	}
+
+
+
+	@Override
+	public Reader selectReaderByUsername(String username) {
+		return readerRepo.findByUsername(username);
+	}
+
+	@Override
+	public ArrayList<Book> showAllBooksByTitle(String title) {
+		return bookRepo.findAllByTitle(title);
+	}
+
 	@Override
 	public ArrayList<Book> showAllBooks() {
 		return (ArrayList<Book>) bookRepo.findAll();
@@ -280,11 +302,37 @@ public class LibraryServiceImpl implements ILibraryService{
 		return (ArrayList<Reader>)readerRepo.findAll();
 	}
 
-
 	@Override
 	public ArrayList<Admin> showAllAdmins() {
 		return (ArrayList<Admin>) adminRepo.findAll();
 	}
+
+	@Override
+	public ArrayList<Author> showAllAuthors() {
+		return (ArrayList<Author>) authorRepo.findAll();
+	}
+
+	@Override
+	public ArrayList<Book> selectAllBooksByCondition(Condition condition) throws Exception {
+		ArrayList<Book> selectBook = bookRepo.findByCondition(condition);
+		if (selectBook != null) {
+			return selectBook;
+		} else {
+			throw new Exception("The Condition is wrong");
+		}
+	}
+	
+	@Override
+	public ArrayList<Book> selectAllBooksByGenre(Genre genre) throws Exception {
+		ArrayList<Book> selectBook = bookRepo.findByGenre(genre);
+		if (selectBook != null) {
+			return selectBook;
+		} else {
+			throw new Exception("The Genre is wrong");
+		}
+	}
+
+
 
 	@Override
 	public boolean giveBookToReader(Reader reader, String title) {
@@ -308,7 +356,6 @@ public class LibraryServiceImpl implements ILibraryService{
 		return false;
 	}
 
-
 	@Override
 	public boolean takeBookFromReader(Reader reader, Book book) {  
 		if(reader.returnBook(book))        
@@ -325,74 +372,6 @@ public class LibraryServiceImpl implements ILibraryService{
 	}
 
 
-	@Override
-	public ArrayList<Book> selectAllBooksByCondition(Condition condition) throws Exception {
-		ArrayList<Book> selectBook = bookRepo.findByCondition(condition);
-		if (selectBook != null) {
-			return selectBook;
-		} else {
-			throw new Exception("The Condition is wrong");
-		}
-	}
-
-
-	@Override
-	public Reader selectReaderByUsername(String username) {
-		return readerRepo.findByUsername(username);
-	}
-
-
-	@Override
-	public ArrayList<Book> showAllBooksByTitle(String title) {
-		return bookRepo.findAllByTitle(title);
-	}
-
-
-	@Override
-	public ArrayList<Book> selectAllBooksByGenre(Genre genre) throws Exception {
-		ArrayList<Book> selectBook = bookRepo.findByGenre(genre);
-		if (selectBook != null) {
-			return selectBook;
-		} else {
-			throw new Exception("The Genre is wrong");
-		}
-	}
-
-
-	@Override
-	public ArrayList<Author> showAllAuthors() {
-		return (ArrayList<Author>) authorRepo.findAll();
-	}
-
-
-	@Override
-	public boolean authoriseAdmin(Admin admin) {
-		if(adminRepo.existsByUsername(admin.getUsername()) && adminRepo.existsByPassword(admin.getPassword())){
-			return true;
-		}
-		else{
-			return false;
-		}
-		
-	}
-	
-
-	@Override
-	public boolean authoriseReader(Reader reader) {
-		if(readerRepo.existsByUsername(reader.getUsername()) && readerRepo.existsByPassword(reader.getPassword())){
-			return true;
-		}
-		else{
-			return false;
-		}
-		
-	}
-
-
-
-	
-
-
-	
+	//
 
 }
