@@ -1,6 +1,7 @@
 package lv.venta.demo.services;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import lv.venta.demo.enums.Condition;
 import lv.venta.demo.enums.Genre;
@@ -8,6 +9,7 @@ import lv.venta.demo.models.Admin;
 import lv.venta.demo.models.Author;
 import lv.venta.demo.models.Book;
 import lv.venta.demo.models.Reader;
+import lv.venta.demo.models.Review;
 
 public interface ILibraryService {
 
@@ -56,26 +58,48 @@ public interface ILibraryService {
 	Reader selectReaderByUsername(String username);
 	// [ADMIN]
 	ArrayList<Book> showAllBooksByTitle(String  title);
-	// [USER], [ADMIN]
+	// [ALL]
 	ArrayList<Book> showAllBooks();  // izmainiju so, jo mums vajag no KUAT KA izdabut to info
-	// [USER], [ADMIN]
+	// [ALL]
 	ArrayList<Reader> showAllReaders();
-	//[USER], [ADMIN]
+	//[All]
 	ArrayList<Admin> showAllAdmins();
 	//[ADMIN]
 	ArrayList<Author> showAllAuthors();
-	// [USER], [ADMIN]
+	// [ALL]
 	ArrayList<Book> selectAllBooksByCondition(Condition condition) throws Exception;
-	//[USER],[ADMIN]
+	//[ALL]
 	//MAYBE only admin
 	ArrayList<Book> selectAllBooksByGenre(Genre genre) throws Exception;
-	// [USER], [ADMIN]
-
+	// [ALL]
 	boolean giveBookToReader(Reader reader, String title);
-	// 2nd. give book ... IS THIS NEEDED?
+	// 2nd. give book ...
 	// 1st. line 19 gives byID ... 2nd line 74 gives byTitle
 	boolean takeBookFromReader(Reader reader, Book book);
-	// 2nd. take book  ...  IS THIS NEEDED?
+	// 2nd. take book  ...  
 	// 1st. line 22 takes byID ... 2nd line 77 gives instance
+
+
+
+	Reader giveReviewToBook(Book book, Review review);
+	//[ALL] only if book is in readers returnedbook array
+	boolean deleteReviewByID(int id);
+	//[ADMIN]
+	ArrayList<Review> showAllReviewsOfCurrentUser();
+	//[ALL]
+	ArrayList<Review> showAllReviewsByUserID(int id);
+	//[ADMIN]
+	ArrayList<Review> showAllReviewsByDate(Date date);
+	//[ADMIN]
+	ArrayList<Review> showAllReviewsOfBookByBookName(String bookName);
+	//[ALL]
+	ArrayList<Reader> showAllBlacklistedReaders();
+	//[ADMIN]
+	Boolean addToBlackListrById(int id);
+	// [ADMIN]
+	Boolean removeFromBlackListByID(int id);
+	// [ADMIN]
+
+
 
 }

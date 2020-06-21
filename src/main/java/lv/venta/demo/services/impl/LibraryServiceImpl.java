@@ -333,7 +333,6 @@ public class LibraryServiceImpl implements ILibraryService{
 	}
 
 
-
 	@Override
 	public boolean giveBookToReader(Reader reader, String title) {
 		ArrayList<Book> allBooks = bookRepo.findAllByTitle(title);
@@ -371,6 +370,7 @@ public class LibraryServiceImpl implements ILibraryService{
 		return false;
 	}
 
+	
 
 	//
 

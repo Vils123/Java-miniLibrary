@@ -30,11 +30,15 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lv.venta.demo.enums.Condition;
 import lv.venta.demo.enums.Genre;
+
 @Entity
 @Table(name = "BookTable")
 @Getter @Setter @NoArgsConstructor
 public class Book implements Serializable{
 
+	@ManyToOne 
+	@JoinColumn(name = "Id_r")
+	private Review review;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

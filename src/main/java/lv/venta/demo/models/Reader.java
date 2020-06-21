@@ -30,9 +30,10 @@ public class Reader extends Person implements Serializable{
 
 
 	@OneToMany(mappedBy = "reader")
-    private Collection<Book> currentBooks;
+	private Collection<Book> currentBooks;
 	
-
+	private boolean blacklisted = false;
+	
     @Transient
 	private static ArrayList<String> takenUsernames = new ArrayList<String>();
 	
