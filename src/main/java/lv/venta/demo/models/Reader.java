@@ -51,7 +51,7 @@ public class Reader extends Person implements Serializable{
 	//and spot person with bad language use in many of reviews
 
     @Transient
-	private static ArrayList<String> takenUsernames = new ArrayList<String>();
+	private static ArrayList<String> takenUsernames = new ArrayList<String>();   //usernames have to be unique
 	
 
     @Transient
@@ -123,7 +123,7 @@ public class Reader extends Person implements Serializable{
     
 	@Override
 	public String toString() {
-		return "Reader " + super.toString() + "\nCurrently taken books:" + takenBooks + "\nBook History: "+ allBooks; 
+		return "Reader " + super.toString() + "\nCurrently taken books:" + takenBooks + "\nBook History: "+ allBooks.toString(); 
 	}
 
 	

@@ -26,7 +26,7 @@ public class Admin extends Person{
 	
 
 	@Transient
-    private static ArrayList<String> takenUsernames = new ArrayList<String>();
+    private static ArrayList<String> takenUsernames = new ArrayList<String>();          //usernames have to be unique
 	
 
 	public Admin(String name, String surname, Date date, String username, String password){

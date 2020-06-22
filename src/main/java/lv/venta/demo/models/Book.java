@@ -82,9 +82,9 @@ public class Book implements Serializable{
 	
 
 	@Column(name = "Condition")
-	private Condition condition = Condition.GOOD;
+	private Condition condition = Condition.MINT;
 	@Transient
-	private int conditionCounter = 15;
+	private int conditionCounter = 60;
 	
 
 	@Column(name = "Date_when_taken")
@@ -213,9 +213,11 @@ public class Book implements Serializable{
 	public boolean decreaseCondition()
 	{
 		conditionCounter = conditionCounter - 1;
-		if(conditionCounter == 10)
+		if(conditionCounter == 45)
+			this.condition = Condition.GOOD;
+		if(conditionCounter == 30)
 			this.condition = Condition.USED;
-		if(conditionCounter == 5)
+		if(conditionCounter == 15)
 			this.condition = Condition.POOR;
 		if(conditionCounter < 0) 
 			return false;                       
@@ -233,11 +235,11 @@ public class Book implements Serializable{
 	private void startConditionCounter()
 	{
 		if(this.condition == Condition.GOOD)
-			conditionCounter = 15;
+			conditionCounter = 45;
 		if(this.condition == Condition.USED)
-			conditionCounter = 10;
+			conditionCounter = 30;
 		if(this.condition == Condition.POOR)
-			conditionCounter = 5;
+			conditionCounter = 15;
 	}
 	
 	public void addTakenDate()
