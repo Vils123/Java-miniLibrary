@@ -38,6 +38,13 @@ public class LibraryServiceImpl implements ILibraryService {
 	@Autowired
 	IAuthorRepo authorRepo;
 
+	
+
+	private Reader currentReader = null;
+
+
+
+
 	@Override
 	public void inputdata() {
 
@@ -362,9 +369,30 @@ public class LibraryServiceImpl implements ILibraryService {
 	}
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	@Override
-	public boolean giveReviewToBook(String title , Review review) {
+	public boolean giveReviewToBook(Book book, Review review) { 
 		
+
+
 		return false;
 	}
 
@@ -382,8 +410,7 @@ public class LibraryServiceImpl implements ILibraryService {
 
 	@Override
 	public ArrayList<Review> showAllReviewsByUserID(int id) {
-		// TODO Auto-generated method stub
-		return null;
+		return reviewRepo.findAllByWriterId(id); //  i guess
 	}
 
 	@Override
@@ -394,7 +421,6 @@ public class LibraryServiceImpl implements ILibraryService {
 
 	@Override
 	public ArrayList<Review> showAllReviewsOfBookByBookName(String bookName) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -402,7 +428,7 @@ public class LibraryServiceImpl implements ILibraryService {
 	public ArrayList<Reader> showAllBlacklistedReaders() {
 		ArrayList<Reader> allBlacklisted = new ArrayList<Reader>();
 
-		allBlacklisted = readerRepo.findAllByIsBlacklisted(true);
+		allBlacklisted = readerRepo.findAllByBlacklisted(true);
 
 		return allBlacklisted;
 	}
@@ -430,12 +456,20 @@ public class LibraryServiceImpl implements ILibraryService {
 	}
 
 	@Override
-	public boolean updateReviewByReviewId(int id) {
-		return false;
+	public boolean updateReview(Review review) { //ir padots review id 
+		Review temp = reviewRepo.findById(review.getId());
+		if (temp == null)
+			return false;
+		temp.setThoughts(review.getThoughts());  
+		//tiek apdeitots tikai thoughts (1 field)
+		reviewRepo.save(temp);
+		return true;
 	}
 
-	//ok?
-	public boolean deleteAllReviewsByUserByUserId(int id) {
+
+
+	@Override
+	public boolean deleteAllReviewsByReaderByReaderId(int id) {
 		if (!reviewRepo.existsByWriterId(id))// ja saakumaa nemaz nav tads title, tad false
 			return false;
 		ArrayList<Review> allReviews = reviewRepo.findAllByWriterId(id);
@@ -444,6 +478,21 @@ public class LibraryServiceImpl implements ILibraryService {
 		}
 		return true;
 	}
+
+
+
+	
+
+	public void setCurrentReader(Reader reader){
+		this.currentReader = reader;
+	}
+
+	public Reader currentReader(){
+		return currentReader;
+	}
+
+
+
 
 
 	

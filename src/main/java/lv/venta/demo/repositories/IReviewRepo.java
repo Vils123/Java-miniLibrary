@@ -9,7 +9,7 @@ import lv.venta.demo.models.Review;
 public interface IReviewRepo extends CrudRepository<Review, Integer> {
 
     Review findById(int id);
-    ArrayList<Review> findByUserId(int id);
+    ArrayList<Review> findByWriterId(int id);
     boolean existsByWriterId(int id); // ?
     ArrayList<Review> findAllByWriterId(int id);
     

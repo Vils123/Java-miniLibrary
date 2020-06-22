@@ -13,7 +13,7 @@ public interface IReaderRepo extends CrudRepository<Reader,Integer>{
     Reader findById(int id);
     boolean existsByUsername(String username);
     boolean existsByPassword(String password);
-    ArrayList<Reader> findAllByIsBlacklisted(boolean isBlacklistd);
-    //Reader isBlacklisted();
+    ArrayList<Reader> findAllByBlacklisted(boolean isBlacklistd);
+    
     
 }

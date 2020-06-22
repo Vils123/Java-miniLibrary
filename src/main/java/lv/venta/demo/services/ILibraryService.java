@@ -82,7 +82,7 @@ public interface ILibraryService {
 
 
 
-	boolean giveReviewToBook(String title, Review review);
+	boolean giveReviewToBook(Book book, Review review);
 	//[ALL] only if book is in readers returnedbook array
 	boolean deleteReviewByID(int id);
 	//[ALL]
@@ -100,8 +100,13 @@ public interface ILibraryService {
 	// [ADMIN]
 	Boolean removeFromBlackListByID(int id);
 	// [ADMIN]
-	boolean updateReviewByReviewId(int id);
-	//[ALL] only allows to update reviws description not ratings
-	boolean deleteAllReviewsByUserByUserId(int id);
+	boolean deleteAllReviewsByReaderByReaderId(int id);
+
+	boolean updateReview(Review review);
+
+
+	void setCurrentReader(Reader reader);
+
+	Reader currentReader();
 
 }
