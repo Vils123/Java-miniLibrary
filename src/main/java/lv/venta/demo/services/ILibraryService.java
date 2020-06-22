@@ -82,17 +82,17 @@ public interface ILibraryService {
 
 
 
-	Reader giveReviewToBook(Book book, Review review);
+	boolean giveReviewToBook(String title, Review review);
 	//[ALL] only if book is in readers returnedbook array
 	boolean deleteReviewByID(int id);
 	//[ALL]
 	ArrayList<Review> showAllReviewsOfCurrentUser();
 	//[ALL]
-	ArrayList<Review> showAllReviewsByUserID(int id);
+	ArrayList<Review> showAllReviewsByUserID(int id); // maybe username
 	//[ADMIN]
-	ArrayList<Review> showAllReviewsByDate(Date date);
+	ArrayList<Review> showAllReviewsByDate(Date date); 
 	//[ADMIN]
-	ArrayList<Review> showAllReviewsOfBookByBookName(String bookName);
+	ArrayList<Review> showAllReviewsOfBookByBookName(String bookName);  
 	//[ALL]
 	ArrayList<Reader> showAllBlacklistedReaders();
 	//[ADMIN]
@@ -102,6 +102,6 @@ public interface ILibraryService {
 	// [ADMIN]
 	boolean updateReviewByReviewId(int id);
 	//[ALL] only allows to update reviws description not ratings
-
+	boolean deleteAllReviewsByUserByUserId(int id);
 
 }

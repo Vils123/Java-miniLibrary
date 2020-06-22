@@ -362,20 +362,16 @@ public class LibraryServiceImpl implements ILibraryService {
 	}
 
 
-
-
-
-
 	@Override
-	public Reader giveReviewToBook(Book book, Review review) {
+	public boolean giveReviewToBook(String title , Review review) {
 		
-		return null;
+		return false;
 	}
+
 
 	@Override
 	public boolean deleteReviewByID(int id) {
-		// arraylist where all written reviews are stored? put it where
-		return false;
+		return false ;
 	}
 
 	@Override
@@ -406,28 +402,49 @@ public class LibraryServiceImpl implements ILibraryService {
 	public ArrayList<Reader> showAllBlacklistedReaders() {
 		ArrayList<Reader> allBlacklisted = new ArrayList<Reader>();
 
-		//readerRepo.isBlacklisted();
+		allBlacklisted = readerRepo.findAllByIsBlacklisted(true);
 
 		return allBlacklisted;
 	}
 
 	@Override
 	public Boolean addToBlackListById(int id) {
-		// TODO Auto-generated method stub
-		return null;
+		Reader temp = readerRepo.findById(id);
+		if (temp != null) {
+			temp.setBlacklisted(true);
+			temp.setBlacklistDate(new Date());
+			return true;
+		}
+		return false;
 	}
 
 	@Override
 	public Boolean removeFromBlackListByID(int id) {
-		// TODO Auto-generated method stub
-		return null;
+		Reader temp = readerRepo.findById(id);
+		if (temp != null) {
+			temp.setBlacklisted(false);
+			temp.setBlacklistDate(null);
+			return true;
+		}
+		return false; 
 	}
 
 	@Override
 	public boolean updateReviewByReviewId(int id) {
-		// TODO Auto-generated method stub
 		return false;
 	}
+
+	//ok?
+	public boolean deleteAllReviewsByUserByUserId(int id) {
+		if (!reviewRepo.existsByWriterId(id))// ja saakumaa nemaz nav tads title, tad false
+			return false;
+		ArrayList<Review> allReviews = reviewRepo.findAllByWriterId(id);
+		for (Review a : allReviews) {
+				reviewRepo.delete(a);
+		}
+		return true;
+	}
+
 
 	
 
