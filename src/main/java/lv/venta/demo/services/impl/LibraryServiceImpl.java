@@ -71,12 +71,12 @@ public class LibraryServiceImpl implements ILibraryService {
 		authorRepo.save(a3);
 
 		Book b1 = new Book("123456789112", "Harry potter and the java code", a1, new Date(115, 0, 1), Genre.COMEDY,
-				Condition.POOR,1);
+				Condition.POOR);
 		addNewBook(b1);
-		Book b2 = new Book("191919191919", "The master of code", a3, new Date(115, 0, 1), Genre.COMEDY, Condition.GOOD,1);
+		Book b2 = new Book("191919191919", "The master of code", a3, new Date(115, 0, 1), Genre.COMEDY, Condition.GOOD);
 		addNewBook(b2);
 		Book b3 = new Book("192929191991", "The lost Student", a2, new Date(114, 0, 1), Genre.DETECTIVE,
-				Condition.MINT,1);
+				Condition.MINT);
 		addNewBook(b3);
 
 		giveBookToReader(r1, "Harry potter and the java code");

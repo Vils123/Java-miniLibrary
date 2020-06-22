@@ -84,7 +84,7 @@ public class Book implements Serializable{
 	@Column(name = "Condition")
 	private Condition condition = Condition.MINT;
 	@Transient
-	private int conditionCounter = 60;
+	private int conditionCounter = 60; //
 	
 
 	@Column(name = "Date_when_taken")
@@ -110,38 +110,38 @@ public class Book implements Serializable{
 	
 	
 	//constructor for one author
-	public Book(String isbn, String title, Author author, Date publishDate, Genre genre,
-			Condition condition,int book_count) {
-		Book temp = new Book();
-		if (checkDate(publishDate)) // no time travelers
-		{
-			if(book_count>=0){
-				for (int i = 0; i < book_count; i++) {
-					temp = new Book(isbn, title, author, publishDate, genre, condition);
-					allBooksInLibrary.add(temp);
-				}
-			}
-			// addBookToAuthors();
-		}
-	}
+	// public Book(String isbn, String title, Author author, Date publishDate, Genre genre,
+	// 		Condition condition,int book_count) {
+	// 	Book temp = new Book();
+	// 	if (checkDate(publishDate)) // no time travelers
+	// 	{
+	// 		if(book_count>=0){
+	// 			for (int i = 0; i < book_count; i++) {
+	// 				temp = new Book(isbn, title, author, publishDate, genre, condition);
+	// 				allBooksInLibrary.add(temp);
+	// 			}
+	// 		}
+	// 		// addBookToAuthors();
+	// 	}
+	// }
 
-	public Book(String isbn, String title, Collection<Author> authors, Date publishDate, Genre genre,
-	 Condition condition, int book_count ) {
-		Book temp = new Book();
-		if (checkDate(publishDate)) // no time travelers
-		{
-			if (book_count >= 0) {
-				for (int i = 0; i < book_count; i++) {
-					temp = new Book(isbn, title, authors, publishDate, genre, condition);
-					allBooksInLibrary.add(temp);
-				}
-			}
-			// addBookToAuthors();
-		}
-	}
+	// public Book(String isbn, String title, Collection<Author> authors, Date publishDate, Genre genre,
+	//  Condition condition, int book_count ) {
+	// 	Book temp = new Book();
+	// 	if (checkDate(publishDate)) // no time travelers
+	// 	{
+	// 		if (book_count >= 0) {
+	// 			for (int i = 0; i < book_count; i++) {
+	// 				temp = new Book(isbn, title, authors, publishDate, genre, condition);
+	// 				allBooksInLibrary.add(temp);
+	// 			}
+	// 		}
+	// 		// addBookToAuthors();
+	// 	}
+	// }
 
 	// made it private because there is noo need of single book adding used in loop constructor
-	private Book(String isbn, String title, Collection<Author> authors, Date publishDate, Genre genre,
+	public Book(String isbn, String title, Collection<Author> authors, Date publishDate, Genre genre,
 			Condition condition) {
 		if(checkDate(publishDate))   //no time travelers
 		{
@@ -160,7 +160,7 @@ public class Book implements Serializable{
 	}
 
 	//made it private because there is noo need of single book adding used in loop constructor 
-	private Book(String isbn, String title, Author author, Date publishDate, Genre genre,
+	public Book(String isbn, String title, Author author, Date publishDate, Genre genre,
 			Condition condition) {
 		if(checkDate(publishDate))   //no time travelers
 		{
