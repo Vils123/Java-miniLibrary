@@ -1,6 +1,6 @@
 package lv.venta.demo.models;
 
-import java.util.ArrayList;
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
 
@@ -9,8 +9,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -24,21 +25,23 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+@Entity
+@Table(name = "All_reviews")
 @Getter
 @Setter
 @NoArgsConstructor
-@Table
-@Entity(name = "All reviews")
-public class Review {
+public class Review implements Serializable {
 
-    // @OneToMany(mappedBy = "review")  
-    // private Collection<Book> allBooks;
 
-    // @OneToOne
-    
-
-    ArrayList <Review> allReviewsByUsers = new ArrayList<>();
-
+    //////////////////////////////////////////////
+    @ManyToMany(mappedBy = "review") //1111111111
+    private Collection<Book> allBooksReviewPost; 
+    // One review to many books (because id different for each book with same name)
+    //////////////////////////////////////////////
+    @ManyToOne //2222222222222222222
+    @JoinColumn(name = "reader_id")  // so it is  possible to find reviews by reader id !?
+    private Reader writer;           //reader can write many separate reviews
+    //////////////////////////////////////////////
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -46,44 +49,64 @@ public class Review {
     @Setter(value = AccessLevel.PRIVATE)
     private int id;
 
-    @Column(name = "Rating aspect 1")
+    @Column(name = "Rating_aspect_1")
     @Min(1) @Max(10)
-    int rating1;
+    private int rating1 =1 ;
 
-    @Column(name = "Rating axpect 2")
+    @Column(name = "Rating_axpect_2")
     @Min(1)
     @Max(10)
-    int rating2;
+    private int rating2 = 1;
 
-    @Column(name = "rating aspect 3")
+    @Column(name = "rating_aspect_3")
     @Min(1)
     @Max(10)
-    int rating3;
+    private int rating3 = 1 ;
 
-    @Column(name = "Total this review score")
-    private double review_total = (rating1 + rating2 + rating3); // 3;  
+    @Column(name = "Total_this_review_score")
+    private double review_total = 0.0d; // 3;  
 
-    @Column(name = "rating aspect 3")
-    private double bookOveralScore;
+    // @Column(name = "Book total rating by users")
+    // private double bookOveralScore;
 
-    @Column(name = "Review Description")
+    @Column(name = "Review_Description")
     String thoughts;
 
-    @Column(name = "Comment Post Date")
+    @Column(name = "Comment_Post_Date")
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "dd-mm-yyyy")
     private Date commentDate = null;
 
-    public Review (Book book, int r1 , int r2 , int r3 , String thoughts ){
-        
-        setRating1(r1);
-        setRating2(r2);
-        setRating3(r3);
-        setThoughts(thoughts);
-        setCommentDate(new Date());
+    public Review (Reader reader, Book book, int r1 , int r2 , int r3 , String thoughts ){
 
+        //if(postReview(reader, book)){
+            setRating1(r1);
+            setRating2(r2);
+            setRating3(r3);
+            setReview_total((r1+r2+r3)/3);
+            setThoughts(thoughts);
+            setCommentDate(new Date());
+            postReview(reader, book); 
+        //}
         //make repo ad in repo to allreviews
         
+    }
+
+    ///should this be here ....
+    public boolean postReview (Reader reader, Book book){
+
+        if(reader.getBooksReadAndReturned().contains(book)){
+
+            for(Book temp : Book.allBooksInLibrary){
+                if(temp.getTitle().equals(book.getTitle())){
+                    allBooksReviewPost.add(temp);  // pieliek pie sasaistes
+                }
+            } 
+            this.writer = reader;  // pieliek pie sasaistes
+            return true;
+        }  
+        return false; 
+        //
     }
 
 }

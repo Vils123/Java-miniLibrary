@@ -17,10 +17,14 @@ import lv.venta.demo.repositories.IAdminRepo;
 import lv.venta.demo.repositories.IAuthorRepo;
 import lv.venta.demo.repositories.IBookRepo;
 import lv.venta.demo.repositories.IReaderRepo;
+import lv.venta.demo.repositories.IReviewRepo;
 import lv.venta.demo.services.ILibraryService;
 
 @Service
 public class LibraryServiceImpl implements ILibraryService {
+
+	@Autowired
+	IReviewRepo reviewRepo;
 
 	@Autowired
 	IBookRepo bookRepo;
@@ -67,16 +71,19 @@ public class LibraryServiceImpl implements ILibraryService {
 		authorRepo.save(a3);
 
 		Book b1 = new Book("123456789112", "Harry potter and the java code", a1, new Date(115, 0, 1), Genre.COMEDY,
-				Condition.POOR);
+				Condition.POOR,1);
 		addNewBook(b1);
-		Book b2 = new Book("191919191919", "The master of code", a3, new Date(115, 0, 1), Genre.COMEDY, Condition.GOOD);
+		Book b2 = new Book("191919191919", "The master of code", a3, new Date(115, 0, 1), Genre.COMEDY, Condition.GOOD,1);
 		addNewBook(b2);
 		Book b3 = new Book("192929191991", "The lost Student", a2, new Date(114, 0, 1), Genre.DETECTIVE,
-				Condition.MINT);
+				Condition.MINT,1);
 		addNewBook(b3);
 
 		giveBookToReader(r1, "Harry potter and the java code");
 		takeBookFromReader(r1, r1.getTakenBooks().get(0));
+
+		Review rev1 = new Review(r1,b1,8,9,10,"DAMN DUMBLEDORE CHEEKS THO");
+		reviewRepo.save(rev1);
 
 		giveBookToReader(r3, "The lost Student");
 		giveBookToReader(r2, "The master of code");
@@ -399,7 +406,7 @@ public class LibraryServiceImpl implements ILibraryService {
 	public ArrayList<Reader> showAllBlacklistedReaders() {
 		ArrayList<Reader> allBlacklisted = new ArrayList<Reader>();
 
-		readerRepo.isBlacklisted();
+		//readerRepo.isBlacklisted();
 
 		return allBlacklisted;
 	}

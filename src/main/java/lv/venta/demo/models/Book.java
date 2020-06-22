@@ -36,12 +36,23 @@ import lv.venta.demo.enums.Genre;
 @Getter @Setter @NoArgsConstructor
 public class Book implements Serializable{
 
-	ArrayList<Book> allBooksInLibrary = new ArrayList<Book>();///
-	// for adding them fro mconstructor and storing them after construction
+	protected static ArrayList<Book> allBooksInLibrary = new ArrayList<Book>();///
+	//to add them from constructor and storing them after construction so 
+	//used as a main function for library book lookthrough
 
-	@ManyToOne 
-	@JoinColumn(name = "Id_r")
-	private Review review;
+	////////////////////////////////////////////////
+	@ManyToMany//11111111111111
+	@JoinTable(name = "Book_Review", joinColumns = @JoinColumn(name = "B_R_Id"), inverseJoinColumns = @JoinColumn(name = "Review_Id"))
+	private Collection<Review> review;
+	////////////////////////////////////
+	@ManyToOne
+	@JoinColumn(name = "Reader_Id")
+	private Reader reader;
+
+	@ManyToMany
+	@JoinTable(name = "Book_Author", joinColumns = @JoinColumn(name = "B_Id"), inverseJoinColumns = @JoinColumn(name = "Id"))
+	private Collection<Author> authors;
+	/////////////////////////////////////////////////
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -93,16 +104,7 @@ public class Book implements Serializable{
 	// can be 0 at first 
 	// can be changed 
 	// one of parametres in constructor ... ? how to for loop a constructor
-	
 
-	@ManyToOne
-	@JoinColumn(name = "Reader_Id")
-	private Reader reader;
-	
-
-	@ManyToMany
-	@JoinTable(name = "Book_Author", joinColumns =@JoinColumn(name = "B_Id"), inverseJoinColumns =@JoinColumn(name = "Id"))
-	private Collection<Author> authors;
 	@Column(name = "In_Library")
 	private boolean inLibrary = true;
 	
@@ -138,7 +140,6 @@ public class Book implements Serializable{
 		}
 	}
 
-
 	// made it private because there is noo need of single book adding used in loop constructor
 	private Book(String isbn, String title, Collection<Author> authors, Date publishDate, Genre genre,
 			Condition condition) {
@@ -158,7 +159,6 @@ public class Book implements Serializable{
 		}
 	}
 
-	
 	//made it private because there is noo need of single book adding used in loop constructor 
 	private Book(String isbn, String title, Author author, Date publishDate, Genre genre,
 			Condition condition) {
@@ -182,11 +182,14 @@ public class Book implements Serializable{
 	}
 
 	
+
+
 	public void setPublishDate(Date date)
 	{
 		if(checkDate(date))
 			this.publishDate = date;
 	}
+
 	public void setCondition(Condition condition)
 	{
 		this.condition = condition;
@@ -197,7 +200,6 @@ public class Book implements Serializable{
 		this.genre = genre;
 	}
 	
-	
 	public boolean addAuthor(Author author)
 	{
 		if(!authors.contains(author))
@@ -207,7 +209,6 @@ public class Book implements Serializable{
 		}
 		return false;
 	}
-	
 	
 	public boolean decreaseCondition()
 	{
@@ -221,7 +222,6 @@ public class Book implements Serializable{
 		return true;
 	}
 	
-	
 	private boolean checkDate(Date date)
 	{
 		Date today = new Date();
@@ -229,6 +229,7 @@ public class Book implements Serializable{
 			return true;
 		return false;
 	}
+
 	private void startConditionCounter()
 	{
 		if(this.condition == Condition.GOOD)
@@ -239,12 +240,10 @@ public class Book implements Serializable{
 			conditionCounter = 5;
 	}
 	
-
 	public void addTakenDate()
 	{
 		takenDate = new Date();
 	}
-	
 
 	public void addReturnDate(Date date)
 	{
@@ -252,7 +251,6 @@ public class Book implements Serializable{
 			returnDate = date;
 	}
 	
-
 	public boolean returnBook()   //graamata ir atpakal biblioteekaa - tai zuud condition,datumi,reader
 	{
 		if(!inLibrary)
@@ -268,7 +266,6 @@ public class Book implements Serializable{
 		return false;
 	}
 	
-
 	public boolean giveBook(Reader reader)
 	{
 		if(inLibrary)
@@ -286,7 +283,6 @@ public class Book implements Serializable{
 		return false;
 	}
 	
-	
 	public void addBookToAuthors()
 	{
 		if(authors.isEmpty())
@@ -302,7 +298,6 @@ public class Book implements Serializable{
 			}
 		}
 	}
-	
 	
 	public String toString()
 	{

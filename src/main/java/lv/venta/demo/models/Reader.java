@@ -8,6 +8,7 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -23,6 +24,13 @@ import lombok.Setter;
 @Table
 @Entity(name = "ReaderTable")
 public class Reader extends Person implements Serializable{
+
+
+	/////////////////////////////////
+	@OneToMany//222222222222222222222222222
+	(mappedBy = "writer")
+	private Collection<Review> writtenReviews;
+	//////////////////////////////////////
 
     @Column(name = "Username")
     private String username;
@@ -88,7 +96,8 @@ public class Reader extends Person implements Serializable{
     	if(book.getReader() == this)
     	{
     		book.returnBook();
-    		takenBooks.remove(book);
+			takenBooks.remove(book);
+			booksReadAndReturned.add(book);
     		return true;
     	}
     	return false;

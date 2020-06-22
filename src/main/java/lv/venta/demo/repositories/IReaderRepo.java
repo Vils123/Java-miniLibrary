@@ -12,6 +12,6 @@ public interface IReaderRepo extends CrudRepository<Reader,Integer>{
     Reader findByUsername(String username);
     boolean existsByUsername(String username);
     boolean existsByPassword(String password);
-    Reader isBlacklisted();
+    //Reader isBlacklisted();
 
 }
