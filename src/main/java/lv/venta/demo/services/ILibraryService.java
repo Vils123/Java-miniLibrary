@@ -46,7 +46,7 @@ public interface ILibraryService {
 	boolean updateAuthor(Author author);
 	//updating / changing info of class objeect instances
 
-	boolean deleteReader(Reader reader);
+	boolean deleteReader(String username);
 	//[ADMIN]
 	boolean deleteAuthor(Author author);
 	// [ADMIN]
@@ -108,5 +108,7 @@ public interface ILibraryService {
 	void setCurrentReader(Reader reader);
 
 	Reader currentReader();
+
+	boolean addBookToAuthor(Author author, Book book);
 
 }

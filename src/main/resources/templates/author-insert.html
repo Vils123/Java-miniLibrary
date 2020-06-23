@@ -1,0 +1,56 @@
+<form action="#" th:action="@{/admin/addNewAuthor}" th:object="${author}"
+method="post">
+
+<table>
+
+<tr>
+<td>Author Name</td>
+<td> <input type="text" th:field="*{name}"> </td>
+<td th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></td>
+</tr>
+
+<tr>
+<td>Author Surname</td>
+<td><input type="text" th:field="*{surname}"> </td>
+<td th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}"></td>
+</tr>
+
+<tr>
+<td>Date of Birth</td>
+<td><input type="text" th:field="*{dateOfBirth}"></td>
+<td th:if="${#fields.hasErrors('dateOfBirth')}" th:errors="*{dateOfBirth}"></td>
+</tr>
+
+<tr>
+<td>Country of origin</td>
+<td><input type="text" th:field="*{countryOfOrigin}"></td>
+<td th:if="${#fields.hasErrors('countryOfOrigin')}" th:errors="*{countryOfOrigin}"></td>
+</tr>
+
+<tr>
+<td>Short backstory</td>
+<td><input type="text" th:field="*{shortBackground}"></td>
+<td th:if="${#fields.hasErrors('shortBackground')}" th:errors="*{shortBackground}"></td>
+</tr>
+
+<tr>
+<td>LiteratureStyle</td>
+<td><input type="text" th:field="*{literatureStyle}"></td>
+<td th:if="${#fields.hasErrors('literatureStyle')}" th:errors="*{literatureStyle}"></td>
+</tr>
+
+<tr>
+<td>Author main Genre</td>
+<select name = "type">
+    <option th:each="genre : ${type}" th:text="${genre.toString()}"></option>
+</tr>
+
+</table>
+<input type="submit">
+</form>
+
+
+
+</body>
+
+</html>

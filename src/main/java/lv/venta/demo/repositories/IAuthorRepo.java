@@ -12,6 +12,7 @@ public interface IAuthorRepo extends CrudRepository<Author,Integer> {
 	Author findByNameAndSurname(String name, String surname);
     Author findByCountryOfOrigin (String origin);
     Author findByLiteratureStyle (String literatureStyle);
+    boolean existsByName(String name);
 
     
 

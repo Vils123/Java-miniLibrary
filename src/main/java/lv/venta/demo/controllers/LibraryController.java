@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import lv.venta.demo.enums.Condition;
 import lv.venta.demo.enums.Genre;
 import lv.venta.demo.models.Admin;
+import lv.venta.demo.models.Author;
 import lv.venta.demo.models.Book;
 import lv.venta.demo.models.Reader;
 import lv.venta.demo.services.impl.LibraryServiceImpl;
@@ -175,4 +176,86 @@ public class LibraryController {
 		}
 
 
+@GetMapping("/admin/addNewAuthor") //localhost:8080/admin/addNewAuthor
+	public String addNewAuthor(Model model, Author author){
+		model.addAttribute("type", Genre.values());
+		return "author-insert";
+	}
+		
+	@PostMapping("/admin/addNewAuthor")
+	public String addNewAuthor(Model model, @Valid Author author, @RequestParam(name = "type")Genre genre, BindingResult result)
+			throws Exception {
+			System.out.println("Adding a book");
+		if(!result.hasErrors()){
+			model.addAttribute("type", Genre.values());
+			service.addAuthor(author);
+			return "redirect:/admin/addNewBook";
+		}
+		else{
+			return "author-insert";
+			}
+		}		
+
+		
+@GetMapping("/admin/addNewBook") //localhost:8080/admin/addNewBook
+public String addNewBoook(Model model, Book book){
+	model.addAttribute("type", Genre.values());
+	return "book-insert";
 }
+
+@PostMapping("/admin/addNewBook")
+public String addNewBook(Model model, @Valid Book book, @RequestParam(name = "type")Genre genre, BindingResult result)
+		throws Exception {
+	System.out.println("Adding a book");
+	if(!result.hasErrors()){
+		model.addAttribute("type", Genre.values());
+		service.addNewBook(book);
+		return "redirect:/home";
+	}
+	else{
+		return "author-insert";
+	}
+}
+
+@GetMapping("/admin/linkBookAndAuthor")//localhost:8080/admin/linkBookAndAuthor
+public String linkBook(Model model,Book book,Author author){
+	return "link";
+}
+@PostMapping("/admin/linkBookAndAuthor")
+public String linkBookPost(Model model, @Valid Book book, @Valid Author author, BindingResult result)
+		throws Exception {
+	System.out.println("Linking");
+	if(!result.hasErrors()){
+		service.addBookToAuthor(author, book);		//es nezinu ka salinkot, viss ir pareizi, bet sis negrib pievienot to stulbo gramatu.
+		return "author-all-show";
+	}
+	else{
+		return "author-insert";
+	}
+}
+
+@GetMapping("/admin/deleteReader")//localhost:8080/admin/deleteReader
+public String deleteReader(Reader reader){
+	return "delete-by-username";}
+
+@PostMapping("/admin/deleteReader")
+public String deleteReaderPost(Model model, @Valid Reader reader, BindingResult result){
+	if(!result.hasErrors()){
+		model.addAttribute("inner", service.deleteReader(reader.getUsername()));
+		return "reader-all-show"; 
+	}
+	else{
+		return "delete-by-username";
+}}
+
+
+
+
+
+}
+
+
+
+
+
+ 

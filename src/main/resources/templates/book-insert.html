@@ -1,0 +1,41 @@
+<html>
+<body xmlns:th="http://www.thymeleaf.org">
+
+        <form action="#" th:action="@{/admin/addNewBook}" th:object="${book}"
+                method="post">
+
+        <table>
+        
+        
+        <tr>
+                <td>ISBN Number</td>
+                <td> <input type="text" th:field="*{isbn}"> </td>
+                <td th:if="${#fields.hasErrors('isbn')}" th:errors="*{isbn}"></td>
+        </tr>
+        
+        <tr>
+                <td>Title</td>
+                <td><input type="text" th:field="*{title}"> </td>
+                <td th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></td>
+        </tr>
+                
+        <tr>
+                <td>Publish date</td>
+                <td><input type="text" th:field="*{publishDate}"></td>
+                <td th:if="${#fields.hasErrors('publishDate')}" th:errors="*{publishDate}"></td>
+        </tr>
+
+        <tr>
+                <td>Book Genre</td>
+                <select name = "type">
+                    <option th:each="genre : ${type}" th:text="${genre.toString()}"></option>
+        </tr>
+</table>
+<input type="submit">
+</form>
+        
+
+</body>
+
+</html>
+

@@ -241,8 +241,8 @@ public class LibraryServiceImpl implements ILibraryService {
 	}
 
 	@Override
-	public boolean deleteReader(Reader reader) {
-		Reader temp = readerRepo.findByUsername(reader.getUsername());
+	public boolean deleteReader(String username) {
+		Reader temp = readerRepo.findByUsername(username);
 		if (temp == null) {
 			return false; // Parbauda vai usernname eksiste un ja ja tad izdzes to lietotaju, ja ne nu tad
 							// nav pareizi kaut kas
@@ -491,12 +491,29 @@ public class LibraryServiceImpl implements ILibraryService {
 		return currentReader;
 	}
 
+	@Override
+	public boolean addBookToAuthor(Author author, Book book) {
+		ArrayList<Book> allBooks = bookRepo.findAllByTitle(book.getTitle());
+		Book temp = null;
+		for (Book a : allBooks) {
+			if (a.isInLibrary()) {
+				System.out.println("ir");
+				temp = a;
+				break;
+			}
+		}
+		System.out.println(temp.getTitle());
+		if(authorRepo.existsByName(author.getName())){
+			Author foundAuth = authorRepo.findByNameAndSurname(author.getName(),author.getSurname());
+			foundAuth.addBook(temp);
+			System.out.println(temp.getTitle());
+			System.out.println(foundAuth.getName());
+			return true;
+		}
+		return false;
+		
+		
+	}
 
-
-
-
-	
-
-	//
 
 }
