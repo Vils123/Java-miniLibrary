@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+style="background-color:powderblue;">
+<head>
+<meta charset="ISO-8859-1">
+<title>Current Books</title>
+</head>
+
+<body style="background-color:powderblue;"></body>
+<table style="border:2px solid rgb(0, 0, 0);margin-left:auto;margin-right:auto;background-color: rgb(255, 255, 255);">
+
+        <tr th:each="reader: ${inner}">
+            <td th:text="${reader.showCurrentBooks()}" />
+        </tr>
+
+        <button onclick="goBack()">Go Back</button>
+
+        <script>
+        function goBack() {
+          window.history.back();
+        }
+        </script>
+
+</table>
+
+
+</body>
+</html>
