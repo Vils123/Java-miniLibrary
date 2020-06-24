@@ -35,7 +35,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 //localhost:8080/admin/addNewAuthor
 //localhost:8080/admin/addNewBook
 
-//localhost:8080/admin/deleteReader
+
 
 //localhost:8080/admin/addReaderToBook
 //localhost:8080/admin/addBookToReader
@@ -121,10 +121,15 @@ public class LibraryController {
 	
 
 	@PostMapping("/reader/showAllBooksByCondition")
-		public String showAllBooksByCondition (Model model, @RequestParam(name = "type") Condition condition)
+		public String showAllBooksByCondition (Model model, @RequestParam(name = "type") Condition condition,BindingResult result)
 				throws Exception {
+		if(!result.hasErrors()){
 		model.addAttribute("inner", service.selectAllBooksByCondition(condition));
 		return "books-all-show"; }
+		else{
+			return "get-book-condition";
+		}
+	}
 
 	@GetMapping("/admin/registerReader") //localhost:8080/admin/registerReader
 	public String insertReader(Reader reader){
@@ -135,8 +140,7 @@ public class LibraryController {
 	public String insertPatient(@Valid Reader reader, BindingResult result) {
 		System.out.println(reader);
 		
-		if(!result.hasErrors()) {
-			service.addReader(reader);
+		if(!result.hasErrors() && service.addReader(reader)) {
 			return "admin-page";}
 		else {
 			return "reader-insert";
@@ -153,8 +157,7 @@ public class LibraryController {
 	public String insertAdmin(@Valid Admin admin, BindingResult result) {
 		System.out.println(admin);
 		
-		if(!result.hasErrors()) {
-			service.addAdmin(admin);
+		if(!result.hasErrors() && service.addAdmin(admin)) {
 			return "admin-page";}
 		else {
 			return "admin-insert";
@@ -169,11 +172,15 @@ public class LibraryController {
 
 
 @PostMapping("/reader/showAllBooksByGenre")
-	public String showAllBooksByGenrePost (Model model, @RequestParam(name = "type") Genre genre)
+	public String showAllBooksByGenrePost (Model model, @RequestParam(name = "type") Genre genre, BindingResult result)
 			throws Exception {
+	if(!result.hasErrors()){
 	model.addAttribute("inner", service.selectAllBooksByGenre(genre));
 	return "books-all-show"; }
-	
+	else{
+		return "get-book-genre";
+	}
+}
 @GetMapping("/admin/showAllAuthors") //localhost:8080/admin/showAllAuthors
 	public String showAllAuthors(Model model){
 		model.addAttribute("inner", service.showAllAuthors());
@@ -255,19 +262,6 @@ public String addNewBook(Model model, @Valid Book book, @RequestParam(name = "ty
 }
 
 
-@GetMapping("/admin/deleteReader")//localhost:8080/admin/deleteReader
-public String deleteReader(Reader reader){
-	return "delete-by-username";}
-
-@PostMapping("/admin/deleteReader")
-public String deleteReaderPost(Model model, @Valid Reader reader, BindingResult result){
-	if(!result.hasErrors()){
-		model.addAttribute("inner", service.deleteReader(reader.getUsername()));
-		return "reader-all-show"; 
-	}
-	else{
-		return "delete-by-username";
-}}
 
 
 @GetMapping("/admin/addReaderToBook")//localhost:8080/admin/addReaderToBook
