@@ -19,6 +19,36 @@ import lv.venta.demo.models.Reader;
 import lv.venta.demo.services.impl.LibraryServiceImpl;
 import org.springframework.web.bind.annotation.RequestBody;
 
+//localhost:8080/admin/inputdata
+//localhost:8080/home
+
+
+//localhost:8080/admin/showAllReaders
+//localhost:8080/admin/showAllBooks
+//localhost:8080/admin/showAllAuthors
+//localhost:8080/admin/readerByUsername
+
+
+//localhost:8080/admin/registerReader
+//localhost:8080/admin/registerAdmin
+
+//localhost:8080/admin/addNewAuthor
+//localhost:8080/admin/addNewBook
+
+//localhost:8080/admin/deleteReader
+
+//localhost:8080/admin/addReaderToBook
+//localhost:8080/admin/addBookToReader
+
+//localhost:8080/reader/showAllBooksByCondition
+//localhost:8080/reader/booksByTitle
+//localhost:8080/reader/showAllBooksByGenre
+//localhost:8080/reader/showAllAuthors
+
+//localhost:8080/reader/showMyTakenBooks
+
+
+
 @Controller
 public class LibraryController {
 	@Autowired

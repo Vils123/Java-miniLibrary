@@ -67,7 +67,7 @@ public class LibraryServiceImpl implements ILibraryService {
 				"He writing facts", Genre.COMEDY, null);
 		Author a2 = new Author("Egata", "Bristi", new Date(10, 05, 11), "America", "Great author",
 				"Writes detective novels", Genre.DETECTIVE, new Date(90, 04, 9));
-		Author a3 = new Author("Verners", "Smits", new Date(98, 05, 10), "Latvia", "Coder", "He do be coding",
+		Author a3 = new Author("Zigis", "Pudele", new Date(98, 05, 10), "Latvia", "Coder", "He do be coding",
 				Genre.MYSTERY, null);
 
 		authorRepo.save(a1);
@@ -89,37 +89,18 @@ public class LibraryServiceImpl implements ILibraryService {
 		giveBookToReader(r1, "Harry potter and the java code");
 		takeBookFromReader(r1, r1.getTakenBooks().get(0));
 
-		Review rev1 = new Review(r1, b1, 8, 9, 10, "DAMN DUMBLEDORE CHEEKS THO");
+		Review rev1 = new Review(r1, b1, 8, 9, 10, "yes quite an interesting book 10/10 - IGN");
 		reviewRepo.save(rev1);
 
 
 		giveBookToReader(r3, "The lost Student");
 		giveBookToReader(r2, "The master of code");
 		System.out.println(r2.getTakenBooks());
-		giveBookToReader(r3, "The master of code");
-		giveBookToReader(r2, "The lost Student");
-<<<<<<< HEAD
-<<<<<<< HEAD
-		System.out.println("UPDATING");
-		updateReader(r1);
-		updateReader(r2);
-		updateReader(r3);
-		updateReader(r4);
-		System.out.println("UPDATED");
-		System.out.println(r1 + "\n");
-		System.out.println(r2 + "\n");
-		System.out.println(r3 + "\n");
-		System.out.println(r4 + "\n");
-		System.out.println(r2.getTakenBooks());
-=======
-
-
->>>>>>> 49da1d9ff29646da5e0700bf2435643629de5758
 
 	}
 
 	@Override
-	public boolean addNewBook(Book book) {
+	public boolean addNewBook(Book book) {          //could make this loop and add more than one book at a time
 		if (book != null) {
 			bookRepo.save(book);
 			return true;
@@ -265,10 +246,10 @@ public class LibraryServiceImpl implements ILibraryService {
 	@Override
 	public boolean deleteReader(String username) {
 		Reader temp = readerRepo.findByUsername(username);
-		if (temp == null) {
-			return false; // Parbauda vai usernname eksiste un ja ja tad izdzes to lietotaju, ja ne nu tad
-							// nav pareizi kaut kas
-		} else {
+		if (temp == null)
+			return false; 	
+		else 
+		{
 			readerRepo.delete(temp);
 			return true;
 		}
@@ -288,24 +269,27 @@ public class LibraryServiceImpl implements ILibraryService {
 
 	@Override
 	public boolean authoriseAdmin(Admin admin) {
-		if (adminRepo.existsByUsername(admin.getUsername()) && adminRepo.existsByPassword(admin.getPassword())) {
-			return true;
-		} else {
+		if(!adminRepo.existsByUsername(admin.getUsername()))
 			return false;
-		}
+		Admin temp = adminRepo.findByUsername(admin.getUsername());
+		if (temp.getPassword().equals(admin.getPassword()))
+			return true;
+		return false;
+
 
 	}
 
 	@Override
 	public boolean authoriseReader(Reader reader) {
-		if (readerRepo.existsByUsername(reader.getUsername()) && readerRepo.existsByPassword(reader.getPassword())) {
-			return true;
-		} else {
+		if(!readerRepo.existsByUsername(reader.getUsername()))
 			return false;
-		}
+		Reader temp = readerRepo.findByUsername(reader.getUsername());
+		if (temp.getPassword().equals(reader.getPassword()))
+			return true;
+		return false;
 
 	}
-
+//ricisjgey
 	@Override
 	public Reader selectReaderByUsername(String username) {
 		return readerRepo.findByUsername(username);
@@ -395,10 +379,10 @@ public class LibraryServiceImpl implements ILibraryService {
 	}
 
 	@Override
-	public boolean addReview(Review review) {
+	public boolean addReview(Review review) {          //BETA
 		if (reviewRepo.existsById(review.getId()))
 			return false;
-		String title = review.getTitle();
+		String title = review.getTitle();   //book title
 		ArrayList<Book> temp = bookRepo.findAllByTitle(title);
 		for (Book a : temp) {
 			a.addReview(review);
@@ -422,7 +406,7 @@ public class LibraryServiceImpl implements ILibraryService {
 
 	@Override
 	public ArrayList<Review> showAllReviewsByUserID(int id) {
-		return reviewRepo.findAllByWriterId(id); // i guess
+		return reviewRepo.findAllByWriterId(id); 
 	}
 
 	@Override
@@ -451,6 +435,7 @@ public class LibraryServiceImpl implements ILibraryService {
 		if (temp != null) {
 			temp.setBlacklisted(true);
 			temp.setBlacklistDate(new Date());
+			updateReader(temp);
 			return true;
 		}
 		return false;
@@ -462,6 +447,7 @@ public class LibraryServiceImpl implements ILibraryService {
 		if (temp != null) {
 			temp.setBlacklisted(false);
 			temp.setBlacklistDate(null);
+			updateReader(temp);
 			return true;
 		}
 		return false;
@@ -511,17 +497,13 @@ public class LibraryServiceImpl implements ILibraryService {
 		Book temp = null;
 		for (Book a : allBooks) {
 			if (a.isInLibrary()) {
-				System.out.println("ir");
 				temp = a;
 				break;
 			}
 		}
-		System.out.println(temp.getTitle());
 		if (authorRepo.existsByName(author.getName())) {
 			Author foundAuth = authorRepo.findByNameAndSurname(author.getName(), author.getSurname());
 			foundAuth.addBook(temp);
-			System.out.println(temp.getTitle());
-			System.out.println(foundAuth.getName());
 			return true;
 		}
 		return false;

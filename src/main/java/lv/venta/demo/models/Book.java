@@ -258,7 +258,7 @@ public class Book implements Serializable{
 		}
 	}
 	
-	public void addReview(Review review)
+	public void addReview(Review review)    //BETA
 	{
 		if(!this.review.contains(review))
 			this.review.add(review);
