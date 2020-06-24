@@ -505,7 +505,7 @@ public class LibraryServiceImpl implements ILibraryService {
 	}
 
 
-
+	
 	
 
 	public void setCurrentReader(Reader reader){
@@ -547,6 +547,11 @@ public class LibraryServiceImpl implements ILibraryService {
 		return false;
 		
 		
+	}
+
+	@Override
+	public boolean checkIfBookTitleExists(String title) {
+		return (bookRepo.existsByTitle(title));
 	}
 
 

@@ -29,6 +29,8 @@ public interface ILibraryService {
 	//deleting / removing all books from library by
 	//title or isbn [ADMIN]
 
+	boolean checkIfBookTitleExists(String title);
+	
 	boolean addReader(Reader reader);
 	//registration from first page 
 	//maybe [ADMIN] function too ??? boiz ?

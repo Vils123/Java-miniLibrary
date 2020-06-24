@@ -71,7 +71,7 @@ public class LibraryController {
 	@PostMapping("/reader/booksByTitle")//localhost:8080/reader/booksByTitle
 	public String booksByAuthorTitle(Model model,@Valid Book book,BindingResult result){
 		System.out.println("Working");
-		if(!result.hasErrors()){
+		if(!result.hasErrors() && service.checkIfBookTitleExists(book.getTitle())){
 			model.addAttribute("inner", service.showAllBooksByTitle(book.getTitle()));
 			return "books-all-show"; 
 		}
