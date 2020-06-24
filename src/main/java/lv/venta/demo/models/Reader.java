@@ -1,3 +1,4 @@
+//Reader class - People who take books home and return them
 package lv.venta.demo.models;
 
 import java.io.Serializable;
@@ -27,11 +28,9 @@ import lombok.Setter;
 public class Reader extends Person implements Serializable{
 
 
-	/////////////////////////////////
-	@OneToMany//222222222222222222222222222
+	@OneToMany
 	(mappedBy = "writer")
 	private Collection<Review> writtenReviews;
-	//////////////////////////////////////
 
     @Column(name = "Username")
     private String username;
@@ -42,28 +41,25 @@ public class Reader extends Person implements Serializable{
 	@OneToMany(mappedBy = "reader")
 	private Collection<Book> currentBooks;
 
-	///for review 
+
 	private boolean blacklisted = false; 
-	///for review
+
 	@Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern = "dd-mm-yyyy")
-	private Date blacklistDate = null;
-	///blacklisting incase if admin is looking through reviews
-	//and spot person with bad language use in many of reviews
+	private Date blacklistDate = null;         //a blacklisted reader cant make reviews (maybe they said a bad word?)
+
 
     @Transient
 	private static ArrayList<String> takenUsernames = new ArrayList<String>();   //usernames have to be unique
 	
     @Lob
-	private ArrayList<String> allBooks = new ArrayList<String>();
+	private ArrayList<String> allBooks = new ArrayList<String>();     //every book they have ever taken
 
 	@Lob
-	private ArrayList<Book> takenBooks = new ArrayList<Book>();
-	//books taken / in reading process
-
+	private ArrayList<Book> takenBooks = new ArrayList<Book>();      //books they currently have taken
 	@Transient
-	private ArrayList<Book> booksReadAndReturned = new ArrayList<Book>();     //need to add it in return function
-	//used so user can make review only on books that have been read and returned 
+	private ArrayList<Book> booksReadAndReturned = new ArrayList<Book>();     //books they have returned
+
 	
     public Reader(String name, String surname, Date date, String username, String password){
     	super(name,surname,date);
@@ -78,7 +74,7 @@ public class Reader extends Person implements Serializable{
 	
     public boolean takeBook(Book book)
     {
-    	if(takenBooks.size() > 2)     //max 3 books var reizee njemt
+    	if(takenBooks.size() > 2)     //max 3 books at a time
     		return false;
     	if(book.giveBook(this))
     	{

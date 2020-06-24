@@ -30,10 +30,10 @@ public interface ILibraryService {
 	//title or isbn [ADMIN]
 
 	boolean checkIfBookTitleExists(String title);
+	//checks if book exists yes [ADMIN]
 	
 	boolean addReader(Reader reader);
 	//registration from first page 
-	//maybe [ADMIN] function too ??? boiz ?
 	
 	boolean addAdmin(Admin admin);
 	//ONLY ONE ADMIN EXISTS AT FIRST
@@ -50,7 +50,7 @@ public interface ILibraryService {
 
 	boolean deleteReader(String username);
 	//[ADMIN]
-	boolean deleteAuthor(Author author);
+	boolean deleteAuthor(String name, String surname);
 	// [ADMIN]
 
 	boolean authoriseAdmin(Admin admin);//
@@ -85,7 +85,7 @@ public interface ILibraryService {
 
 
 	boolean addReview(Review review);
-	
+	//BETA
 	
 	
 	boolean deleteReviewByID(int id);
