@@ -94,16 +94,7 @@ public class LibraryServiceImpl implements ILibraryService {
 
 		giveBookToReader(r3, "The lost Student");
 		giveBookToReader(r2, "The master of code");
-		System.out.println("UPDATING");
-		updateReader(r1);
-		updateReader(r2);
-		updateReader(r3);
-		updateReader(r4);
-		System.out.println("UPDATED");
-		System.out.println(r1 + "\n");
-		System.out.println(r2 + "\n");
-		System.out.println(r3 + "\n");
-		System.out.println(r4 + "\n");
+		System.out.println(r2.getTakenBooks());
 
 	}
 
@@ -360,9 +351,6 @@ public class LibraryServiceImpl implements ILibraryService {
 		{
 			System.out.println("giving book to " + reader);
 			updateBook(temp);
-			ArrayList<Author> authors = (ArrayList<Author>)temp.getAuthors();
-			for(int i = 0; i<authors.size(); i++)
-				updateAuthor(authors.get(i));
 			updateReader(reader);
 			return true;
 		}
