@@ -360,6 +360,9 @@ public class LibraryServiceImpl implements ILibraryService {
 		{
 			System.out.println("giving book to " + reader);
 			updateBook(temp);
+			ArrayList<Author> authors = (ArrayList<Author>)temp.getAuthors();
+			for(int i = 0; i<authors.size(); i++)
+				updateAuthor(authors.get(i));
 			updateReader(reader);
 			return true;
 		}
