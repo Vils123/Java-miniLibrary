@@ -13,9 +13,13 @@ style="background-color:powderblue;">
             <td th:text="${author.toString()}" />
         </tr>
 
-        <form action="reader-page.html" class="inline">
-            <button class="float-left submit-button" >Go back</button>
-        </form>
+        <button onclick="goBack()">Go Back</button>
+
+        <script>
+        function goBack() {
+          window.history.back();
+        }
+        </script>
 
 </table>
 

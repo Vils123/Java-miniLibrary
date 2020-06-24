@@ -1,7 +1,19 @@
+<html xmlns:th="http://www.thymeleaf.org"
+style="background-color:powderblue;">
 <form action="#" th:action="@{/admin/addNewAuthor}" th:object="${author}"
 method="post">
 
-<table>
+<body style="background-color:powderblue;"></body>
+<table style="border:2px solid rgb(0, 0, 0);margin-left:auto;margin-right:auto;background-color: rgb(255, 255, 255);">
+
+    <tr>
+        <td>Author main Genre</td>
+        <div style="text-align:center">
+        <select name = "type">
+            <option th:each="genre : ${type}" th:text="${genre.toString()}"></option>
+             </div>
+        </tr>
+   
 
 <tr>
 <td>Author Name</td>
@@ -39,14 +51,11 @@ method="post">
 <td th:if="${#fields.hasErrors('literatureStyle')}" th:errors="*{literatureStyle}"></td>
 </tr>
 
-<tr>
-<td>Author main Genre</td>
-<select name = "type">
-    <option th:each="genre : ${type}" th:text="${genre.toString()}"></option>
-</tr>
 
 </table>
+<div style="text-align:center">
 <input type="submit">
+</div>
 </form>
 
 

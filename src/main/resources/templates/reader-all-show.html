@@ -12,9 +12,13 @@ style="background-color:powderblue;">
         <tr th:each="reader: ${inner}">
             <td th:text="${reader.toString()}" />
         </tr>
-        <form action="admin-page.html" class="inline">
-            <button class="float-left submit-button" >Go back</button>
-        </form>
+        <button onclick="goBack()">Go Back</button>
+
+        <script>
+        function goBack() {
+          window.history.back();
+        }
+        </script>
 
 </table>
 

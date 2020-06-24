@@ -210,12 +210,13 @@ public String addNewBoook(Model model, Book book){
 @PostMapping("/admin/addNewBook")
 public String addNewBook(Model model, @Valid Book book, @RequestParam(name = "type")Genre genre, BindingResult result)
 		throws Exception {
-	System.out.println("Adding a book");
+	
 	if(!result.hasErrors()){
 		Book temp = new Book(book.getIsbn(),book.getTitle(),service.currentAuthor(),book.getPublishDate(),book.getGenre(),Condition.MINT);
 		model.addAttribute("type", Genre.values());
 		service.addNewBook(temp);
-		return "redirect:/home";
+		System.out.println("Adding a book");
+		return "admin-page";
 	}
 	else{
 		return "author-insert";

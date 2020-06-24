@@ -319,7 +319,7 @@ public class Book implements Serializable{
 		if(!inLibrary)
 			inLib = "Taken";
 			
-		return title + "\nWritten By: " + autori +  "\nGenre: " + genre + "\nCondition: " + condition + inLib; 
+		return title + "\nWritten By: " + autori +  "\nGenre: " + genre + "\nCondition: " + condition + " " + inLib; 
 	}
 
 
