@@ -1,3 +1,4 @@
+//Person class  -  base class for admin,reader and author
 package lv.venta.demo.models;
 
 import java.util.Date;
@@ -65,7 +66,7 @@ public class Person {
 	
 	public void setName(String name)
 	{
-		this.name = Verification.verifyName(name);
+		this.name = Verification.verifyName(name);      //both of these remove any digits in the name
 	}
 
 
@@ -84,7 +85,7 @@ public class Person {
 	}
 	
 
-	public String toString()              //no date here for now, maybe later
+	public String toString()             
 	{
 		return name + " " + surname;
 	}

@@ -1,3 +1,4 @@
+//Admin class aka the Librarian
 package lv.venta.demo.models;
 
 import java.util.ArrayList;
@@ -16,15 +17,12 @@ import lombok.Setter;
 @Getter @Setter @NoArgsConstructor
 public class Admin extends Person{
 
-
 	@Column(name = "Username")
     private String username;
-
 
     @Column(name = "Password")
 	private String password;
 	
-
 	@Transient
     private static ArrayList<String> takenUsernames = new ArrayList<String>();          //usernames have to be unique
 	

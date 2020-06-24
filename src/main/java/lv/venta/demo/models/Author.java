@@ -1,3 +1,4 @@
+//Author class - authors of books
 package lv.venta.demo.models;
 
 import java.io.Serializable;
@@ -43,7 +44,8 @@ public class Author extends Person implements Serializable{
 
 	@Column(name="Literature_style")
 	@Size(min=3, max=30)
-	@Pattern(regexp="[a-zA-Z\\s]+$")
+	@Pattern(regexp="[a-zA-Z\\s]+$"
+			+ "")
 	private String literatureStyle;
 
 

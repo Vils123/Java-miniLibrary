@@ -264,8 +264,8 @@ public class LibraryServiceImpl implements ILibraryService {
 	}
 
 	@Override
-	public boolean deleteAuthor(Author author) {
-		Author temp = authorRepo.findByNameAndSurname(author.getName(), author.getSurname());
+	public boolean deleteAuthor(String name, String surname) {
+		Author temp = authorRepo.findByNameAndSurname(name, surname);
 		if (temp == null)
 			return false;
 		else {

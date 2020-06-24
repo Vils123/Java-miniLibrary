@@ -1,3 +1,4 @@
+//Review class -  readers can post reviews for books they have read  - BETA
 package lv.venta.demo.models;
 
 import java.io.Serializable;

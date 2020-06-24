@@ -1,3 +1,4 @@
+//Book class - books can have the same name and same isbn numbers etc. - because libraries have many copies of the same book
 package lv.venta.demo.models;
 
 import java.io.Serializable;
@@ -36,23 +37,20 @@ import lv.venta.demo.enums.Genre;
 @Getter @Setter @NoArgsConstructor
 public class Book implements Serializable{
 
-	protected static ArrayList<Book> allBooksInLibrary = new ArrayList<Book>();///
-	//to add them from constructor and storing them after construction so 
-	//used as a main function for library book lookthrough
+	protected static ArrayList<Book> allBooksInLibrary = new ArrayList<Book>(); //BETA
 
-	////////////////////////////////////////////////
-	@ManyToMany//11111111111111
+
+	@ManyToMany
 	@JoinTable(name = "Book_Review", joinColumns = @JoinColumn(name = "B_R_Id"), inverseJoinColumns = @JoinColumn(name = "Review_Id"))
 	private Collection<Review> review;
-	////////////////////////////////////
+
 	@ManyToOne
 	@JoinColumn(name = "Reader_Id")
 	private Reader reader;
 
 	@ManyToMany
 	@JoinTable(name = "Book_Author", joinColumns = @JoinColumn(name = "B_Id"), inverseJoinColumns = @JoinColumn(name = "Id"))
-	private Collection<Author> authors;
-	/////////////////////////////////////////////////
+	private Collection<Author> authors;      //Books technically can have many authors - for simplicity our system currently has one author per book though
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -64,7 +62,7 @@ public class Book implements Serializable{
 	@Size(min=10, max=13)
 	@Pattern(regexp="[0-9A-Z\\s]+$")
 	@Column(name = "ISBN") 
-	private String isbn;  
+	private String isbn;           //isbn numbers range from 10 to 13 numbers (but can have "X" instead of "10")
 	
 
 	@Column(name = "Title")
@@ -84,7 +82,7 @@ public class Book implements Serializable{
 	@Column(name = "Condition")
 	private Condition condition = Condition.MINT;
 	@Transient
-	private int conditionCounter = 60; //
+	private int conditionCounter = 60;      //condition counts down by 1 every time a book is taken and returned - this is so the librarian has a sense of when to inspect a book
 	
 
 	@Column(name = "Date_when_taken")
@@ -99,48 +97,10 @@ public class Book implements Serializable{
 	private Date returnDate = null;
 
 
-	@Min(0)
-	int book_count; 
-	// can be 0 at first 
-	// can be changed 
-	// one of parametres in constructor ... ? how to for loop a constructor
-
 	@Column(name = "In_Library")
 	private boolean inLibrary = true;
 	
-	
-	//constructor for one author
-	// public Book(String isbn, String title, Author author, Date publishDate, Genre genre,
-	// 		Condition condition,int book_count) {
-	// 	Book temp = new Book();
-	// 	if (checkDate(publishDate)) // no time travelers
-	// 	{
-	// 		if(book_count>=0){
-	// 			for (int i = 0; i < book_count; i++) {
-	// 				temp = new Book(isbn, title, author, publishDate, genre, condition);
-	// 				allBooksInLibrary.add(temp);
-	// 			}
-	// 		}
-	// 		// addBookToAuthors();
-	// 	}
-	// }
-
-	// public Book(String isbn, String title, Collection<Author> authors, Date publishDate, Genre genre,
-	//  Condition condition, int book_count ) {
-	// 	Book temp = new Book();
-	// 	if (checkDate(publishDate)) // no time travelers
-	// 	{
-	// 		if (book_count >= 0) {
-	// 			for (int i = 0; i < book_count; i++) {
-	// 				temp = new Book(isbn, title, authors, publishDate, genre, condition);
-	// 				allBooksInLibrary.add(temp);
-	// 			}
-	// 		}
-	// 		// addBookToAuthors();
-	// 	}
-	// }
-
-	// made it private because there is noo need of single book adding used in loop constructor
+	//2 constructors for 1 or many authors
 	public Book(String isbn, String title, Collection<Author> authors, Date publishDate, Genre genre,
 			Condition condition) {
 		if(checkDate(publishDate))   //no time travelers
@@ -155,11 +115,9 @@ public class Book implements Serializable{
 				this.condition = condition;
 				startConditionCounter();
 			}
-			//addBookToAuthors();
 		}
 	}
 
-	//made it private because there is noo need of single book adding used in loop constructor 
 	public Book(String isbn, String title, Author author, Date publishDate, Genre genre,
 			Condition condition) {
 		if(checkDate(publishDate))   //no time travelers
@@ -177,7 +135,6 @@ public class Book implements Serializable{
 				this.condition = condition;
 				startConditionCounter();
 			}
-			//addBookToAuthors();
 		}
 	}
 
@@ -214,7 +171,7 @@ public class Book implements Serializable{
 	{
 		conditionCounter = conditionCounter - 1;
 		if(conditionCounter == 45)
-			this.condition = Condition.GOOD;
+			this.condition = Condition.GOOD;       //condition changes when a threshold is met
 		if(conditionCounter == 30)
 			this.condition = Condition.USED;
 		if(conditionCounter == 15)
@@ -227,7 +184,7 @@ public class Book implements Serializable{
 	private boolean checkDate(Date date)
 	{
 		Date today = new Date();
-		if(date.getYear() <= today.getYear())
+		if(date.getYear() <= today.getYear())      //checks if a book is published this year or earlier
 			return true;
 		return false;
 	}
@@ -236,7 +193,7 @@ public class Book implements Serializable{
 	{
 		if(this.condition == Condition.GOOD)
 			conditionCounter = 45;
-		if(this.condition == Condition.USED)
+		if(this.condition == Condition.USED)  //starts with a different number based on starting condition
 			conditionCounter = 30;
 		if(this.condition == Condition.POOR)
 			conditionCounter = 15;
@@ -253,7 +210,7 @@ public class Book implements Serializable{
 			returnDate = date;
 	}
 	
-	public boolean returnBook()   //graamata ir atpakal biblioteekaa - tai zuud condition,datumi,reader
+	public boolean returnBook()   //a book is returned, so some parameters go to null
 	{
 		if(!inLibrary)
 		{
@@ -268,7 +225,7 @@ public class Book implements Serializable{
 		return false;
 	}
 	
-	public boolean giveBook(Reader reader)
+	public boolean giveBook(Reader reader)       //books have to be returned in 7 days  (or else?... we dont know yet)
 	{
 		if(inLibrary)
 		{
@@ -285,7 +242,7 @@ public class Book implements Serializable{
 		return false;
 	}
 	
-	public void addBookToAuthors()
+	public void addBookToAuthors()   //adds this book title to every authors collection
 	{
 		if(authors.isEmpty())
 			return;
