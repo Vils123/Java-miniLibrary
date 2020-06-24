@@ -169,7 +169,7 @@ public class LibraryController {
 			}
 			else if(service.authoriseReader(reader)){
 				Reader temp = service.selectReaderByUsername(reader.getUsername());
-				service.setCurrentReader(reader);
+				service.setCurrentReader(temp);
 				return "reader-page";
 			}
 			else{
@@ -272,7 +272,8 @@ public String addBookToReaderPost(Model model, @Valid Book book, BindingResult r
 
 
 @GetMapping("/reader/showMyTakenBooks")//localhost:8080/reader/showMyTakenBooks
-public String showMyTakenBooks(Reader reader){
+public String showMyTakenBooks(Model model,Reader reader){
+	model.addAttribute("inner", service.showCurrentBooks(service.currentReader()));
 	return "show-my-books";
 }
 

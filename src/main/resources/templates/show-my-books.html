@@ -10,7 +10,7 @@ style="background-color:powderblue;">
 <table style="border:2px solid rgb(0, 0, 0);margin-left:auto;margin-right:auto;background-color: rgb(255, 255, 255);">
 
         <tr th:each="reader: ${inner}">
-            <td th:text="${reader.showCurrentBooks()}" />
+            <td th:text="${reader.toString()}" />
         </tr>
 
         <button onclick="goBack()">Go Back</button>
