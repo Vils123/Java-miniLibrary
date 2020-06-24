@@ -398,6 +398,7 @@ public class LibraryServiceImpl implements ILibraryService {
 		{
 			a.addReview(review);
 		}
+		reviewRepo.save(review);
 		return true;
 	}
 
