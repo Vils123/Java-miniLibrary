@@ -166,6 +166,7 @@ public class LibraryController {
 				return "admin-page";
 			}
 			else if(service.authoriseReader(reader)){
+				service.setCurrentReader(reader);
 				return "reader-page";
 			}
 			else{

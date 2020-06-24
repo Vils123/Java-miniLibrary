@@ -389,23 +389,25 @@ public class LibraryServiceImpl implements ILibraryService {
 
 
 	@Override
-	public boolean giveReviewToBook(Book book, Review review) { 
-		
-
-
-		return false;
+	public boolean addReview(Review review) { 
+		if(reviewRepo.existsById(review.getId()))
+			return false;
+		reviewRepo.save(review);
+		return true;
 	}
 
 
 	@Override
 	public boolean deleteReviewByID(int id) {
-		return false ;
+		if(!reviewRepo.existsById(id))
+			return false;
+		reviewRepo.deleteById(id);
+		return true;
 	}
 
 	@Override
 	public ArrayList<Review> showAllReviewsOfCurrentUser() {
-		// TODO Auto-generated method stub
-		return null;
+		return (ArrayList<Review>) currentReader.getWrittenReviews();
 	}
 
 	@Override
@@ -415,13 +417,13 @@ public class LibraryServiceImpl implements ILibraryService {
 
 	@Override
 	public ArrayList<Review> showAllReviewsByDate(Date date) {
-		// TODO Auto-generated method stub
-		return null;
+		return reviewRepo.findAllByCommentDate(date);
 	}
 
 	@Override
 	public ArrayList<Review> showAllReviewsOfBookByBookName(String bookName) {
-		return null;
+		Book temp = bookRepo.findByTitle(bookName).get(0);
+		return (ArrayList<Review>) temp.getReview();
 	}
 
 	@Override

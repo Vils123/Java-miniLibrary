@@ -1,6 +1,7 @@
 package lv.venta.demo.repositories;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import org.springframework.data.repository.CrudRepository;
 
@@ -12,5 +13,6 @@ public interface IReviewRepo extends CrudRepository<Review, Integer> {
     ArrayList<Review> findByWriterId(int id);
     boolean existsByWriterId(int id); // ?
     ArrayList<Review> findAllByWriterId(int id);
+    ArrayList<Review> findAllByCommentDate(Date date);
     
 }

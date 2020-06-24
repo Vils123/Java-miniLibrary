@@ -82,8 +82,10 @@ public interface ILibraryService {
 
 
 
-	boolean giveReviewToBook(Book book, Review review);
-	//[ALL] only if book is in readers returnedbook array
+	boolean addReview(Review review);
+	
+	
+	
 	boolean deleteReviewByID(int id);
 	//[ALL]
 	ArrayList<Review> showAllReviewsOfCurrentUser();
