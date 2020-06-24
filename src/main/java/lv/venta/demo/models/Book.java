@@ -315,9 +315,11 @@ public class Book implements Serializable{
 			autori += a.toString() + ", ";
 		}
 		autori = autori.substring(0, autori.length()-2);
-		
+		String inLib = "In Library";
+		if(!inLibrary)
+			inLib = "Taken";
 			
-		return title + "\nWritten By: " + autori +  "\nGenre: " + genre + "\nCondition: " + condition; 
+		return title + "\nWritten By: " + autori +  "\nGenre: " + genre + "\nCondition: " + condition + inLib; 
 	}
 
 
