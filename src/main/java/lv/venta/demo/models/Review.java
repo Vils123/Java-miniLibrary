@@ -33,16 +33,12 @@ import lombok.Setter;
 @NoArgsConstructor
 public class Review implements Serializable {
 
-
-    //////////////////////////////////////////////
-    @ManyToMany(mappedBy = "review") //1111111111
+    @ManyToMany(mappedBy = "review")
     private Collection<Book> allBooksReviewPost; 
-    // One review to many books (because id different for each book with same name)
-    //////////////////////////////////////////////
-    @ManyToOne //2222222222222222222
-    @JoinColumn(name = "reader_id")  // so it is  possible to find reviews by reader id !?
-    private Reader writer;           //reader can write many separate reviews
-    //////////////////////////////////////////////
+
+    @ManyToOne
+    @JoinColumn(name = "reader_id")  
+    private Reader writer;           
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -54,7 +50,7 @@ public class Review implements Serializable {
     @Column(name = "Book_Title")
     private String title;
     
-    @Column(name = "Rating_aspect_1")
+    @Column(name = "Rating_aspect_1")   //3 rating aspects (book quality, story,  etc.)
     @Min(1) @Max(10)
     private int rating1 =1 ;
 
@@ -69,13 +65,11 @@ public class Review implements Serializable {
     private int rating3 = 1 ;
 
     @Column(name = "Total_this_review_score")
-    private double review_total = 0.0d; // 3;  
+    private double review_total = 0.0d;   
 
-    // @Column(name = "Book total rating by users")
-    // private double bookOveralScore;
 
     @Column(name = "Review_Description")
-    String thoughts;
+    private String thoughts;
 
     @Column(name = "Comment_Post_Date")
     @Temporal(TemporalType.DATE)

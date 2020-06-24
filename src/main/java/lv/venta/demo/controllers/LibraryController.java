@@ -272,11 +272,10 @@ public String addBookToReaderPost(Model model, @Valid Book book, BindingResult r
 
 
 @GetMapping("/reader/showMyTakenBooks")//localhost:8080/reader/showMyTakenBooks
-public String showMyTakenBooks(Model model,Reader reader){
+public String showMyTakenBooks(Model model){
 	model.addAttribute("inner", service.showCurrentBooks(service.currentReader()));
-	return "show-my-books";
+	return "books-all-show";
 }
-
 
 
 

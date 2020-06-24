@@ -92,8 +92,13 @@ public class LibraryServiceImpl implements ILibraryService {
 		Review rev1 = new Review(r1, b1, 8, 9, 10, "DAMN DUMBLEDORE CHEEKS THO");
 		reviewRepo.save(rev1);
 
+
+		giveBookToReader(r3, "The lost Student");
+		giveBookToReader(r2, "The master of code");
+		System.out.println(r2.getTakenBooks());
 		giveBookToReader(r3, "The master of code");
 		giveBookToReader(r2, "The lost Student");
+<<<<<<< HEAD
 		System.out.println("UPDATING");
 		updateReader(r1);
 		updateReader(r2);
@@ -104,6 +109,11 @@ public class LibraryServiceImpl implements ILibraryService {
 		System.out.println(r2 + "\n");
 		System.out.println(r3 + "\n");
 		System.out.println(r4 + "\n");
+		System.out.println(r2.getTakenBooks());
+=======
+
+
+>>>>>>> 49da1d9ff29646da5e0700bf2435643629de5758
 
 	}
 
@@ -524,7 +534,9 @@ public class LibraryServiceImpl implements ILibraryService {
 
 	@Override
 	public ArrayList<Book> showCurrentBooks(Reader reader) {
+		System.out.println(reader.getTakenBooks());
 		return reader.getTakenBooks();
+		
 	}
 
 
