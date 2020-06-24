@@ -133,7 +133,7 @@ public class Reader extends Person implements Serializable{
 		{
 			all += allBooks.get(i) + "\n";
 		}
-		return "Reader " + super.toString() + "\nCurrently taken books:" + taken + "\nBook History: "+ all;
+		return "Reader " + super.toString() + "\nCurrently taken books:    " + taken + "\nBook History:    "+ all;
 	}
 
 	

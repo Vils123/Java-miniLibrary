@@ -190,6 +190,7 @@ public class LibraryController {
 		if(!result.hasErrors()){
 			model.addAttribute("type", Genre.values());
 			service.addAuthor(author);
+			service.setCurrentAuthor(author);
 			return "redirect:/admin/addNewBook";
 		}
 		else{
@@ -209,8 +210,9 @@ public String addNewBook(Model model, @Valid Book book, @RequestParam(name = "ty
 		throws Exception {
 	System.out.println("Adding a book");
 	if(!result.hasErrors()){
+		Book temp = new Book(book.getIsbn(),book.getTitle(),service.currentAuthor(),book.getPublishDate(),book.getGenre(),Condition.MINT);
 		model.addAttribute("type", Genre.values());
-		service.addNewBook(book);
+		service.addNewBook(temp);
 		return "redirect:/home";
 	}
 	else{

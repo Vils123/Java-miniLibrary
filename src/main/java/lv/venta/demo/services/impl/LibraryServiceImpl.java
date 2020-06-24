@@ -41,6 +41,7 @@ public class LibraryServiceImpl implements ILibraryService {
 	
 
 	private Reader currentReader = null;
+	private Author currentAuthor = null;
 
 
 
@@ -515,6 +516,15 @@ public class LibraryServiceImpl implements ILibraryService {
 		return currentReader;
 	}
 
+	public void setCurrentAuthor(Author author){
+		this.currentAuthor = author;
+	}
+
+	public Author currentAuthor(){
+		return currentAuthor;
+	}
+	
+	
 	@Override
 	public boolean addBookToAuthor(Author author, Book book) {
 		ArrayList<Book> allBooks = bookRepo.findAllByTitle(book.getTitle());
