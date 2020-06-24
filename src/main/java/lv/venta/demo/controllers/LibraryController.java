@@ -71,12 +71,12 @@ public class LibraryController {
 	@PostMapping("/reader/booksByTitle")//localhost:8080/reader/booksByTitle
 	public String booksByAuthorTitle(Model model,@Valid Book book,BindingResult result){
 		System.out.println("Working");
-		if(!result.hasErrors() && service.checkIfBookTitleExists(book.getTitle())){
+		if(!result.hasErrors()){
 			model.addAttribute("inner", service.showAllBooksByTitle(book.getTitle()));
 			return "books-all-show"; 
 		}
 		else{
-			return "get-book-by-title";
+			return "redirect:/reader/booksByTitle";
 		}
 
 	} 
@@ -105,7 +105,7 @@ public class LibraryController {
 		
 		if(!result.hasErrors()) {
 			service.addReader(reader);
-			return "ok";}
+			return "admin-page";}
 		else {
 			return "reader-insert";
 		}
@@ -123,7 +123,7 @@ public class LibraryController {
 		
 		if(!result.hasErrors()) {
 			service.addAdmin(admin);
-			return "ok";}
+			return "admin-page";}
 		else {
 			return "admin-insert";
 		}
@@ -220,22 +220,6 @@ public String addNewBook(Model model, @Valid Book book, @RequestParam(name = "ty
 	}
 }
 
-@GetMapping("/admin/linkBookAndAuthor")//localhost:8080/admin/linkBookAndAuthor
-public String linkBook(Model model,Book book,Author author){
-	return "link";
-}
-@PostMapping("/admin/linkBookAndAuthor")
-public String linkBookPost(Model model, @Valid Book book, @Valid Author author, BindingResult result)
-		throws Exception {
-	System.out.println("Linking");
-	if(!result.hasErrors()){
-		service.addBookToAuthor(author, book);		//es nezinu ka salinkot, viss ir pareizi, bet sis negrib pievienot to stulbo gramatu.
-		return "author-all-show";
-	}
-	else{
-		return "author-insert";
-	}
-}
 
 @GetMapping("/admin/deleteReader")//localhost:8080/admin/deleteReader
 public String deleteReader(Reader reader){
@@ -250,6 +234,9 @@ public String deleteReaderPost(Model model, @Valid Reader reader, BindingResult 
 	else{
 		return "delete-by-username";
 }}
+
+
+
 
 
 
