@@ -49,6 +49,10 @@ public class Review implements Serializable {
     @Setter(value = AccessLevel.PRIVATE)
     private int id;
 
+    
+    @Column(name = "Book_Title")
+    private String title;
+    
     @Column(name = "Rating_aspect_1")
     @Min(1) @Max(10)
     private int rating1 =1 ;
@@ -86,6 +90,7 @@ public class Review implements Serializable {
             setReview_total((r1+r2+r3)/3);
             setThoughts(thoughts);
             setCommentDate(new Date());
+            setTitle(book.getTitle());
             postReview(reader, book); 
         //}
         //make repo ad in repo to allreviews

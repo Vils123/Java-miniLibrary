@@ -392,7 +392,12 @@ public class LibraryServiceImpl implements ILibraryService {
 	public boolean addReview(Review review) { 
 		if(reviewRepo.existsById(review.getId()))
 			return false;
-		reviewRepo.save(review);
+		String title = review.getTitle();
+		ArrayList<Book> temp = bookRepo.findAllByTitle(title);
+		for(Book a : temp)
+		{
+			a.addReview(review);
+		}
 		return true;
 	}
 

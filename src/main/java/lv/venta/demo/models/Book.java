@@ -301,6 +301,12 @@ public class Book implements Serializable{
 		}
 	}
 	
+	public void addReview(Review review)
+	{
+		if(!this.review.contains(review))
+			this.review.add(review);
+	}
+	
 	public String toString()
 	{
 		String autori = "";
