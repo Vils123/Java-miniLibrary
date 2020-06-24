@@ -115,5 +115,7 @@ public interface ILibraryService {
 
 	boolean addBookToAuthor(Author author, Book book);
 
+	ArrayList<Book> showCurrentBooks(Reader reader);
+
 
 }

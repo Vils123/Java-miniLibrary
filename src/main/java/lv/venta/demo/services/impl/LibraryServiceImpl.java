@@ -92,9 +92,14 @@ public class LibraryServiceImpl implements ILibraryService {
 		Review rev1 = new Review(r1, b1, 8, 9, 10, "DAMN DUMBLEDORE CHEEKS THO");
 		reviewRepo.save(rev1);
 
+
 		giveBookToReader(r3, "The lost Student");
 		giveBookToReader(r2, "The master of code");
 		System.out.println(r2.getTakenBooks());
+		giveBookToReader(r3, "The master of code");
+		giveBookToReader(r2, "The lost Student");
+
+
 
 	}
 
@@ -511,6 +516,11 @@ public class LibraryServiceImpl implements ILibraryService {
 	@Override
 	public boolean checkIfBookTitleExists(String title) {
 		return (bookRepo.existsByTitle(title));
+	}
+
+	@Override
+	public ArrayList<Book> showCurrentBooks(Reader reader) {
+		return reader.getTakenBooks();
 	}
 
 
