@@ -19,7 +19,7 @@ import lv.venta.demo.repositories.IBookRepo;
 import lv.venta.demo.repositories.IReaderRepo;
 import lv.venta.demo.repositories.IReviewRepo;
 import lv.venta.demo.services.ILibraryService;
-import lv.venta.demo.services.Person;
+
 
 @Service
 public class LibraryServiceImpl implements ILibraryService {
@@ -82,6 +82,9 @@ public class LibraryServiceImpl implements ILibraryService {
 		Book b3 = new Book("192929191991", "The lost Student", a2, new Date(114, 0, 1), Genre.DETECTIVE,
 				Condition.MINT);
 		addNewBook(b3);
+		Book b4 = new Book("192929191923", "Horses", a3, new Date(114, 0, 9), Genre.FANTASY,
+				Condition.MINT);
+		addNewBook(b4);		
 
 		giveBookToReader(r1, "Harry potter and the java code");
 		takeBookFromReader(r1, r1.getTakenBooks().get(0));

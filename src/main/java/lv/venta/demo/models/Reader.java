@@ -126,14 +126,14 @@ public class Reader extends Person implements Serializable{
 		String taken = "";
 		for(int i = 0; i < takenBooks.size(); i++)
 		{
-			taken += takenBooks.get(i).getTitle() + "\n";
+			taken += takenBooks.get(i).getTitle() + "; ";
 		}
 		String all = "";
 		for(int i = 0; i < allBooks.size(); i++)
 		{
-			all += allBooks.get(i) + "\n";
+			all += allBooks.get(i) + "; ";
 		}
-		return "Reader " + super.toString() + "\nCurrently taken books:    " + taken + "\nBook History:    "+ all;
+		return "Reader " + super.toString() + "[Currently taken books: " + taken + "]" + "[Book History:    "+ all + "]";
 	}
 
 	

@@ -239,6 +239,37 @@ public String deleteReaderPost(Model model, @Valid Reader reader, BindingResult 
 }}
 
 
+@GetMapping("/admin/addReaderToBook")//localhost:8080/admin/addReaderToBook
+public String addBook(Reader reader){
+return "get-username-for-book";}
+
+@PostMapping("/admin/addReaderToBook")
+public String addBookPost(Model model, @Valid Reader reader, BindingResult result){
+	if(!result.hasErrors()){
+		Reader temp = service.selectReaderByUsername(reader.getUsername());
+		service.setCurrentReader(temp);
+		return "redirect:/admin/addBookToReader";}
+	else{
+		return "get-username-for-book";
+	}
+}
+
+
+@GetMapping("/admin/addBookToReader")//localhost:8080/admin/addBookToReader
+public String addBookToReader(Book book){
+return "get-book-by-title-add";}
+
+@PostMapping("/admin/addBookToReader")//localhost:8080/admin/addBookToReader
+public String addBookToReaderPost(Model model, @Valid Book book, BindingResult result){
+	if(!result.hasErrors()){
+		service.giveBookToReader(service.currentReader(), book.getTitle());
+		return "admin-page";}
+	else{
+		return "get-book-by-title-add";
+	}
+}
+
+
 
 
 
