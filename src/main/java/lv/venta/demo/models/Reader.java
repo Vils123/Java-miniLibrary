@@ -7,6 +7,7 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Lob;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -53,12 +54,10 @@ public class Reader extends Person implements Serializable{
     @Transient
 	private static ArrayList<String> takenUsernames = new ArrayList<String>();   //usernames have to be unique
 	
-
-    @Transient
+    @Lob
 	private ArrayList<String> allBooks = new ArrayList<String>();
-	//books that are returned and anre in reading process(taken from library)
 
-    @Transient
+	@Lob
 	private ArrayList<Book> takenBooks = new ArrayList<Book>();
 	//books taken / in reading process
 
@@ -123,7 +122,18 @@ public class Reader extends Person implements Serializable{
     
 	@Override
 	public String toString() {
-		return "Reader " + super.toString() + "\nCurrently taken books:" + takenBooks + "\nBook History: "+ allBooks.toString(); 
+
+		String taken = "";
+		for(int i = 0; i < takenBooks.size(); i++)
+		{
+			taken += takenBooks.get(i).getTitle() + "\n";
+		}
+		String all = "";
+		for(int i = 0; i < allBooks.size(); i++)
+		{
+			all += allBooks.get(i) + "\n";
+		}
+		return "Reader " + super.toString() + "\nCurrently taken books:" + taken + "\nBook History: "+ all;
 	}
 
 	
