@@ -19,6 +19,7 @@ import lv.venta.demo.repositories.IBookRepo;
 import lv.venta.demo.repositories.IReaderRepo;
 import lv.venta.demo.repositories.IReviewRepo;
 import lv.venta.demo.services.ILibraryService;
+import lv.venta.demo.services.Person;
 
 @Service
 public class LibraryServiceImpl implements ILibraryService {
@@ -38,13 +39,8 @@ public class LibraryServiceImpl implements ILibraryService {
 	@Autowired
 	IAuthorRepo authorRepo;
 
-	
-
 	private Reader currentReader = null;
 	private Author currentAuthor = null;
-
-
-
 
 	@Override
 	public void inputdata() {
@@ -90,7 +86,7 @@ public class LibraryServiceImpl implements ILibraryService {
 		giveBookToReader(r1, "Harry potter and the java code");
 		takeBookFromReader(r1, r1.getTakenBooks().get(0));
 
-		Review rev1 = new Review(r1,b1,8,9,10,"DAMN DUMBLEDORE CHEEKS THO");
+		Review rev1 = new Review(r1, b1, 8, 9, 10, "DAMN DUMBLEDORE CHEEKS THO");
 		reviewRepo.save(rev1);
 
 		giveBookToReader(r3, "The lost Student");
@@ -374,55 +370,32 @@ public class LibraryServiceImpl implements ILibraryService {
 
 			if (book.getConditionCounter() < 1)
 				bookRepo.delete(book); // if book dies
-			else
-			{
+			else {
 				updateBook(book);
 				updateReader(reader);
 			}
-			
+
 			return true;
 		}
 		return false;
 	}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 	@Override
-	public boolean addReview(Review review) { 
-		if(reviewRepo.existsById(review.getId()))
+	public boolean addReview(Review review) {
+		if (reviewRepo.existsById(review.getId()))
 			return false;
 		String title = review.getTitle();
 		ArrayList<Book> temp = bookRepo.findAllByTitle(title);
-		for(Book a : temp)
-		{
+		for (Book a : temp) {
 			a.addReview(review);
 		}
 		reviewRepo.save(review);
 		return true;
 	}
 
-
 	@Override
 	public boolean deleteReviewByID(int id) {
-		if(!reviewRepo.existsById(id))
+		if (!reviewRepo.existsById(id))
 			return false;
 		reviewRepo.deleteById(id);
 		return true;
@@ -435,7 +408,7 @@ public class LibraryServiceImpl implements ILibraryService {
 
 	@Override
 	public ArrayList<Review> showAllReviewsByUserID(int id) {
-		return reviewRepo.findAllByWriterId(id); //  i guess
+		return reviewRepo.findAllByWriterId(id); // i guess
 	}
 
 	@Override
@@ -477,21 +450,19 @@ public class LibraryServiceImpl implements ILibraryService {
 			temp.setBlacklistDate(null);
 			return true;
 		}
-		return false; 
+		return false;
 	}
 
 	@Override
-	public boolean updateReview(Review review) { //ir padots review id 
+	public boolean updateReview(Review review) { // ir padots review id
 		Review temp = reviewRepo.findById(review.getId());
 		if (temp == null)
 			return false;
-		temp.setThoughts(review.getThoughts());  
-		//tiek apdeitots tikai thoughts (1 field)
+		temp.setThoughts(review.getThoughts());
+		// tiek apdeitots tikai thoughts (1 field)
 		reviewRepo.save(temp);
 		return true;
 	}
-
-
 
 	@Override
 	public boolean deleteAllReviewsByReaderByReaderId(int id) {
@@ -499,32 +470,27 @@ public class LibraryServiceImpl implements ILibraryService {
 			return false;
 		ArrayList<Review> allReviews = reviewRepo.findAllByWriterId(id);
 		for (Review a : allReviews) {
-				reviewRepo.delete(a);
+			reviewRepo.delete(a);
 		}
 		return true;
 	}
 
-
-	
-	
-
-	public void setCurrentReader(Reader reader){
+	public void setCurrentReader(Reader reader) {
 		this.currentReader = reader;
 	}
 
-	public Reader currentReader(){
+	public Reader currentReader() {
 		return currentReader;
 	}
 
-	public void setCurrentAuthor(Author author){
+	public void setCurrentAuthor(Author author) {
 		this.currentAuthor = author;
 	}
 
-	public Author currentAuthor(){
+	public Author currentAuthor() {
 		return currentAuthor;
 	}
-	
-	
+
 	@Override
 	public boolean addBookToAuthor(Author author, Book book) {
 		ArrayList<Book> allBooks = bookRepo.findAllByTitle(book.getTitle());
@@ -537,22 +503,22 @@ public class LibraryServiceImpl implements ILibraryService {
 			}
 		}
 		System.out.println(temp.getTitle());
-		if(authorRepo.existsByName(author.getName())){
-			Author foundAuth = authorRepo.findByNameAndSurname(author.getName(),author.getSurname());
+		if (authorRepo.existsByName(author.getName())) {
+			Author foundAuth = authorRepo.findByNameAndSurname(author.getName(), author.getSurname());
 			foundAuth.addBook(temp);
 			System.out.println(temp.getTitle());
 			System.out.println(foundAuth.getName());
 			return true;
 		}
 		return false;
-		
-		
+
 	}
 
 	@Override
 	public boolean checkIfBookTitleExists(String title) {
 		return (bookRepo.existsByTitle(title));
 	}
+
 
 
 }

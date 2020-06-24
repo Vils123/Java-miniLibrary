@@ -17,6 +17,8 @@ import lv.venta.demo.models.Author;
 import lv.venta.demo.models.Book;
 import lv.venta.demo.models.Reader;
 import lv.venta.demo.services.impl.LibraryServiceImpl;
+import org.springframework.web.bind.annotation.RequestBody;
+
 @Controller
 public class LibraryController {
 	@Autowired
@@ -234,6 +236,9 @@ public String deleteReaderPost(Model model, @Valid Reader reader, BindingResult 
 	else{
 		return "delete-by-username";
 }}
+
+
+
 
 
 
