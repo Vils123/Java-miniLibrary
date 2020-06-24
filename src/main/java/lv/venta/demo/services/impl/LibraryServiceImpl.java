@@ -99,6 +99,7 @@ public class LibraryServiceImpl implements ILibraryService {
 		giveBookToReader(r3, "The master of code");
 		giveBookToReader(r2, "The lost Student");
 <<<<<<< HEAD
+<<<<<<< HEAD
 		System.out.println("UPDATING");
 		updateReader(r1);
 		updateReader(r2);
