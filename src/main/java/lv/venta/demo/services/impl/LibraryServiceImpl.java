@@ -67,7 +67,7 @@ public class LibraryServiceImpl implements ILibraryService {
 				"Smart man", Genre.MYSTERY, null);
 		Author a2 = new Author("Egata", "Bristi", new Date(10, 05, 11), "America", "Great author",
 				"Writes detective novels", Genre.DETECTIVE, new Date(90, 04, 9));
-		Author a3 = new Author("Zigis", "Pudele", new Date(98, 05, 10), "Latvia", "Coder", "The best Java coder of alll time",
+		Author a3 = new Author("Zigis", "Pudele", new Date(98, 05, 10), "Latvia", "Coder", "Great Coder",
 				Genre.FANTASY, null);
 
 		authorRepo.save(a1);
@@ -80,7 +80,7 @@ public class LibraryServiceImpl implements ILibraryService {
 		Book b2 = new Book("191919191919", "The master of code", a3, new Date(115, 0, 1), Genre.COMEDY, Condition.GOOD);
 		addNewBook(b2);
 		Book b3 = new Book("192929191991", "The lost Student", a2, new Date(114, 0, 1), Genre.DETECTIVE,
-				Condition.POOR)
+				Condition.POOR);
 		addNewBook(b3);
 		Book b4 = new Book("192929191923", "The stolen coffe", a1, new Date(114, 0, 9), Genre.MYSTERY,
 				Condition.MINT);
