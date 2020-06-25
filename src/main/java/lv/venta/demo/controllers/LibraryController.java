@@ -121,15 +121,11 @@ public class LibraryController {
 	
 
 	@PostMapping("/reader/showAllBooksByCondition")
-		public String showAllBooksByCondition (Model model, @RequestParam(name = "type") Condition condition,BindingResult result)
+		public String showAllBooksByCondition (Model model, @RequestParam(name = "type") Condition condition)
 				throws Exception {
-		if(!result.hasErrors()){
 		model.addAttribute("inner", service.selectAllBooksByCondition(condition));
 		return "books-all-show"; }
-		else{
-			return "get-book-condition";
-		}
-	}
+	
 
 	@GetMapping("/admin/registerReader") //localhost:8080/admin/registerReader
 	public String insertReader(Reader reader){
@@ -172,15 +168,11 @@ public class LibraryController {
 
 
 @PostMapping("/reader/showAllBooksByGenre")
-	public String showAllBooksByGenrePost (Model model, @RequestParam(name = "type") Genre genre, BindingResult result)
+	public String showAllBooksByGenrePost (Model model, @RequestParam(name = "type") Genre genre)
 			throws Exception {
-	if(!result.hasErrors()){
 	model.addAttribute("inner", service.selectAllBooksByGenre(genre));
-	return "books-all-show"; }
-	else{
-		return "get-book-genre";
-	}
-}
+	return "books-all-show";}
+
 @GetMapping("/admin/showAllAuthors") //localhost:8080/admin/showAllAuthors
 	public String showAllAuthors(Model model){
 		model.addAttribute("inner", service.showAllAuthors());
@@ -219,12 +211,11 @@ public class LibraryController {
 
 @GetMapping("/admin/addNewAuthor") //localhost:8080/admin/addNewAuthor
 	public String addNewAuthor(Model model, Author author){
-		model.addAttribute("type", Genre.values());
 		return "author-insert";
 	}
 		
 	@PostMapping("/admin/addNewAuthor")
-	public String addNewAuthor(Model model, @Valid Author author, @RequestParam(name = "type")Genre genre, BindingResult result)
+	public String addNewAuthor(Model model, @Valid Author author,Genre genre, BindingResult result)
 			throws Exception {
 			System.out.println("Adding a book");
 		if(!result.hasErrors()){
@@ -241,12 +232,11 @@ public class LibraryController {
 		
 @GetMapping("/admin/addNewBook") //localhost:8080/admin/addNewBook
 public String addNewBoook(Model model, Book book){
-	model.addAttribute("type", Genre.values());
 	return "book-insert";
 }
 
 @PostMapping("/admin/addNewBook")
-public String addNewBook(Model model, @Valid Book book, @RequestParam(name = "type")Genre genre, BindingResult result)
+public String addNewBook(Model model, @Valid Book book,Genre genre, BindingResult result)
 		throws Exception {
 	
 	if(!result.hasErrors()){

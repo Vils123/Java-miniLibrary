@@ -6,12 +6,10 @@ method="post">
 <body style="background-color:powderblue;"></body>
 <table style="border:2px solid rgb(0, 0, 0);margin-left:auto;margin-right:auto;background-color: rgb(255, 255, 255);">
         
-                <tr>
-                        <td>Book Genre</td>
-                        <div style="text-align:center">
-                        <select name = "type">
-                            <option th:each="genre : ${type}" th:text="${genre.toString()}"></option>
-                        </div>
+        <tr>
+                <td>Book genre</td>
+                <td> <input type="text" th:field="*{genre}"> </td>
+                <td th:if="${#fields.hasErrors('genre')}" th:errors="*{genre}"></td>
                 </tr>
         
         <tr>
