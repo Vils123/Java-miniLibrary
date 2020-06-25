@@ -45,8 +45,8 @@ public class LibraryServiceImpl implements ILibraryService {
 	@Override
 	public void inputdata() {
 
-		Admin admin1 = new Admin("Dat", "Boss", new Date(66, 06, 06), "boss", "password");
-		Admin admin2 = new Admin("Bossiks", "Tossiks", new Date(98, 07, 01), "smuks", "koks");
+		Admin admin1 = new Admin("Janis", "Gailis", new Date(66, 06, 06), "boss", "password");
+		Admin admin2 = new Admin("Edgars", "Tossiks", new Date(98, 07, 01), "smuks", "lapa");
 		Admin admin3 = new Admin("Janka", "Panka", new Date(99, 07, 01), "Janka", "paks");
 
 		adminRepo.save(admin1);
@@ -54,35 +54,35 @@ public class LibraryServiceImpl implements ILibraryService {
 		adminRepo.save(admin3);
 
 		Reader r1 = new Reader("Janis", "Berzins", new Date(100, 05, 05), "janchuks123", "parole123");
-		Reader r2 = new Reader("Richards", "Everts", new Date(98, 05, 05), "ricijs111", "parole123");
-		Reader r3 = new Reader("Karlis", "Sermuksitis", new Date(99, 02, 05), "bilis333", "parole123");
-		Reader r4 = new Reader("Vladislavs", "Sivakovs", new Date(99, 07, 7), "vvssss123333", "parole123");
+		Reader r2 = new Reader("Ricardo", "Paduse", new Date(98, 05, 05), "ricijs111", "parole123");
+		Reader r3 = new Reader("Zanis", "Locs", new Date(99, 02, 05), "zanits333", "parole123");
+		Reader r4 = new Reader("Edvards", "Mucenieks", new Date(99, 07, 7), "edva123333", "parole123");
 
 		readerRepo.save(r2);
 		readerRepo.save(r3);
 		readerRepo.save(r4);
 		readerRepo.save(r1);
 
-		Author a1 = new Author("Barack", "Obama", new Date(60, 03, 03), "not USA", "He was a president aswell",
-				"He writing facts", Genre.COMEDY, null);
+		Author a1 = new Author("Barack", "Obama", new Date(60, 03, 03), "America", "A great president",
+				"Smart man", Genre.MYSTERY, null);
 		Author a2 = new Author("Egata", "Bristi", new Date(10, 05, 11), "America", "Great author",
 				"Writes detective novels", Genre.DETECTIVE, new Date(90, 04, 9));
-		Author a3 = new Author("Zigis", "Pudele", new Date(98, 05, 10), "Latvia", "Coder", "He do be coding",
-				Genre.MYSTERY, null);
+		Author a3 = new Author("Zigis", "Pudele", new Date(98, 05, 10), "Latvia", "Coder", "The best Java coder of alll time",
+				Genre.FANTASY, null);
 
 		authorRepo.save(a1);
 		authorRepo.save(a2);
 		authorRepo.save(a3);
 
-		Book b1 = new Book("123456789112", "Harry potter and the java code", a1, new Date(115, 0, 1), Genre.COMEDY,
+		Book b1 = new Book("123456789112", "Harry potter and the java code", a3, new Date(115, 0, 1), Genre.COMEDY,
 				Condition.POOR);
 		addNewBook(b1);
 		Book b2 = new Book("191919191919", "The master of code", a3, new Date(115, 0, 1), Genre.COMEDY, Condition.GOOD);
 		addNewBook(b2);
 		Book b3 = new Book("192929191991", "The lost Student", a2, new Date(114, 0, 1), Genre.DETECTIVE,
-				Condition.MINT);
+				Condition.POOR)
 		addNewBook(b3);
-		Book b4 = new Book("192929191923", "Horses", a3, new Date(114, 0, 9), Genre.FANTASY,
+		Book b4 = new Book("192929191923", "The stolen coffe", a1, new Date(114, 0, 9), Genre.MYSTERY,
 				Condition.MINT);
 		addNewBook(b4);		
 
